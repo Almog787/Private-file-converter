@@ -32,11 +32,14 @@
             -moz-appearance: none;
             appearance: none;
         }
+        
+        /* Modal Animation */
+        .modal-active { display: flex !important; }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen relative">
 
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center">
+    <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-2">
             <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-blue-100">G</div>
             <span class="text-xl font-extrabold tracking-tight uppercase">Global<span class="text-blue-600">Convert</span></span>
@@ -60,7 +63,6 @@
     </header>
 
     <main class="max-w-5xl mx-auto px-6 pb-24 space-y-12">
-
         <!-- Image Section -->
         <section id="image-section" class="section-card p-8 md:p-12">
             <div class="flex items-center gap-4 mb-8">
@@ -147,21 +149,73 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer class="bg-white border-t border-slate-200 py-12 text-center text-slate-400 text-sm px-6">
         <p class="mb-2">Powered by GlobalConvert Engine &bull; Client-Side Processing</p>
         <div class="flex justify-center gap-4 mt-4">
-            <a href="#" class="hover:text-blue-600 transition font-semibold">Privacy Policy</a>
+            <button onclick="openModal('privacy-modal')" class="hover:text-blue-600 transition font-semibold">Privacy Policy</button>
             <span>&bull;</span>
-            <a href="#" class="hover:text-blue-600 transition font-semibold">Terms of Service</a>
+            <button onclick="openModal('terms-modal')" class="hover:text-blue-600 transition font-semibold">Terms of Service</button>
         </div>
         <p class="mt-6 text-xs opacity-50">&copy; 2026 GlobalConvert Suite. All rights reserved.</p>
     </footer>
 
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-8 shadow-2xl relative">
+            <button onclick="closeModal('privacy-modal')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition bg-slate-100 p-2 rounded-full">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-3xl font-extrabold mb-6 text-slate-900">Privacy Policy</h2>
+            <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                <p><strong>1. Local Processing (Client-Side)</strong><br>GlobalConvert operates entirely within your web browser. When you select a file to convert, it is processed locally on your device. We do not upload, store, transmit, or view your files on any external servers.</p>
+                <p><strong>2. Information Collection</strong><br>We do not require account creation, nor do we collect personally identifiable information (PII) to use our conversion tools.</p>
+                <p><strong>3. Third-Party Advertisers & Cookies (Google AdSense)</strong><br>To keep this tool free, we may use third-party advertising companies, such as Google AdSense, to serve ads. Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites.<br>
+                Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.<br>
+                Users may opt-out of personalized advertising by visiting <a href="https://myadcenter.google.com/" target="_blank" class="text-blue-600 underline">Google Ads Settings</a>.</p>
+                <p><strong>4. Analytics</strong><br>We may use basic, anonymized analytics to measure website traffic and improve user experience, without tracking individual files or contents.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-8 shadow-2xl relative">
+            <button onclick="closeModal('terms-modal')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition bg-slate-100 p-2 rounded-full">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-3xl font-extrabold mb-6 text-slate-900">Terms of Service</h2>
+            <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                <p><strong>1. Acceptance of Terms</strong><br>By accessing and using GlobalConvert, you accept and agree to be bound by these Terms of Service. If you do not agree, please do not use the tool.</p>
+                <p><strong>2. Use of Service</strong><br>The tool is provided "as is". While we strive for high-quality conversions, we do not guarantee that the results will be error-free or perfectly suited for every possible use case. You agree to use the tool responsibly.</p>
+                <p><strong>3. Limitation of Liability</strong><br>Because the processing happens on your device, we are not responsible for any data loss, browser crashes, or damage to your device resulting from processing extremely large or corrupted files. Use at your own risk.</p>
+                <p><strong>4. Intellectual Property</strong><br>You retain all rights to the files you convert. We claim no ownership over your original or converted files.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         let activeFiles = { image: null, doc: null, audio: null };
+
+        // --- Modal Logic ---
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('modal-active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('modal-active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('fixed')) {
+                event.target.classList.remove('modal-active');
+                document.body.style.overflow = '';
+            }
+        }
 
         // --- Drag and Drop Setup ---
         function setupDragAndDrop(zoneId, inputId, type) {
@@ -219,7 +273,6 @@
                             canvas.height = img.height;
                             const ctx = canvas.getContext('2d');
                             
-                            // Fix for transparent PNG to JPEG (White background instead of black)
                             if (format === 'jpeg') {
                                 ctx.fillStyle = '#FFFFFF';
                                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -229,11 +282,10 @@
                             const mime = format === 'jpeg' ? 'image/jpeg' : `image/${format}`;
                             const ext = format === 'jpeg' ? 'jpg' : format;
                             
-                            // toBlob handles large images much better than toDataURL
                             canvas.toBlob((blob) => {
                                 download(URL.createObjectURL(blob), `Converted.${ext}`);
                                 finalize(type);
-                            }, mime, 0.92); // 0.92 compression ratio for high quality
+                            }, mime, 0.92);
                         };
                         img.src = e.target.result;
                     };
@@ -249,6 +301,7 @@
                                 const res = await mammoth.convertToHtml({arrayBuffer: buffer});
                                 blob = new Blob([`<!DOCTYPE html><html><body style='font-family:sans-serif;padding:40px'>${res.value}</body></html>`], {type: 'text/html'});
                             } else {
+                                // כאן נחתך הקוד - הנה ההשלמה:
                                 const res = await mammoth.extractRawText({arrayBuffer: buffer});
                                 blob = new Blob([res.value], {type: 'text/plain'});
                             }
@@ -286,36 +339,15 @@
             u32(0x46464952); u32(len - 8); u32(0x45564157); u32(0x20746d66); u32(16); u16(1); u16(nCh);
             u32(audioBuf.sampleRate); u32(audioBuf.sampleRate * 2 * nCh); u16(nCh * 2); u16(16); u32(0x61746164); u32(len - p - 4);
 
-            // Optimization: Fetch all channels into an array BEFORE the loop
-            // This prevents calling getChannelData millions of times and crashing the browser
             const channels =[];
             for (let c = 0; c < nCh; c++) {
                 channels.push(audioBuf.getChannelData(c));
             }
 
-            // Write PCM audio data
             for (let i = 0; i < audioBuf.length; i++) {
                 for (let c = 0; c < nCh; c++) {
                     let s = Math.max(-1, Math.min(1, channels[c][i]));
                     view.setInt16(p, s < 0 ? s * 32768 : s * 32767, true); p += 2;
                 }
             }
-            return new Blob([buf], { type: "audio/wav" });
-        }
-
-        // --- Utility Functions ---
-        function download(url, name) {
-            const a = document.createElement('a'); a.href = url; a.download = name; a.click();
-            // Prevent memory leaks by revoking the object URL after triggering download
-            setTimeout(() => URL.revokeObjectURL(url), 1000);
-        }
-
-        function finalize(type) {
-            setButtonState(type, false);
-            activeFiles[type] = null;
-            document.getElementById(`${type}-input`).value = "";
-            document.getElementById(`${type}-file-name`).innerText = "";
-        }
-    </script>
-</body>
-</html>
+            return new Blob([buf]
