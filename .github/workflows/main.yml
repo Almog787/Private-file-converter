@@ -1,36 +1,42 @@
-name: Generate XML Sitemap
+name: Unified SEO Optimization
 
 on:
   push:
-    branches: [ main ]  # ירוץ בכל פעם שתעשה Push לענף הראשי
+    branches: [ main ]
 
-# הגדרת הרשאות כתיבה כדי למנוע שגיאת 403
 permissions:
   contents: write
 
 jobs:
-  sitemap_job:
+  seo_job:
     runs-on: ubuntu-latest
-    name: Generate a sitemap
     steps:
     - name: Checkout the repo
-      uses: actions/checkout@v4 # גרסה מעודכנת ויציבה
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0 
 
-    - name: Generate Sitemap
+    # שלב 1: יצירת Sitemap
+    - name: Generate XML Sitemap
       uses: cicirello/generate-sitemap@v1
       with:
         base-url-path: https://almog787.github.io/Private-file-converter/
         path-to-root: .
-        # מוציא קבצים לא רלוונטיים מהסריקה
         additional-extensions: html
         exclude-files: .github/** README.md
-        
-    - name: Commit and push if changed
+
+    # שלב 2: יצירת קובץ robots.txt אוטומטי
+    - name: Create Robots.txt
+      run: |
+        echo "User-agent: *" > robots.txt
+        echo "Allow: /" >> robots.txt
+        echo "" >> robots.txt
+        echo "Sitemap: https://almog787.github.io/Private-file-converter/sitemap.xml" >> robots.txt
+
+    # שלב 3: דחיפת השינויים למאגר
+    - name: Commit and push changes
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add sitemap.xml
-        # יבצע Commit רק אם חל שינוי בקובץ
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Automated sitemap update" && git push)
+        git add sitemap.xml robots.txt
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🚀 SEO Update: Sitemap & Robots.txt updated" && git push)
