@@ -1,57 +1,76 @@
-name: SEO Automation (Sitemap & Robots)
+# שם קל לזיהוי לאקשן שלך בתוך GitHub
+name: SEO Automation (Sitemap & Robots.txt)
 
 on:
+  # האקשן ירוץ אוטומטית בכל פעם שאתה מעלה (push) שינויים לענף הראשי
   push:
     branches: [ main ]
-    # שיפור: יריץ את יצירת מפת האתר רק אם שינית קבצי HTML
-    # זה חוסך משאבים ומונע קומיטים מיותרים אם סתם שינית קובץ טקסט
+    # שיפור יעילות: יריץ את האקשן רק אם שינית קובץ HTML,
+    # וחוסך ריצות מיותרות אם סתם עדכנת קובץ תמונה או טקסט.
     paths:
       - '**/*.html'
+      - 'favicon.svg'
+
+  # מאפשר לך להריץ את האקשן גם באופן ידני דרך לשונית Actions ב-GitHub
   workflow_dispatch: 
 
+# הגדרת הרשאות חיונית: מאפשר לאקשן לכתוב את הקבצים החדשים למאגר שלך
 permissions:
   contents: write
 
 jobs:
+  # שם המשימה שתרוץ
   generate-seo-files:
+    # ירוץ על שרת הלינוקס העדכני ביותר של GitHub
     runs-on: ubuntu-latest
     steps:
+      # 1. שכפול הקוד מהמאגר שלך לשרת הזמני
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          # קריטי ל-SEO: מושך את כל היסטוריית הקומיטים כדי שהאקשן 
-          # יידע בדיוק באיזה תאריך ושעה כל דף עודכן (תגית lastmod)
+          # פרמטר קריטי ל-SEO: מושך את כל היסטוריית הקומיטים.
+          # זה מאפשר לאקשן לדעת מתי כל קובץ עודכן לאחרונה ולהוסיף תגית <lastmod> למפת האתר.
           fetch-depth: 0 
 
-      - name: Generate Sitemap Statically
-        # אקשן ייעודי וחכם בהרבה לאתרים סטטיים
+      # 2. יצירת מפת האתר (sitemap.xml) באופן סטטי
+      - name: Generate Sitemap
+        # שימוש באקשן ייעודי וחכם לאתרים סטטיים
         uses: cicirello/generate-sitemap@v1
         with:
-          # הכתובת של האתר שלך (שנה אותה כשתקנה דומיין אמיתי!)
-          base-url-path: https://almog787.github.io/Private-file-converter/
-          # הגדרת תדירות ברירת מחדל לסריקה עבור גוגל
-          default-change-freq: weekly
-          # משאיר את הסיומת .html בכתובות כיוון שכך האתר שלך מוגדר כרגע
+          # הדומיין הראשי והחדש של האתר שלך
+          base-url-path: https://globalcalcpro.com/
+          # מונע מהאקשן להסיר את סיומת ה-.html, כי הקישורים באתר שלך כוללים אותה
           drop-html-extension: false
+          # מתעלם מקבצים שאינם דפי תוכן אמיתיים
+          exclude-file: "['privacy.html', 'terms.html']"
 
-      - name: Create SEO-Optimized Robots.txt
+      # 3. יצירת קובץ robots.txt המותאם ל-SEO
+      - name: Create Optimized Robots.txt
         run: |
           cat <<EOF > robots.txt
+          # הוראה לכל מנועי החיפוש
           User-agent: *
+          # אפשר לסרוק את כל האתר
           Allow: /
 
-          # מניעת סריקה של קבצי מערכת פנימיים - Best Practice ל-SEO
+          # הנחיה חשובה: אל תסרקו תיקיות מערכת פנימיות
           Disallow: /.git/
           Disallow: /.github/
-          Disallow: /README.md
 
-          Sitemap: https://almog787.github.io/Private-file-converter/sitemap.xml
+          # הצהרה ברורה על מיקום מפת האתר
+          Sitemap: https://globalcalcpro.com/sitemap.xml
           EOF
 
-      - name: Commit and Push Changes
+      # 4. שמירה והעלאה של הקבצים החדשים למאגר
+      - name: Commit and Push SEO Files
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # הגדרת זהות הבוט שיבצע את הקומיט
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          
+          # הוספת הקבצים שיצרנו לשמירה
           git add sitemap.xml robots.txt
-          # בודק אם היו שינויים, ורק אם כן עושה קומיט כדי למנוע שגיאות
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🚀 SEO Auto-Update: Sitemap & Robots.txt" && git push)
+          
+          # פקודה חכמה: מבצע קומיט ו-push רק אם זוהו שינויים בקבצים,
+          # ומונע קומיטים ריקים או שגיאות אם לא היה צורך בעדכון.
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🚀 SEO: Auto-update sitemap.xml & robots.txt" && git push)
