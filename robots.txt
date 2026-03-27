@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://almog787.github.io/Private-file-converter/sitemap.xml
