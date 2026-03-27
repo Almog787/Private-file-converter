@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <title>Free Percentage Calculator | Fast & Accurate Percent Finder</title>
+    <meta name="description" content="Calculate percentages instantly. Find out what X percent of Y is, calculate discounts, markups, and solve math problems with our free percentage calculator.">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph":[
+        {
+          "@type": "WebApplication",
+          "name": "Percentage Calculator",
+          "applicationCategory": "EducationalApplication"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity":[{
+            "@type": "Question",
+            "name": "How do you calculate a percentage?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "To calculate a percentage, you divide the value by the total value and then multiply the result by 100. The formula is: (Value / Total Value) × 100 = Percentage."
+            }
+          }]
+        }
+      ]
+    }
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBS74DCCQ8"></script>
+    <script>
+      window.dataLayer = window.dataLayer ||[];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VBS74DCCQ8');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: { colors: { "primary": "#004ac6" }, fontFamily: { "headline":["Space Grotesk"], "body": ["Manrope"] } }
+        }
+      }
+    </script>
+    <style>
+        .mesh-gradient-bg { background: radial-gradient(at top left, rgba(0, 74, 198, 0.03) 0%, transparent 50%), radial-gradient(at bottom right, rgba(67, 56, 217, 0.03) 0%, transparent 50%); }
+        .ad-placeholder { border: 2px dashed #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.875rem; }
+    </style>
+</head>
+<body class="mesh-gradient-bg min-h-screen font-body text-slate-900">
+
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
+    <nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+        <a href="index.html" class="text-2xl font-bold font-headline tracking-tighter text-primary">Global Calc Hub</a>
+        <div class="hidden md:flex gap-8 font-headline font-semibold text-sm">
+            <a href="compound-interest.html" class="hover:text-primary transition-colors">Compound Interest</a>
+            <a href="percentage.html" class="text-primary transition-colors">Percentage</a>
+            <a href="unit-converter.html" class="hover:text-primary transition-colors">Unit Converter</a>
+        </div>
+    </nav>
+</header>
+
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+    
+    <div class="text-center mb-10">
+        <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Percentage Calculator</h1>
+        <p class="text-slate-500">Fast and accurate tool for everyday percentage problems.</p>
+    </div>
+
+    <!-- AdSense Leaderboard Placeholder -->
+    <div class="w-full max-w-4xl mx-auto h-[90px] ad-placeholder mb-8 rounded-xl hidden md:flex">Ad Placement (728x90)</div>
+
+    <!-- The Calculator UI -->
+    <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl shadow-blue-900/5 overflow-hidden border border-slate-100 p-8 md:p-12 mb-16">
+        <div class="grid md:grid-cols-2 gap-10">
+            <div class="space-y-5">
+                <div>
+                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">What is (%)</label>
+                    <input id="perc-val" type="number" placeholder="e.g. 15" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Of Total Amount</label>
+                    <input id="perc-total" type="number" placeholder="e.g. 500" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                </div>
+                <button onclick="calcPercent()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-primary/30">Calculate</button>
+            </div>
+            <div class="bg-slate-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-slate-100">
+                <span class="text-sm font-bold text-slate-400 uppercase mb-2">Result</span>
+                <div id="res-percent-val" class="text-5xl font-headline font-bold text-primary">0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Area -->
+    <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm">
+        <h2 class="text-3xl font-bold font-headline mb-6">Mastering Percentages in Daily Life</h2>
+        <p class="text-slate-600 mb-6 leading-relaxed">
+            The word "percent" comes from the Latin "per centum," meaning "by the hundred." Whether you're calculating a tip at a restaurant, figuring out a discount during a sale, or analyzing data for work, understanding percentages is a crucial daily skill. Our tool simplifies this process so you don't have to do the mental math.
+        </p>
+
+        <!-- AdSense In-Article Placeholder -->
+        <div class="w-full h-[250px] ad-placeholder my-8 rounded-xl">In-Article Ad Placement</div>
+
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Common Uses for This Calculator</h3>
+        <ul class="list-disc list-inside text-slate-600 mb-6 space-y-2">
+            <li><strong>Shopping Discounts:</strong> Easily find out how much you save when an item is 20% off.</li>
+            <li><strong>Tipping:</strong> Calculate a standard 15%, 18%, or 20% tip on your bill.</li>
+            <li><strong>Taxes:</strong> Add sales tax to the base price of your purchases.</li>
+            <li><strong>Business Margins:</strong> Determine profit margins and markups quickly.</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Frequently Asked Questions</h3>
+        <div class="space-y-4">
+            <div class="border-l-4 border-primary pl-4">
+                <h4 class="font-bold text-slate-900">How do I calculate 20% of a number manually?</h4>
+                <p class="text-slate-600 text-sm mt-1">A quick trick is to move the decimal point one place to the left to find 10%, and then multiply that number by 2. For example, 10% of 50 is 5. Multiply 5 by 2, and you get 10.</p>
+            </div>
+        </div>
+    </article>
+</main>
+
+<footer class="text-center py-12 text-slate-400 text-sm border-t border-slate-100 mt-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="font-headline font-bold text-slate-900 text-lg">Global Calc Hub</div>
+        <p>© 2026 Precision Engineering. All rights reserved.</p>
+        <div class="flex gap-6">
+            <a href="privacy.html" class="hover:text-primary">Privacy Policy</a>
+            <a href="terms.html" class="hover:text-primary">Terms of Service</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function calcPercent() {
+        const v = parseFloat(document.getElementById('perc-val').value);
+        const t = parseFloat(document.getElementById('perc-total').value);
+        if(isNaN(v) || isNaN(t)) return;
+        
+        const result = (v / 100) * t;
+        
+        // Check if result is a whole number to format accordingly
+        if (result % 1 === 0) {
+            document.getElementById('res-percent-val').innerText = result.toLocaleString();
+        } else {
+            document.getElementById('res-percent-val').innerText = result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+        
+        gtag('event', 'calculate', { 'event_category': 'Engagement', 'event_label': 'Percentage' });
+    }
+</script>
+</body>
+</html>
