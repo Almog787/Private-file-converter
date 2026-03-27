@@ -1,40 +1,57 @@
-name: Dynamic Sitemap Crawler
+name: SEO Automation (Sitemap & Robots)
 
 on:
   push:
     branches: [ main ]
-  # מאפשר להריץ את הסריקה גם ידנית בלחיצת כפתור ב-GitHub
+    # שיפור: יריץ את יצירת מפת האתר רק אם שינית קבצי HTML
+    # זה חוסך משאבים ומונע קומיטים מיותרים אם סתם שינית קובץ טקסט
+    paths:
+      - '**/*.html'
   workflow_dispatch: 
 
 permissions:
   contents: write
 
 jobs:
-  sitemap:
+  generate-seo-files:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Generate Sitemap by Crawling
-        uses: f-drop/sitemap-generator-action@master
         with:
-          # הכתובת לסריקה
-          base-url: https://almog787.github.io/Private-file-converter/
-          # שם הקובץ שיווצר
-          file-name: sitemap.xml
-          # סריקה לעומק (חשוב אם יש הרבה דפים)
-          crawl-max-depth: 5
+          # קריטי ל-SEO: מושך את כל היסטוריית הקומיטים כדי שהאקשן 
+          # יידע בדיוק באיזה תאריך ושעה כל דף עודכן (תגית lastmod)
+          fetch-depth: 0 
 
-      - name: Create Robots.txt
+      - name: Generate Sitemap Statically
+        # אקשן ייעודי וחכם בהרבה לאתרים סטטיים
+        uses: cicirello/generate-sitemap@v1
+        with:
+          # הכתובת של האתר שלך (שנה אותה כשתקנה דומיין אמיתי!)
+          base-url-path: https://almog787.github.io/Private-file-converter/
+          # הגדרת תדירות ברירת מחדל לסריקה עבור גוגל
+          default-change-freq: weekly
+          # משאיר את הסיומת .html בכתובות כיוון שכך האתר שלך מוגדר כרגע
+          drop-html-extension: false
+
+      - name: Create SEO-Optimized Robots.txt
         run: |
-          echo "User-agent: *" > robots.txt
-          echo "Allow: /" >> robots.txt
-          echo "Sitemap: https://almog787.github.io/Private-file-converter/sitemap.xml" >> robots.txt
+          cat <<EOF > robots.txt
+          User-agent: *
+          Allow: /
 
-      - name: Commit and Push
+          # מניעת סריקה של קבצי מערכת פנימיים - Best Practice ל-SEO
+          Disallow: /.git/
+          Disallow: /.github/
+          Disallow: /README.md
+
+          Sitemap: https://almog787.github.io/Private-file-converter/sitemap.xml
+          EOF
+
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add sitemap.xml robots.txt
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-crawled sitemap updated" && git push)
+          # בודק אם היו שינויים, ורק אם כן עושה קומיט כדי למנוע שגיאות
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🚀 SEO Auto-Update: Sitemap & Robots.txt" && git push)
