@@ -4,18 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Global Calc Hub | Free Financial & Math Calculators</title>
+    <title>Global Calc Hub | Professional Finance & Math Tools</title>
     <meta name="description" content="Free professional online calculators: Compound Interest, Percentages, and Unit Converters. Fast, accurate, and mobile-friendly tools for daily use.">
-    <meta name="keywords" content="compound interest calculator, percentage calculator, unit converter, finance tools, math calculators">
-    <link rel="canonical" href="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/" />
     
-    <meta property="og:title" content="Global Calc Hub - Professional Online Tools">
-    <meta property="og:description" content="Calculate interest, percentages, and units instantly with our free tools.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-REPO-NAME/main/preview.png">
-    <meta property="og:url" content="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/">
-    <meta property="og:type" content="website">
-
-    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232563eb%22/><path d=%22M30 30h40v40H30z%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22/><path d=%22M30 45h40M30 55h40M45 30v40M55 30v40%22 stroke=%22white%22 stroke-width=%224%22/></svg>">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -78,7 +70,6 @@
         .nav-btn.active, .nav-btn:hover {
             background: white;
             color: var(--primary);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         main {
@@ -130,13 +121,6 @@
             border-radius: 10px;
             font-size: 1rem;
             box-sizing: border-box;
-            transition: 0.2s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #fff;
         }
 
         .action-btn {
@@ -149,7 +133,6 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
 
         .result-box {
@@ -160,7 +143,6 @@
             border: 1px solid #dcfce7;
             color: #166534;
             font-weight: bold;
-            font-size: 1.2rem;
         }
 
         .ad-placeholder {
@@ -178,7 +160,6 @@
         footer {
             text-align: center;
             padding: 3rem;
-            background: white;
             color: var(--secondary);
             border-top: 1px solid #e2e8f0;
         }
@@ -188,7 +169,7 @@
 
 <header>
     <h1>Global Calc Hub</h1>
-    <p>Fast, Reliable & Professional Online Tools</p>
+    <p>Professional Online Tools for Wealth & Math</p>
     <div class="nav-container">
         <button class="nav-btn active" onclick="switchCalc('interest', this)">Compound Interest</button>
         <button class="nav-btn" onclick="switchCalc('percent', this)">Percentage</button>
@@ -202,7 +183,7 @@
     <section id="interest" class="calc-card active">
         <h2>Compound Interest Calculator</h2>
         <div class="calc-info">
-            <strong>How it works:</strong> Compound interest is the interest on a loan or deposit calculated based on both the initial principal and the accumulated interest from previous periods.
+            <strong>Compound Interest</strong> is the interest on a loan or deposit calculated based on both the initial principal and the accumulated interest from previous periods.
         </div>
         <div class="input-group">
             <label>Initial Deposit ($)</label>
@@ -216,20 +197,20 @@
             <label>Duration (Years)</label>
             <input type="number" id="t" value="5">
         </div>
-        <button class="action-btn" onclick="calcCompound()">Calculate Wealth</button>
+        <button class="action-btn" onclick="calcCompound()">Calculate</button>
         <div id="res-interest" class="result-box" style="display:none;"></div>
     </section>
 
     <section id="percent" class="calc-card">
         <h2>Percentage Calculator</h2>
         <div class="calc-info">
-            <strong>Tip:</strong> Use this tool to find the value of a percentage or to calculate discounts and tips quickly.
+            Find the exact value of a percentage for discounts, tips, or tax calculations.
         </div>
         <div class="input-group">
             <label>What is</label>
             <input type="number" id="perc-val" placeholder="e.g. 15">
-            <label style="margin-top: 10px;">% of (Total Amount)</label>
-            <input type="number" id="perc-total" placeholder="e.g. 250">
+            <label style="margin-top: 10px;">% of</label>
+            <input type="number" id="perc-total" placeholder="e.g. 200">
         </div>
         <button class="action-btn" onclick="calcPercent()">Find Result</button>
         <div id="res-percent" class="result-box" style="display:none;"></div>
@@ -238,15 +219,15 @@
     <section id="unit" class="calc-card">
         <h2>Unit Converter (Weight)</h2>
         <div class="calc-info">
-            <strong>Note:</strong> This tool provides instant conversion between Metric (KG) and Imperial (LBS) systems.
+            Instant conversion between Metric (KG) and Imperial (LBS).
         </div>
         <div class="input-group">
             <label>Kilograms (KG)</label>
-            <input type="number" id="kg" oninput="convertUnit('kg')" placeholder="Enter weight in KG">
+            <input type="number" id="kg" oninput="convertUnit('kg')" placeholder="Enter KG">
         </div>
         <div class="input-group">
             <label>Pounds (LBS)</label>
-            <input type="number" id="lbs" oninput="convertUnit('lbs')" placeholder="Enter weight in LBS">
+            <input type="number" id="lbs" oninput="convertUnit('lbs')" placeholder="Enter LBS">
         </div>
     </section>
 
@@ -269,16 +250,10 @@
         const p = parseFloat(document.getElementById('p').value);
         const r = parseFloat(document.getElementById('r').value) / 100;
         const t = parseFloat(document.getElementById('t').value);
-        
         const amount = p * Math.pow((1 + r), t);
-        const profit = amount - p;
-
         const resDiv = document.getElementById('res-interest');
         resDiv.style.display = 'block';
-        resDiv.innerHTML = `
-            Future Value: $${amount.toLocaleString(undefined, {maximumFractionDigits: 2})}<br>
-            Total Interest: $${profit.toLocaleString(undefined, {maximumFractionDigits: 2})}
-        `;
+        resDiv.innerHTML = `Future Value: $${amount.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
         gtag('event', 'calculate_compound');
     }
 
@@ -286,7 +261,6 @@
         const val = parseFloat(document.getElementById('perc-val').value);
         const total = parseFloat(document.getElementById('perc-total').value);
         const result = (val / 100) * total;
-
         const resDiv = document.getElementById('res-percent');
         resDiv.style.display = 'block';
         resDiv.innerText = `${val}% of ${total} is: ${result.toFixed(2)}`;
