@@ -4,12 +4,19 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     
-    <!-- שנה את אלו לכל כתבה: -->
-    <title>Title of Your Article | Global Calc Hub</title>
-    <meta name="description" content="A brief 1-2 sentence description of what the article is about for Google.">
+    <!-- === נתונים אלו נמשכים אוטומטית לעמוד הבלוג! נא לעדכן בכל כתבה === -->
+    <title>Your Article Title | Global Calc Hub</title>
+    <meta name="description" content="A brief description of the article. This will appear on the blog card.">
+    <!-- תאריך פרסום (בפורמט שנת-חודש-יום) -->
+    <meta name="article:published_time" content="2026-03-28">
+    <!-- קטגוריה שמופיעה מעל הכותרת (למשל: Finance, Math, Tips) -->
+    <meta name="article:tag" content="Finance">
+    <!-- שם אייקון מגוגל (למשל: trending_up, savings, calculate) -->
+    <meta name="article:icon" content="trending_up">
+    <!-- ================================================================ -->
+
     <link rel="canonical" href="https://globalcalcpro.com/articles/your-article-name.html" />
-    
-    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBS74DCCQ8"></script>
     <script>
@@ -20,7 +27,7 @@
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <!-- הוספתי כאן את typography! -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     
     <script>
@@ -32,7 +39,7 @@
 </head>
 <body class="font-body text-slate-900 flex flex-col min-h-screen">
 
-<!-- Header פשוט -->
+<!-- Header -->
 <header class="w-full bg-white border-b border-slate-100 py-4">
     <div class="max-w-4xl mx-auto px-6 flex items-center justify-between">
         <a href="/" class="text-xl font-bold font-headline text-primary">&larr; Global Calc Hub</a>
@@ -42,38 +49,13 @@
 
 <main class="py-12 px-6 flex-grow">
     <article class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100">
-        
-        <!-- כותרת ופרטים -->
         <header class="mb-10 text-center">
-            <span class="text-sm font-bold text-primary uppercase tracking-wider">Finance</span>
             <h1 class="text-3xl md:text-5xl font-bold font-headline mt-4 mb-6 leading-tight">Your Awesome Article Title Goes Here</h1>
-            <div class="text-slate-400 text-sm">Published on March 28, 2026</div>
         </header>
 
-        <!-- מיקום לפרסומת -->
-        <div class="w-full h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 text-sm mb-10">
-            AdSense Placement
-        </div>
-
-        <!-- גוף המאמר: כאן אתה פשוט כותב HTML רגיל (פסקאות, רשימות) והוא מתעצב לבד! -->
         <div class="prose prose-lg prose-slate prose-a:text-primary max-w-none">
-            
-            <p>Write your introduction paragraph here. Explain what the user is going to learn.</p>
-            
-            <h2>The Main Point</h2>
-            <p>Thanks to the typography plugin, all your <code>&lt;h2&gt;</code> and <code>&lt;p&gt;</code> tags will automatically have the perfect spacing, font size, and layout.</p>
-            
-            <ul>
-                <li>First important point</li>
-                <li>Second important point</li>
-                <li>Third important point</li>
-            </ul>
-
-            <h3>A Sub-heading</h3>
-            <p>You can even add links to your calculators: <a href="/compound-interest.html">Check out our Compound Interest Calculator</a>.</p>
-            
+            <p>Write your article content here...</p>
         </div>
-
     </article>
 </main>
 
