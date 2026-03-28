@@ -1,76 +1,58 @@
-# שם קל לזיהוי לאקשן שלך בתוך GitHub
-name: SEO Automation (Sitemap & Robots.txt)
+name: SEO & Blog Automation
 
 on:
-  # האקשן ירוץ אוטומטית בכל פעם שאתה מעלה (push) שינויים לענף הראשי
   push:
     branches: [ main ]
-    # שיפור יעילות: יריץ את האקשן רק אם שינית קובץ HTML,
-    # וחוסך ריצות מיותרות אם סתם עדכנת קובץ תמונה או טקסט.
     paths:
       - '**/*.html'
       - 'favicon.svg'
-
-  # מאפשר לך להריץ את האקשן גם באופן ידני דרך לשונית Actions ב-GitHub
+      - 'build-blog.js' # מריץ גם אם שינית את הסקריפט
   workflow_dispatch: 
 
-# הגדרת הרשאות חיונית: מאפשר לאקשן לכתוב את הקבצים החדשים למאגר שלך
 permissions:
   contents: write
 
 jobs:
-  # שם המשימה שתרוץ
-  generate-seo-files:
-    # ירוץ על שרת הלינוקס העדכני ביותר של GitHub
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. שכפול הקוד מהמאגר שלך לשרת הזמני
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          # פרמטר קריטי ל-SEO: מושך את כל היסטוריית הקומיטים.
-          # זה מאפשר לאקשן לדעת מתי כל קובץ עודכן לאחרונה ולהוסיף תגית <lastmod> למפת האתר.
           fetch-depth: 0 
 
-      # 2. יצירת מפת האתר (sitemap.xml) באופן סטטי
+      # -- שלב חדש: הרצת הסקריפט שבונה את קובץ המאמרים (posts.json) --
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Generate Blog JSON
+        run: node build-blog.js
+      # ------------------------------------------------------------------
+
       - name: Generate Sitemap
-        # שימוש באקשן ייעודי וחכם לאתרים סטטיים
         uses: cicirello/generate-sitemap@v1
         with:
-          # הדומיין הראשי והחדש של האתר שלך
           base-url-path: https://globalcalcpro.com/
-          # מונע מהאקשן להסיר את סיומת ה-.html, כי הקישורים באתר שלך כוללים אותה
           drop-html-extension: false
-          # מתעלם מקבצים שאינם דפי תוכן אמיתיים
           exclude-file: "['privacy.html', 'terms.html']"
 
-      # 3. יצירת קובץ robots.txt המותאם ל-SEO
       - name: Create Optimized Robots.txt
         run: |
           cat <<EOF > robots.txt
-          # הוראה לכל מנועי החיפוש
           User-agent: *
-          # אפשר לסרוק את כל האתר
           Allow: /
-
-          # הנחיה חשובה: אל תסרקו תיקיות מערכת פנימיות
           Disallow: /.git/
           Disallow: /.github/
-
-          # הצהרה ברורה על מיקום מפת האתר
+          Disallow: /templates/
           Sitemap: https://globalcalcpro.com/sitemap.xml
           EOF
 
-      # 4. שמירה והעלאה של הקבצים החדשים למאגר
-      - name: Commit and Push SEO Files
+      - name: Commit and Push Updates
         run: |
-          # הגדרת זהות הבוט שיבצע את הקומיט
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          
-          # הוספת הקבצים שיצרנו לשמירה
-          git add sitemap.xml robots.txt
-          
-          # פקודה חכמה: מבצע קומיט ו-push רק אם זוהו שינויים בקבצים,
-          # ומונע קומיטים ריקים או שגיאות אם לא היה צורך בעדכון.
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🚀 SEO: Auto-update sitemap.xml & robots.txt" && git push)
+          # הוספת ה-JSON החדש לקומיט
+          git add sitemap.xml robots.txt posts.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🚀 Auto-build: Sitemap, Robots & Blog Data" && git push)
