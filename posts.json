@@ -5,7 +5,8 @@
     "description": "Stop struggling with math at the store or restaurant. Learn these 4 simple mental math tricks to calculate percentages instantly.",
     "date": "2026-03-28",
     "tag": "Math Tips",
-    "icon": "percent"
+    "icon": "percent",
+    "image": ""
   },
   {
     "url": "/articles/magic-of-compound-interest.html",
@@ -13,6 +14,7 @@
     "description": "Discover how compound interest works, why it's considered the 8th wonder of the world, and how to use it to accelerate your wealth building.",
     "date": "2026-03-28",
     "tag": "Finance",
-    "icon": "trending_up"
+    "icon": "trending_up",
+    "image": ""
   }
 ]
