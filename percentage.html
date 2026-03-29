@@ -1,14 +1,45 @@
 ---
 layout: default
-title: "Percentage Calculator"
-description: "Calculate percentages instantly. Find discounts and markups."
+title: "Free Percentage Calculator | Fast & Accurate Percent Finder"
+description: "Calculate percentages instantly. Find out what X percent of Y is, calculate discounts, markups, and solve math problems with our free percentage calculator."
 ---
+
+<!-- Schema Markup for Calculator & FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph":[
+    {
+      "@type": "WebApplication",
+      "name": "Percentage Calculator",
+      "applicationCategory": "EducationalApplication"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity":[{
+        "@type": "Question",
+        "name": "How do you calculate a percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To calculate a percentage, you divide the value by the total value and then multiply the result by 100. The formula is: (Value / Total Value) × 100 = Percentage."
+        }
+      }]
+    }
+  ]
+}
+</script>
+
 <main class="pt-12 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
+    
     <div class="text-center mb-10">
         <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Percentage Calculator</h1>
-        <p class="text-slate-500">Fast tool for everyday math.</p>
+        <p class="text-slate-500">Fast and accurate tool for everyday percentage problems.</p>
     </div>
 
+    <!-- AdSense Leaderboard Placeholder -->
+    <div class="w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-8 rounded-xl hidden md:flex">Ad Placement (728x90)</div>
+
+    <!-- The Calculator UI -->
     <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl shadow-blue-900/5 overflow-hidden border border-slate-100 p-8 md:p-12 mb-16">
         <div class="grid md:grid-cols-2 gap-10">
             <div class="space-y-5">
@@ -28,14 +59,50 @@ description: "Calculate percentages instantly. Find discounts and markups."
             </div>
         </div>
     </div>
+
+    <!-- SEO Content Area -->
+    <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm prose prose-slate max-w-none">
+        <h2 class="text-3xl font-bold font-headline mb-6">Mastering Percentages in Daily Life</h2>
+        <p class="text-slate-600 mb-6 leading-relaxed">
+            The word "percent" comes from the Latin "per centum," meaning "by the hundred." Whether you're calculating a tip at a restaurant, figuring out a discount during a sale, or analyzing data for work, understanding percentages is a crucial daily skill. Our tool simplifies this process so you don't have to do the mental math.
+        </p>
+
+        <!-- AdSense In-Article Placeholder -->
+        <div class="w-full h-[250px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm my-8 rounded-xl">In-Article Ad Placement</div>
+
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Common Uses for This Calculator</h3>
+        <ul class="list-disc list-inside text-slate-600 mb-6 space-y-2">
+            <li><strong>Shopping Discounts:</strong> Easily find out how much you save when an item is 20% off.</li>
+            <li><strong>Tipping:</strong> Calculate a standard 15%, 18%, or 20% tip on your bill.</li>
+            <li><strong>Taxes:</strong> Add sales tax to the base price of your purchases.</li>
+            <li><strong>Business Margins:</strong> Determine profit margins and markups quickly.</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Frequently Asked Questions</h3>
+        <div class="space-y-4 not-prose">
+            <div class="border-l-4 border-primary pl-4">
+                <h4 class="font-bold text-slate-900">How do I calculate 20% of a number manually?</h4>
+                <p class="text-slate-600 text-sm mt-1">A quick trick is to move the decimal point one place to the left to find 10%, and then multiply that number by 2. For example, 10% of 50 is 5. Multiply 5 by 2, and you get 10.</p>
+            </div>
+        </div>
+    </article>
 </main>
+
 <script>
     function calcPercent() {
         const v = parseFloat(document.getElementById('perc-val').value);
         const t = parseFloat(document.getElementById('perc-total').value);
         if(isNaN(v) || isNaN(t)) return;
+        
         const result = (v / 100) * t;
-        document.getElementById('res-percent-val').innerText = result % 1 === 0 ? result.toLocaleString() : result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        
+        // Check if result is a whole number to format accordingly
+        if (result % 1 === 0) {
+            document.getElementById('res-percent-val').innerText = result.toLocaleString();
+        } else {
+            document.getElementById('res-percent-val').innerText = result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+        
         gtag('event', 'calculate', { 'event_category': 'Engagement', 'event_label': 'Percentage' });
     }
 </script>
