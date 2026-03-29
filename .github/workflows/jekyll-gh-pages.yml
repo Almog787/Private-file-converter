@@ -1,37 +1,53 @@
+# קובץ פריסה אוטומטי המשלב בנייה יומית למאמרים עתידיים
 name: Deploy Jekyll site to Pages
 
 on:
+  # 1. ירוץ בכל פעם שאתה מעלה קוד חדש
   push:
     branches: ["main"]
+  
+  # 2. שעון מעורר: יבנה את האתר אוטומטית בכל יום בחצות (UTC)
+  # זה יגרום למאמרים עם תאריך של אותו יום להופיע באתר לבד
+  schedule:
+    - cron: '0 0 * * *'
+
+  # 3. מאפשר לך להריץ את הבנייה ידנית בלחיצת כפתור ב-GitHub
   workflow_dispatch:
 
+# הגדרת הרשאות חיוניות לפריסה ב-GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# מונע כפילות של הרצות בנייה
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
+  # שלב הבנייה (Build)
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # מושך היסטוריה מלאה עבור תאריכי עדכון מדויקים
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
+  # שלב הפריסה (Deploy)
   deploy:
     environment:
       name: github-pages
