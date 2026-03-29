@@ -1,110 +1,31 @@
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    
-    <title>Global Calc Hub | Professional Financial & Conversion Tools</title>
-    <meta name="description" content="Access high-end financial and unit calculators. Free tools for compound interest, percentages, and global unit conversions for professionals.">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <!-- שים לב שעדכנתי את הקנוניקל -->
-    <link rel="canonical" href="https://globalcalcpro.com/" />
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBS74DCCQ8"></script>
-    <script>
-      window.dataLayer = window.dataLayer ||[];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-VBS74DCCQ8');
-    </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700" rel="stylesheet"/>
-    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: { "primary": "#004ac6", "tertiary": "#4338d9" },
-            fontFamily: { "headline": ["Space Grotesk"], "body": ["Manrope"] }
-          }
-        }
-      }
-    </script>
-    
-    <style>
-        .mesh-gradient-bg { background: radial-gradient(at top left, rgba(0, 74, 198, 0.03) 0%, transparent 50%), radial-gradient(at bottom right, rgba(67, 56, 217, 0.03) 0%, transparent 50%); }
-        .ad-placeholder { border: 2px dashed #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.875rem; }
-    </style>
-</head>
-<body class="mesh-gradient-bg min-h-screen font-body text-slate-900 flex flex-col">
-
-<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
-    <nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-        <a href="/" class="text-2xl font-bold font-headline tracking-tighter text-primary">Global Calc Hub</a>
-        <div class="hidden md:flex gap-8 font-headline font-semibold text-sm">
-            <!-- שים לב שהקישורים עכשיו מפנים לעמודים פיזיים -->
-            <a href="compound-interest.html" class="hover:text-primary transition-colors">Compound Interest</a>
-            <a href="percentage.html" class="hover:text-primary transition-colors">Percentage</a>
-            <a href="unit-converter.html" class="hover:text-primary transition-colors">Unit Converter</a>
-            <a href="/blog.html" class="hover:text-primary transition-colors">Blog</a>
-        </div>
-    </nav>
-</header>
-
-<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex-grow">
-    
-    <!-- AdSense Leaderboard Placeholder -->
-    <div class="w-full max-w-4xl mx-auto h-[90px] ad-placeholder mb-12 rounded-xl hidden md:flex">
-        AdSense Placement (728x90)
-    </div>
-
+---
+layout: default
+title: "Home"
+description: "Professional-grade calculators for your daily financial and unit needs."
+---
+<main class="pt-20 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
     <section class="mb-16 text-center">
         <h1 class="text-5xl md:text-6xl font-bold font-headline mb-4 tracking-tight">Ethereal <span class="text-primary">Precision.</span></h1>
-        <p class="text-slate-500 max-w-2xl mx-auto text-lg">Fast, accurate, and professional-grade calculation tools for daily use.</p>
+        <p class="text-slate-500 max-w-2xl mx-auto text-lg">Fast, accurate, and professional calculation tools.</p>
     </section>
 
     <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
-        <!-- Tool Card 1 -->
-        <a href="compound-interest.html" class="bg-white p-8 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:-translate-y-2 transition-transform block">
+        <a href="{{ '/compound-interest.html' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:-translate-y-2 transition-transform block">
             <span class="material-symbols-outlined text-4xl text-primary mb-4 block">payments</span>
             <h2 class="text-2xl font-bold font-headline mb-2">Compound Interest</h2>
-            <p class="text-slate-500 text-sm">Calculate your future wealth. See how your investments grow over time with interest on top of interest.</p>
+            <p class="text-slate-500 text-sm">Calculate future wealth and the magic of compounding.</p>
         </a>
 
-        <!-- Tool Card 2 -->
-        <a href="percentage.html" class="bg-white p-8 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:-translate-y-2 transition-transform block">
+        <a href="{{ '/percentage.html' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:-translate-y-2 transition-transform block">
             <span class="material-symbols-outlined text-4xl text-primary mb-4 block">percent</span>
             <h2 class="text-2xl font-bold font-headline mb-2">Percentage Finder</h2>
-            <p class="text-slate-500 text-sm">Quickly calculate percentages, discounts, and markups without complex math.</p>
+            <p class="text-slate-500 text-sm">Quickly calculate discounts, markups, and differences.</p>
         </a>
 
-        <!-- Tool Card 3 -->
-        <a href="unit-converter.html" class="bg-white p-8 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:-translate-y-2 transition-transform block">
+        <a href="{{ '/unit-converter.html' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:-translate-y-2 transition-transform block">
             <span class="material-symbols-outlined text-4xl text-primary mb-4 block">straighten</span>
             <h2 class="text-2xl font-bold font-headline mb-2">Unit Converter</h2>
-            <p class="text-slate-500 text-sm">Convert weights, lengths, and temperatures instantly across different metric systems.</p>
+            <p class="text-slate-500 text-sm">Convert between Metric and Imperial systems instantly.</p>
         </a>
     </div>
-    
-    <!-- SEO Content Section (Crucial for Homepage ranking) -->
-    <article class="max-w-3xl mx-auto mt-20 prose prose-slate">
-        <h2 class="text-2xl font-bold font-headline mb-4">Why Use Global Calc Hub?</h2>
-        <p class="text-slate-600 mb-4">In today's fast-paced world, professionals need tools that are not only accurate but also intuitive and fast. Global Calc Hub provides a suite of essential calculators designed without clutter. Whether you are an investor calculating APY, a student working on math, or a traveler converting Celsius to Fahrenheit, our tools provide instant, ethereal precision.</p>
-    </article>
 </main>
-
-<footer class="text-center py-12 text-slate-400 text-sm border-t border-slate-100 mt-auto bg-white">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="font-headline font-bold text-slate-900 text-lg">Global Calc Hub</div>
-        <p>© 2026 Precision Engineering. All rights reserved.</p>
-        <div class="flex gap-6">
-            <a href="privacy.html" class="hover:text-primary">Privacy Policy</a>
-            <a href="terms.html" class="hover:text-primary">Terms of Service</a>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>
