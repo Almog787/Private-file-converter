@@ -1,73 +1,14 @@
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <!-- שים לב שעדכנתי את הקנוניקל -->
-    <link rel="canonical" href="https://globalcalcpro.com/" />
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    
-    <title>Universal Unit Converter | Weight, Length & Temperature</title>
-    <meta name="description" content="Instantly convert between metric and imperial units. Free converter for Kilograms to Pounds, Meters to Feet, and Celsius to Fahrenheit.">
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Universal Unit Converter",
-      "applicationCategory": "UtilitiesApplication"
-    }
-    </script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBS74DCCQ8"></script>
-    <script>
-      window.dataLayer = window.dataLayer ||[];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-VBS74DCCQ8');
-    </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700" rel="stylesheet"/>
-    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: { colors: { "primary": "#004ac6" }, fontFamily: { "headline": ["Space Grotesk"], "body": ["Manrope"] } }
-        }
-      }
-    </script>
-    <style>
-        .mesh-gradient-bg { background: radial-gradient(at top left, rgba(0, 74, 198, 0.03) 0%, transparent 50%), radial-gradient(at bottom right, rgba(67, 56, 217, 0.03) 0%, transparent 50%); }
-        .ad-placeholder { border: 2px dashed #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.875rem; }
-    </style>
-</head>
-<body class="mesh-gradient-bg min-h-screen font-body text-slate-900">
-
-<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
-    <nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-        <a href="/" class="text-2xl font-bold font-headline tracking-tighter text-primary">Global Calc Hub</a>
-        <div class="hidden md:flex gap-8 font-headline font-semibold text-sm">
-            <a href="compound-interest.html" class="hover:text-primary transition-colors">Compound Interest</a>
-            <a href="percentage.html" class="hover:text-primary transition-colors">Percentage</a>
-            <a href="unit-converter.html" class="text-primary transition-colors">Unit Converter</a>
-            <a href="/blog.html" class="hover:text-primary transition-colors">Blog</a>
-        </div>
-    </nav>
-</header>
-
-<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
-    
+---
+layout: default
+title: "Universal Unit Converter"
+description: "Convert between metric and imperial units instantly."
+---
+<main class="pt-12 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
     <div class="text-center mb-10">
-        <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Universal Unit Converter</h1>
-        <p class="text-slate-500">Bridge the gap between Metric and Imperial systems instantly.</p>
+        <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Universal Converter</h1>
+        <p class="text-slate-500">Bridge the gap between Metric and Imperial systems.</p>
     </div>
 
-    <!-- AdSense Leaderboard Placeholder -->
-    <div class="w-full max-w-4xl mx-auto h-[90px] ad-placeholder mb-8 rounded-xl hidden md:flex">Ad Placement (728x90)</div>
-
-    <!-- The Calculator UI -->
     <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl shadow-blue-900/5 overflow-hidden border border-slate-100 p-8 md:p-12 mb-16">
         <div class="space-y-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-100 pb-6">
@@ -94,72 +35,10 @@
             </div>
         </div>
     </div>
-
-    <!-- SEO Content Area -->
-    <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm">
-        <h2 class="text-3xl font-bold font-headline mb-6">Navigating Global Measurements</h2>
-        <p class="text-slate-600 mb-6 leading-relaxed">
-            The world primarily uses two systems of measurement: the Metric System (used by most of the world) and the Imperial System (used mainly in the United States). Whether you are following a recipe, planning a road trip abroad, or importing goods, converting units accurately is essential to avoid costly mistakes.
-        </p>
-
-        <!-- AdSense In-Article Placeholder -->
-        <div class="w-full h-[250px] ad-placeholder my-8 rounded-xl">In-Article Ad Placement</div>
-
-        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Standard Conversion Ratios</h3>
-        <p class="text-slate-600 mb-6">Our converter is built on universally accepted mathematical constants for perfect accuracy:</p>
-        <ul class="list-none space-y-3 text-slate-600">
-            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100">⚖️ <strong>Weight:</strong> 1 Kilogram = 2.20462 Pounds</li>
-            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100">📏 <strong>Length:</strong> 1 Meter = 3.28084 Feet</li>
-            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100">🌡️ <strong>Temperature:</strong> (Celsius × 9/5) + 32 = Fahrenheit</li>
-        </ul>
-    </article>
 </main>
-
-<footer class="text-center py-12 text-slate-400 text-sm border-t border-slate-100 mt-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="font-headline font-bold text-slate-900 text-lg">Global Calc Hub</div>
-        <p>© 2026 Precision Engineering. All rights reserved.</p>
-        <div class="flex gap-6">
-            <a href="privacy.html" class="hover:text-primary">Privacy Policy</a>
-            <a href="terms.html" class="hover:text-primary">Terms of Service</a>
-        </div>
-    </div>
-</footer>
-
 <script>
-    const unitConfigs = {
-        weight: { l1: "Kilograms (KG)", l2: "Pounds (LBS)", ratio: 2.20462, mode: 'mult' },
-        length: { l1: "Meters (M)", l2: "Feet (FT)", ratio: 3.28084, mode: 'mult' },
-        temp: { l1: "Celsius (C°)", l2: "Fahrenheit (F°)", mode: 'temp' }
-    };
-
-    function initUnitLabels() {
-        const type = document.getElementById('unit-type').value;
-        document.getElementById('label-1').innerText = unitConfigs[type].l1;
-        document.getElementById('label-2').innerText = unitConfigs[type].l2;
-        document.getElementById('input-1').value = "";
-        document.getElementById('input-2').value = "";
-    }
-
-    function convertMaster(source) {
-        const type = document.getElementById('unit-type').value;
-        const config = unitConfigs[type];
-        const in1 = document.getElementById('input-1');
-        const in2 = document.getElementById('input-2');
-
-        if (config.mode === 'mult') {
-            if (source === 1) in2.value = in1.value ? (in1.value * config.ratio).toFixed(2) : "";
-            else in1.value = in2.value ? (in2.value / config.ratio).toFixed(2) : "";
-        } else if (config.mode === 'temp') {
-            if (source === 1) in2.value = in1.value ? ((in1.value * 9/5) + 32).toFixed(1) : "";
-            else in1.value = in2.value ? ((in2.value - 32) * 5/9).toFixed(1) : "";
-        }
-        
-        gtag('event', 'convert', { 'event_category': 'Engagement', 'event_label': type });
-    }
-
-    // Initialize labels on first load
+    const unitConfigs = { weight: { l1: "KG", l2: "LBS", ratio: 2.20462, mode: 'mult' }, length: { l1: "Meters", l2: "Feet", ratio: 3.28084, mode: 'mult' }, temp: { l1: "Celsius", l2: "Fahrenheit", mode: 'temp' } };
+    function initUnitLabels() { const t = document.getElementById('unit-type').value; document.getElementById('label-1').innerText = unitConfigs[t].l1; document.getElementById('label-2').innerText = unitConfigs[t].l2; document.getElementById('input-1').value = ""; document.getElementById('input-2').value = ""; }
+    function convertMaster(src) { const t = document.getElementById('unit-type').value; const c = unitConfigs[t]; const i1 = document.getElementById('input-1'); const i2 = document.getElementById('input-2'); if (c.mode === 'mult') { if (src === 1) i2.value = i1.value ? (i1.value * c.ratio).toFixed(2) : ""; else i1.value = i2.value ? (i2.value / c.ratio).toFixed(2) : ""; } else if (c.mode === 'temp') { if (src === 1) i2.value = i1.value ? ((i1.value * 9/5) + 32).toFixed(1) : ""; else i1.value = i2.value ? ((i2.value - 32) * 5/9).toFixed(1) : ""; } gtag('event', 'convert', { 'event_category': 'Engagement', 'event_label': t }); }
     window.onload = initUnitLabels;
 </script>
-</body>
-</html>
