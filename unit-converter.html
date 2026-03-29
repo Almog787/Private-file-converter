@@ -1,14 +1,30 @@
 ---
 layout: default
-title: "Universal Unit Converter"
-description: "Convert between metric and imperial units instantly."
+title: "Universal Unit Converter | Weight, Length & Temperature"
+description: "Instantly convert between metric and imperial units. Free converter for Kilograms to Pounds, Meters to Feet, and Celsius to Fahrenheit."
 ---
+
+<!-- Schema Markup -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Universal Unit Converter",
+  "applicationCategory": "UtilitiesApplication"
+}
+</script>
+
 <main class="pt-12 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
+    
     <div class="text-center mb-10">
-        <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Universal Converter</h1>
-        <p class="text-slate-500">Bridge the gap between Metric and Imperial systems.</p>
+        <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Universal Unit Converter</h1>
+        <p class="text-slate-500">Bridge the gap between Metric and Imperial systems instantly.</p>
     </div>
 
+    <!-- AdSense Leaderboard Placeholder -->
+    <div class="w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-8 rounded-xl hidden md:flex">Ad Placement (728x90)</div>
+
+    <!-- The Calculator UI -->
     <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl shadow-blue-900/5 overflow-hidden border border-slate-100 p-8 md:p-12 mb-16">
         <div class="space-y-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-100 pb-6">
@@ -35,10 +51,59 @@ description: "Convert between metric and imperial units instantly."
             </div>
         </div>
     </div>
+
+    <!-- SEO Content Area -->
+    <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm prose prose-slate max-w-none">
+        <h2 class="text-3xl font-bold font-headline mb-6">Navigating Global Measurements</h2>
+        <p class="text-slate-600 mb-6 leading-relaxed">
+            The world primarily uses two systems of measurement: the Metric System (used by most of the world) and the Imperial System (used mainly in the United States). Whether you are following a recipe, planning a road trip abroad, or importing goods, converting units accurately is essential to avoid costly mistakes.
+        </p>
+
+        <!-- AdSense In-Article Placeholder -->
+        <div class="w-full h-[250px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm my-8 rounded-xl">In-Article Ad Placement</div>
+
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Standard Conversion Ratios</h3>
+        <p class="text-slate-600 mb-6">Our converter is built on universally accepted mathematical constants for perfect accuracy:</p>
+        <ul class="list-none space-y-3 text-slate-600 pl-0 not-prose">
+            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">⚖️ <strong>Weight:</strong> 1 Kilogram = 2.20462 Pounds</li>
+            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">📏 <strong>Length:</strong> 1 Meter = 3.28084 Feet</li>
+            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">🌡️ <strong>Temperature:</strong> (Celsius × 9/5) + 32 = Fahrenheit</li>
+        </ul>
+    </article>
 </main>
+
 <script>
-    const unitConfigs = { weight: { l1: "KG", l2: "LBS", ratio: 2.20462, mode: 'mult' }, length: { l1: "Meters", l2: "Feet", ratio: 3.28084, mode: 'mult' }, temp: { l1: "Celsius", l2: "Fahrenheit", mode: 'temp' } };
-    function initUnitLabels() { const t = document.getElementById('unit-type').value; document.getElementById('label-1').innerText = unitConfigs[t].l1; document.getElementById('label-2').innerText = unitConfigs[t].l2; document.getElementById('input-1').value = ""; document.getElementById('input-2').value = ""; }
-    function convertMaster(src) { const t = document.getElementById('unit-type').value; const c = unitConfigs[t]; const i1 = document.getElementById('input-1'); const i2 = document.getElementById('input-2'); if (c.mode === 'mult') { if (src === 1) i2.value = i1.value ? (i1.value * c.ratio).toFixed(2) : ""; else i1.value = i2.value ? (i2.value / c.ratio).toFixed(2) : ""; } else if (c.mode === 'temp') { if (src === 1) i2.value = i1.value ? ((i1.value * 9/5) + 32).toFixed(1) : ""; else i1.value = i2.value ? ((i2.value - 32) * 5/9).toFixed(1) : ""; } gtag('event', 'convert', { 'event_category': 'Engagement', 'event_label': t }); }
+    const unitConfigs = {
+        weight: { l1: "Kilograms (KG)", l2: "Pounds (LBS)", ratio: 2.20462, mode: 'mult' },
+        length: { l1: "Meters (M)", l2: "Feet (FT)", ratio: 3.28084, mode: 'mult' },
+        temp: { l1: "Celsius (C°)", l2: "Fahrenheit (F°)", mode: 'temp' }
+    };
+
+    function initUnitLabels() {
+        const type = document.getElementById('unit-type').value;
+        document.getElementById('label-1').innerText = unitConfigs[type].l1;
+        document.getElementById('label-2').innerText = unitConfigs[type].l2;
+        document.getElementById('input-1').value = "";
+        document.getElementById('input-2').value = "";
+    }
+
+    function convertMaster(source) {
+        const type = document.getElementById('unit-type').value;
+        const config = unitConfigs[type];
+        const in1 = document.getElementById('input-1');
+        const in2 = document.getElementById('input-2');
+
+        if (config.mode === 'mult') {
+            if (source === 1) in2.value = in1.value ? (in1.value * config.ratio).toFixed(2) : "";
+            else in1.value = in2.value ? (in2.value / config.ratio).toFixed(2) : "";
+        } else if (config.mode === 'temp') {
+            if (source === 1) in2.value = in1.value ? ((in1.value * 9/5) + 32).toFixed(1) : "";
+            else in1.value = in2.value ? ((in2.value - 32) * 5/9).toFixed(1) : "";
+        }
+        
+        gtag('event', 'convert', { 'event_category': 'Engagement', 'event_label': type });
+    }
+
+    // Initialize labels on first load
     window.onload = initUnitLabels;
 </script>
