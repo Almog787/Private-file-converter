@@ -1,118 +1,32 @@
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Financial & Math Blog | Global Calc Hub</title>
-    <meta name="description" content="Read our latest articles, guides, and tips on finance, math, and everyday calculations.">
-    <link rel="canonical" href="https://globalcalcpro.com/blog.html" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBS74DCCQ8"></script>
-    <script>
-      window.dataLayer = window.dataLayer ||[];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-VBS74DCCQ8');
-    </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700" rel="stylesheet"/>
-    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    
-    <script>
-      tailwind.config = {
-        theme: { extend: { colors: { "primary": "#004ac6" }, fontFamily: { "headline":["Space Grotesk"], "body":["Manrope"] } } }
-      }
-    </script>
-    <style>
-        .mesh-gradient-bg { background: radial-gradient(at top left, rgba(0, 74, 198, 0.03) 0%, transparent 50%), radial-gradient(at bottom right, rgba(67, 56, 217, 0.03) 0%, transparent 50%); }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
-        .skeleton { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; background: #e2e8f0; border-radius: 1.5rem; height: 420px; }
-    </style>
-</head>
-<body class="mesh-gradient-bg min-h-screen font-body text-slate-900 flex flex-col">
-
-<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
-    <nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-        <a href="/" class="text-2xl font-bold font-headline tracking-tighter text-primary">Global Calc Hub</a>
-        <div class="hidden md:flex gap-8 font-headline font-semibold text-sm">
-            <a href="/compound-interest.html" class="hover:text-primary transition-colors">Compound Interest</a>
-            <a href="/percentage.html" class="hover:text-primary transition-colors">Percentage</a>
-            <a href="/unit-converter.html" class="hover:text-primary transition-colors">Unit Converter</a>
-            <a href="/blog.html" class="text-primary transition-colors font-bold">Blog</a>
-        </div>
-    </nav>
-</header>
-
-<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
+---
+layout: default
+title: "Financial & Math Blog"
+description: "Insights, guides, and tips to make you smarter with numbers."
+---
+<main class="pt-12 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
     <div class="text-center mb-16">
         <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Knowledge <span class="text-primary">Base.</span></h1>
-        <p class="text-slate-500 max-w-2xl mx-auto text-lg">Insights, guides, and tips to make you smarter with numbers.</p>
     </div>
 
-    <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for post in site.posts %}
+        <a href="{{ post.url | relative_url }}" class="bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group block flex flex-col h-full">
+            <div class="h-48 bg-slate-50 flex items-center justify-center relative overflow-hidden shrink-0">
+                {% if post.image %}
+                <img src="{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ post.title }}">
+                {% else %}
+                <span class="material-symbols-outlined text-6xl text-slate-300">{{ post.icon }}</span>
+                {% endif %}
+                <div class="absolute top-4 left-4">
+                    <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary shadow-sm uppercase tracking-wider">{{ post.tag }}</span>
+                </div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow text-left">
+                <h2 class="text-xl font-bold font-headline mb-3 text-slate-900 group-hover:text-primary transition-colors">{{ post.title }}</h2>
+                <p class="text-slate-500 text-sm mb-4 line-clamp-3 flex-grow">{{ post.description }}</p>
+                <span class="text-xs text-slate-400 mt-auto pt-4 border-t border-slate-50">{{ post.date | date: "%B %-d, %Y" }}</span>
+            </div>
+        </a>
+        {% endfor %}
     </div>
 </main>
-
-<footer class="text-center py-12 text-slate-400 text-sm border-t border-slate-100 mt-auto bg-white">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="font-headline font-bold text-slate-900 text-lg">Global Calc Hub</div>
-        <p>© 2026 Precision Engineering. All rights reserved.</p>
-        <div class="flex gap-6">
-            <a href="/privacy.html" class="hover:text-primary">Privacy Policy</a>
-            <a href="/terms.html" class="hover:text-primary">Terms of Service</a>
-        </div>
-    </div>
-</footer>
-
-<script>
-    async function loadArticles() {
-        const grid = document.getElementById('blog-grid');
-        try {
-            const response = await fetch('/posts.json?t=' + new Date().getTime());
-            const posts = await response.json();
-            
-            if (posts.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center py-10"><p class="text-slate-500 text-lg">Articles are coming soon. Stay tuned!</p></div>';
-                return;
-            }
-
-            grid.innerHTML = posts.map(post => {
-                const formattedDate = new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-                
-                const mediaContent = post.image 
-                    ? `<img src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${post.title}">`
-                    : `<span class="material-symbols-outlined text-6xl text-slate-300">${post.icon}</span>`;
-
-                return `
-                <a href="${post.url}" class="bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group block flex flex-col h-full">
-                    <div class="h-48 bg-slate-50 flex items-center justify-center relative overflow-hidden shrink-0">
-                        ${mediaContent}
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <span class="text-xs font-bold text-primary uppercase tracking-wider mb-2 block">${post.tag}</span>
-                        <h2 class="text-xl font-bold font-headline mb-3 text-slate-900 group-hover:text-primary transition-colors">${post.title}</h2>
-                        <p class="text-slate-500 text-sm mb-4 line-clamp-3 flex-grow">${post.description}</p>
-                        <span class="text-xs text-slate-400 mt-auto pt-4 border-t border-slate-100 block">${formattedDate}</span>
-                    </div>
-                </a>
-                `;
-            }).join('');
-            
-        } catch (error) {
-            grid.innerHTML = '<div class="col-span-full text-center text-red-500 py-10">Unable to load articles at this moment.</div>';
-            console.error('Error loading posts.json:', error);
-        }
-    }
-    
-    loadArticles();
-</script>
-
-</body>
-</html>
-
-
