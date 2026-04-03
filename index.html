@@ -15,7 +15,8 @@ description: "Access high-end financial and unit calculators. Free tools for com
         <p class="text-slate-500 max-w-2xl mx-auto text-lg">Fast, accurate, and professional-grade calculation tools for daily use.</p>
     </section>
 
-    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+    <!-- Calculators Grid -->
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 mb-20">
         <!-- Tool Card 1 -->
         <a href="{{ '/compound-interest.html' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:-translate-y-2 transition-transform block">
             <span class="material-symbols-outlined text-4xl text-primary mb-4 block">payments</span>
@@ -37,10 +38,44 @@ description: "Access high-end financial and unit calculators. Free tools for com
             <p class="text-slate-500 text-sm">Convert weights, lengths, and temperatures instantly across different metric systems.</p>
         </a>
     </div>
+
+    <!-- Latest Article Section (Featured Insight) -->
+    {% assign latest_post = site.posts.first %}
+    {% if latest_post %}
+    <section class="max-w-5xl mx-auto mb-20">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold font-headline">Latest Insight</h2>
+            <a href="{{ '/blog.html' | relative_url }}" class="text-primary font-bold flex items-center gap-1 hover:underline">
+                View All Articles <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        </div>
+        
+        <a href="{{ latest_post.url | relative_url }}" class="bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:shadow-2xl transition-all group flex flex-col md:flex-row shadow-xl shadow-blue-900/5">
+            <div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+                {% if latest_post.image %}
+                    <img src="{{ latest_post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ latest_post.title }}">
+                {% else %}
+                    <div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-300">
+                        <span class="material-symbols-outlined text-8xl">{{ latest_post.icon }}</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="p-8 md:p-12 md:w-1/2 flex flex-col justify-center">
+                <span class="text-xs font-bold text-primary uppercase tracking-widest mb-4 block">{{ latest_post.tag }}</span>
+                <h3 class="text-3xl font-bold font-headline mb-4 text-slate-900 group-hover:text-primary transition-colors leading-tight">{{ latest_post.title }}</h3>
+                <p class="text-slate-500 mb-6 line-clamp-2">{{ latest_post.description }}</p>
+                <div class="flex items-center gap-4 text-sm text-slate-400 italic">
+                    <span>{{ latest_post.date | date: "%B %-d, %Y" }}</span>
+                </div>
+            </div>
+        </a>
+    </section>
+    {% endif %}
     
-    <!-- SEO Content Section (Crucial for Homepage ranking) -->
-    <article class="max-w-3xl mx-auto mt-20 prose prose-slate max-w-none">
-        <h2 class="text-2xl font-bold font-headline mb-4">Why Use Global Calc Hub?</h2>
-        <p class="text-slate-600 mb-4">In today's fast-paced world, professionals need tools that are not only accurate but also intuitive and fast. Global Calc Hub provides a suite of essential calculators designed without clutter. Whether you are an investor calculating APY, a student working on math, or a traveler converting Celsius to Fahrenheit, our tools provide instant, ethereal precision.</p>
+    <!-- SEO Content Section -->
+    <article class="max-w-3xl mx-auto prose prose-slate max-w-none border-t border-slate-100 pt-16">
+        <h2 class="text-3xl font-bold font-headline mb-6">Why Use Global Calc Hub?</h2>
+        <p class="text-slate-600 mb-4 leading-relaxed">In today's fast-paced world, professionals need tools that are not only accurate but also intuitive and fast. Global Calc Hub provides a suite of essential calculators designed without clutter. Whether you are an investor calculating APY, a student working on math, or a traveler converting Celsius to Fahrenheit, our tools provide instant, ethereal precision.</p>
+        <p class="text-slate-600 mb-4 leading-relaxed">Our platform is built for speed and clarity, removing the unnecessary distractions found on traditional calculator websites. By focusing on essential financial formulas and universal unit constants, we ensure that every calculation you perform is backed by mathematical certainty.</p>
     </article>
 </main>
