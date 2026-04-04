@@ -4,7 +4,7 @@ title: "Global Calc Hub | Do Not Enter"
 description: "Warning: Something is wrong with this page."
 ---
 
-<!-- כפתור מילוט חסין-הריסה (מרחף בפינה הימנית התחתונה) -->
+<!-- כפתור מילוט חסין-הריסה (מרחף בפינה) -->
 <a href="{{ '/' | relative_url }}" class="fixed bottom-8 right-8 md:bottom-12 md:right-12 bg-red-600 text-white px-6 py-4 rounded-full font-bold shadow-2xl hover:bg-red-700 hover:scale-110 transition-all z-[99999] flex items-center gap-2 border-4 border-white cursor-pointer" style="animation: pulse-red 2s infinite;">
     <span class="material-symbols-outlined">warning</span>
     Back to Safety!
@@ -20,7 +20,6 @@ description: "Warning: Something is wrong with this page."
 
 <main id="destructible-zone" class="pt-20 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full relative">
     
-    <!-- AdSense Leaderboard Placeholder -->
     <div class="target-item w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-12 rounded-xl hidden md:flex">
         AdSense Placement (728x90)
     </div>
@@ -51,13 +50,11 @@ description: "Warning: Something is wrong with this page."
         </div>
     </div>
 
-    <!-- SEO Content Section -->
     <article class="max-w-3xl mx-auto prose prose-slate max-w-none border-t border-slate-100 pt-16">
         <h2 class="target-item text-3xl font-bold font-headline mb-6">Essential Financial Tools for a Smarter World</h2>
         <p class="target-item text-slate-600 mb-4 leading-relaxed">
             In an era of economic uncertainty, having access to reliable **financial tools** is more important than ever. Global Calc Hub was created to provide professionals and individuals with a suite of **free tools online** that simplify complex math.
         </p>
-        
         <h3 class="target-item text-xl font-bold text-slate-900 mb-4">Precision Planning</h3>
         <p class="target-item text-slate-600 mb-4 leading-relaxed">
             Building wealth requires a deep understanding of how your money grows. Our **compound interest calculator** allows you to visualize your potential returns over decades.
@@ -65,47 +62,101 @@ description: "Warning: Something is wrong with this page."
     </article>
 </main>
 
-<!-- CSS לאנימציית ההרס -->
+<!-- CSS: הגרפיקה והאנימציות של איש הקו ואפקטי הקומיקס -->
 <style>
+    body.chaos-mode { overflow-x: hidden; }
+
+    /* הפיזיקה של האלמנטים הנופלים */
     .fall-physics {
-        transition: transform 1.2s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 1s ease-in;
+        transition: transform 1s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 0.8s ease-in;
         transform-origin: center center;
     }
     
+    @keyframes impactShake {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(6px, 6px) rotate(2deg); }
+        50% { transform: translate(-6px, -3px) rotate(-2deg); }
+        75% { transform: translate(-3px, 6px) rotate(1deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    .shaking { animation: impactShake 0.15s infinite; }
+
+    /* ------------------------------------------------ */
+    /* מבנה הגוף של איש הקו (Stickman)                  */
+    /* ------------------------------------------------ */
     #the-destroyer {
         position: absolute;
         z-index: 10000;
-        font-size: 60px;
-        transition: top 0.4s ease-in-out, left 0.4s ease-in-out, transform 0.1s ease;
-        top: -200px;
-        left: -200px;
+        width: 40px; height: 75px;
+        transition: top 0.4s ease-out, left 0.4s ease-out, transform 0.2s;
+        top: -200px; left: -200px;
         pointer-events: none;
-        filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.2));
     }
+    .sm-head { width: 18px; height: 18px; background: #0f172a; border-radius: 50%; position: absolute; left: 11px; top: 0; transition: all 0.2s; box-shadow: 0 0 8px rgba(0,0,0,0.4);}
+    .sm-torso { width: 6px; height: 28px; background: #0f172a; border-radius: 3px; position: absolute; left: 17px; top: 16px; transition: all 0.2s; }
+    .sm-arm, .sm-leg { width: 6px; height: 26px; background: #0f172a; border-radius: 3px; position: absolute; transform-origin: top center; transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    
+    /* תנוחת המתנה (Idle) */
+    .sm-left-arm { left: 17px; top: 18px; transform: rotate(30deg); }
+    .sm-right-arm { left: 17px; top: 18px; transform: rotate(-30deg); }
+    .sm-left-leg { left: 17px; top: 40px; transform: rotate(20deg); }
+    .sm-right-leg { left: 17px; top: 40px; transform: rotate(-20deg); }
 
-    .hitting {
-        transform: scale(1.5) rotate(-45deg) !important;
-    }
+    /* ------------------------------------------------ */
+    /* תרגילי קונג פו (Kung Fu Moves)                   */
+    /* ------------------------------------------------ */
+    
+    /* 1. בעיטה מעופפת (Flying Kick) */
+    .move-flying-kick { transform: rotate(-20deg) translateY(-20px) scale(1.2); }
+    .move-flying-kick .sm-right-leg { transform: rotate(-90deg) scaleY(1.2); }
+    .move-flying-kick .sm-left-leg { transform: rotate(45deg); }
+    .move-flying-kick .sm-right-arm { transform: rotate(-130deg); }
+    .move-flying-kick .sm-left-arm { transform: rotate(90deg); }
 
-    .pow-effect {
+    /* 2. אגרוף סנטר (Uppercut) */
+    .move-uppercut { transform: translateY(-40px) scale(1.3); }
+    .move-uppercut .sm-right-arm { transform: rotate(-180deg) scaleY(1.3); }
+    .move-uppercut .sm-left-arm { transform: rotate(45deg); }
+    .move-uppercut .sm-left-leg { transform: rotate(10deg); }
+    .move-uppercut .sm-right-leg { transform: rotate(40deg); }
+
+    /* 3. בעיטת טורנדו (Tornado Spin) */
+    .move-tornado { animation: spinAttack 0.3s linear infinite; transform: scale(1.2); }
+    .move-tornado .sm-left-arm { transform: rotate(90deg); }
+    .move-tornado .sm-right-arm { transform: rotate(-90deg); }
+    .move-tornado .sm-left-leg { transform: rotate(80deg); }
+    .move-tornado .sm-right-leg { transform: rotate(-40deg); }
+    @keyframes spinAttack { 100% { transform: rotateY(360deg) scale(1.2); } }
+
+    /* 4. בעיטת עקב אחורית (Roundhouse Kick) */
+    .move-roundhouse { transform: rotate(30deg) scale(1.2); }
+    .move-roundhouse .sm-left-leg { transform: rotate(-110deg) scaleY(1.3); }
+    .move-roundhouse .sm-right-leg { transform: rotate(10deg); }
+    .move-roundhouse .sm-right-arm { transform: rotate(110deg); }
+
+    /* ------------------------------------------------ */
+    /* אפקטים של קומיקס (Comic Text Effects)            */
+    /* ------------------------------------------------ */
+    .comic-pow {
         position: absolute;
-        font-size: 50px;
         z-index: 9999;
-        animation: fadeUp 0.5s ease-out forwards;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 900;
+        font-style: italic;
+        font-size: 50px;
+        color: #ef4444; /* אדום */
+        text-transform: uppercase;
+        text-shadow: 3px 3px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 4px 4px 0 #000;
+        animation: explode 0.5s ease-out forwards;
         pointer-events: none;
     }
-
-    @keyframes fadeUp {
-        0% { opacity: 1; transform: scale(0.5) translateY(0); }
-        100% { opacity: 0; transform: scale(2.5) translateY(-50px); }
-    }
-
-    body.chaos-mode {
-        overflow-x: hidden;
+    @keyframes explode {
+        0% { opacity: 1; transform: scale(0.2) rotate(-20deg); }
+        40% { transform: scale(1.4) rotate(15deg); }
+        100% { opacity: 0; transform: scale(1.8) rotate(25deg) translateY(-40px); }
     }
 </style>
 
-<!-- סקריפט ה-Easter Egg (מופעל אחרי 4 שניות) -->
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
@@ -116,63 +167,94 @@ description: "Warning: Something is wrong with this page."
     function startDestruction() {
         document.body.classList.add('chaos-mode');
         
+        // יצירת איש הקו ב-HTML
         const guy = document.createElement('div');
         guy.id = 'the-destroyer';
-        guy.innerHTML = '🥷'; 
+        guy.innerHTML = `
+            <div class="sm-head"></div>
+            <div class="sm-torso"></div>
+            <div class="sm-arm sm-left-arm"></div>
+            <div class="sm-arm sm-right-arm"></div>
+            <div class="sm-leg sm-left-leg"></div>
+            <div class="sm-leg sm-right-leg"></div>
+        `;
         document.body.appendChild(guy);
 
         const targets = Array.from(document.querySelectorAll('.target-item'));
         targets.forEach(t => t.classList.add('fall-physics'));
 
+        // רשימת התרגילים והמילים
+        const moves =['move-flying-kick', 'move-uppercut', 'move-tornado', 'move-roundhouse'];
+        const impactWords =['BAM!', 'POW!', 'SMASH!', 'WHACK!', 'CRASH!'];
+
         let i = 0;
 
         function destroyNext() {
             if (i >= targets.length) {
+                // סיום המתיחה
                 guy.style.top = '120vh';
                 setTimeout(() => {
-                    alert("Oops... I think a ninja broke your website! 😅 Click 'Back to Safety' to escape.");
+                    alert("Our Kung-Fu master just demolished the site! 🥋 Click 'Back to Safety' to restore it.");
                 }, 1500);
                 return;
             }
 
             const target = targets[i];
+            // גלילה חלקה למטרה הבאה
             target.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
             setTimeout(() => {
                 const rect = target.getBoundingClientRect();
-                const targetY = rect.top + window.scrollY + (rect.height / 2) - 30;
-                const targetX = rect.left + window.scrollX + (rect.width / 2) - 30;
+                // מיקום האיש ליד המטרה
+                const targetY = rect.top + window.scrollY + (rect.height / 2) - 40;
+                const targetX = rect.left + window.scrollX - 50; // מגיע משמאל
 
                 guy.style.top = targetY + 'px';
                 guy.style.left = targetX + 'px';
 
+                // לחכות שהוא יגיע בריצה
                 setTimeout(() => {
-                    guy.classList.add('hitting');
+                    // בחירת תרגיל קונג פו אקראי
+                    const randomMove = moves[Math.floor(Math.random() * moves.length)];
+                    guy.classList.add(randomMove);
                     
+                    // הרעדת האלמנט
+                    target.classList.add('shaking');
+                    
+                    // יצירת אפקט הקומיקס
+                    const word = impactWords[Math.floor(Math.random() * impactWords.length)];
                     const pow = document.createElement('div');
-                    pow.className = 'pow-effect';
-                    pow.innerHTML = '💥';
+                    pow.className = 'comic-pow';
+                    pow.innerText = word;
                     pow.style.top = targetY + 'px';
-                    pow.style.left = targetX + 'px';
+                    pow.style.left = (targetX + 60) + 'px';
                     document.body.appendChild(pow);
                     
+                    // ניקוי אפקט המכה
                     setTimeout(() => pow.remove(), 500);
 
-                    const randomRotation = (Math.random() > 0.5 ? 1 : -1) * (360 + Math.random() * 360);
-                    target.style.transform = `translateY(150vh) rotate(${randomRotation}deg)`;
-                    target.style.opacity = '0';
-                    target.style.pointerEvents = 'none';
-                    
+                    // הפלת האלמנט
                     setTimeout(() => {
-                        guy.classList.remove('hitting');
-                        i++;
-                        destroyNext();
-                    }, 250); 
+                        target.classList.remove('shaking');
+                        const randomRotation = (Math.random() > 0.5 ? 1 : -1) * (360 + Math.random() * 360);
+                        const randomX = (Math.random() - 0.5) * 500; // מעיף אותו קצת הצידה
+                        target.style.transform = `translate(${randomX}px, 150vh) rotate(${randomRotation}deg)`;
+                        target.style.opacity = '0';
+                        target.style.pointerEvents = 'none';
+                        
+                        // האיש חוזר לעמידת מוצא ורץ הלאה
+                        setTimeout(() => {
+                            guy.classList.remove(randomMove);
+                            i++;
+                            destroyNext();
+                        }, 250); 
+                    }, 200); // משך הרעידה לפני הנפילה
                     
-                }, 400); 
-            }, 300); 
+                }, 400); // זמן הריצה אל האלמנט
+            }, 300); // זמן ההמתנה לגלילה
         }
 
+        // הפעלת שרשרת ההרס!
         destroyNext();
     }
 </script>
