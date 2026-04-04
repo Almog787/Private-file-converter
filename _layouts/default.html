@@ -22,8 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400" rel="stylesheet" media="print" onload="this.media='all'"/>
     
-    <!-- 🛑 הסרנו את הסקריפט הגדול של Tailwind -->
-    <!-- ✅ והוספנו את הקישור לקובץ ה-CSS הקטן והמותאם אישית -->
+    <!-- קובץ ה-CSS המותאם אישית של Tailwind -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     
     <style> 
@@ -35,7 +34,8 @@
     <header class="w-full bg-white/80 backdrop-blur-xl border-b border-slate-100 py-4 sticky top-0 z-50">
         <nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
             <a href="{{ '/' | relative_url }}" class="text-2xl font-bold font-headline tracking-tighter text-primary">Global Calc Hub</a>
-            <div class="hidden md:flex gap-8 font-headline font-semibold text-sm">
+            <div class="hidden md:flex flex-wrap items-center gap-x-8 gap-y-2 font-headline font-semibold text-sm">
+                <a href="{{ '/mortgage-calculator.html' | relative_url }}" class="hover:text-primary transition-colors">Mortgage</a>
                 <a href="{{ '/compound-interest.html' | relative_url }}" class="hover:text-primary transition-colors">Compound Interest</a>
                 <a href="{{ '/percentage.html' | relative_url }}" class="hover:text-primary transition-colors">Percentage</a>
                 <a href="{{ '/unit-converter.html' | relative_url }}" class="hover:text-primary transition-colors">Unit Converter</a>
@@ -49,7 +49,7 @@
     <footer class="text-center py-12 text-slate-400 text-sm mt-auto bg-white border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="font-headline font-bold text-slate-900 text-lg">Global Calc Hub</div>
-            <p>© 2026 Almog. All rights reserved.</p>
+            <p>© 2026 Precision Engineering. All rights reserved.</p>
             <div class="flex gap-6">
                 <a href="{{ '/privacy.html' | relative_url }}" class="hover:text-primary transition-colors">Privacy</a>
                 <a href="{{ '/terms.html' | relative_url }}" class="hover:text-primary transition-colors">Terms</a>
