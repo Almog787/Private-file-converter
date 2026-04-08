@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Knowledge Base | Insights & Guides"
+description: "Master your life with calculated insights on Finance, Tech, and Lifestyle."
 ---
 
 <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
@@ -9,35 +10,41 @@ title: "Knowledge Base | Insights & Guides"
         <p class="text-slate-500 max-w-2xl mx-auto text-lg">Calculated insights for a smarter life.</p>
     </div>
 
-    <!-- כפתורי סינון -->
+    <!-- כפתורי סינון קטגוריות -->
     <div class="flex flex-wrap justify-center gap-3 mb-16" id="category-filters">
         <button onclick="filterCategory('all')" class="filter-btn active px-6 py-2 rounded-full font-bold transition-all shadow-md bg-primary text-white" data-target="all">
             All Posts
         </button>
-        {% assign tags = site.posts | map: 'tag' | uniq %}
-        {% for tag in tags %}
-        <button onclick="filterCategory('{{ tag }}')" class="filter-btn px-6 py-2 rounded-full bg-white border border-slate-200 text-slate-600 font-semibold hover:border-primary hover:text-primary transition-all shadow-sm" data-target="{{ tag }}">
-            {{ tag }}
-        </button>
+        <!-- יצירת כפתורים אוטומטית מכל ה-tags שקיימים באתר -->
+        {% assign all_tags = site.posts | map: 'tags' | join: ',' | split: ',' | uniq | sort %}
+        {% for tag in all_tags %}
+            {% if tag != "" %}
+            <button onclick="filterCategory('{{ tag | strip }}')" class="filter-btn px-6 py-2 rounded-full bg-white border border-slate-200 text-slate-600 font-semibold hover:border-primary hover:text-primary transition-all shadow-sm" data-target="{{ tag | strip }}">
+                {{ tag | strip }}
+            </button>
+            {% endif %}
         {% endfor %}
     </div>
 
     <!-- גריד המאמרים -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
         {% for post in site.posts %}
-        <!-- כל כרטיסייה מקבלת data-category שמתאים לסינון -->
-        <div class="post-card {% if forloop.first %}md:col-span-2 lg:col-span-3{% endif %}" data-category="{{ post.tag }}">
+        <!-- כאן הקסם: data-categories מכיל את כל התגיות מופרדות ברווחים -->
+        <div class="post-card {% if forloop.first %}md:col-span-2 lg:col-span-3{% endif %}" 
+             data-categories="{{ post.tags | join: ' ' }} {{ post.tag }}">
             <a href="{{ post.url | relative_url }}" class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 hover:shadow-xl transition-all group flex flex-col {% if forloop.first %}lg:flex-row{% endif %} h-full shadow-sm">
                 <div class="{% if forloop.first %}lg:w-3/5 h-72 lg:h-auto{% else %}h-56{% endif %} overflow-hidden relative shrink-0">
                     {% if post.image %}
                         <img src="{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}">
                     {% else %}
                         <div class="w-full h-full bg-slate-50 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-6xl text-slate-200">{{ post.icon }}</span>
+                            <span class="material-symbols-outlined text-6xl text-slate-200">{{ post.icon | default: 'article' }}</span>
                         </div>
                     {% endif %}
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary shadow-sm uppercase">{{ post.tag }}</span>
+                    <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+                        {% for t in post.tags %}
+                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary shadow-sm uppercase">{{ t }}</span>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="p-8 flex flex-col flex-grow justify-center">
@@ -52,14 +59,14 @@ title: "Knowledge Base | Insights & Guides"
 </main>
 
 <script>
-    // פונקציית הסינון המרכזית
-    function filterCategory(category) {
+    function filterCategory(selectedCategory) {
         const cards = document.querySelectorAll('.post-card');
         const buttons = document.querySelectorAll('.filter-btn');
 
-        // 1. עדכון ויזואלי של הכפתורים
+        // 1. עדכון עיצוב כפתורים
         buttons.forEach(btn => {
-            if (btn.getAttribute('data-target') === category) {
+            const btnTarget = btn.getAttribute('data-target');
+            if (btnTarget === selectedCategory) {
                 btn.classList.add('bg-primary', 'text-white', 'shadow-md');
                 btn.classList.remove('bg-white', 'text-slate-600');
             } else {
@@ -68,16 +75,21 @@ title: "Knowledge Base | Insights & Guides"
             }
         });
 
-        // 2. סינון הכרטיסיות עם אנימציה
+        // 2. לוגיקת סינון חכמה - תומכת בריבוי תגיות
         cards.forEach(card => {
-            const cardCategory = card.getAttribute('data-category');
-            if (category === 'all' || cardCategory === category) {
+            // שולף את רשימת הקטגוריות של הכרטיסייה
+            const cardCategories = card.getAttribute('data-categories').toLowerCase().split(' ');
+            const normalizedSelected = selectedCategory.toLowerCase();
+
+            if (selectedCategory === 'all' || cardCategories.includes(normalizedSelected)) {
                 card.style.display = 'block';
+                // אנימציית הופעה
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'scale(1)';
                 }, 10);
             } else {
+                // אנימציית העלמה
                 card.style.opacity = '0';
                 card.style.transform = 'scale(0.95)';
                 setTimeout(() => {
@@ -87,18 +99,19 @@ title: "Knowledge Base | Insights & Guides"
         });
     }
 
-    // הקסם: האזנה לפרמטרים בכתובת ה-URL בעת טעינת הדף
+    // הפעלה בעת טעינת דף (תומך בקישורים מהתפריט העליון)
     window.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const categoryParam = urlParams.get('category');
-
         if (categoryParam) {
-            // אם יש פרמטר ?category= בכתובת, סנן לפיו
             filterCategory(categoryParam);
         }
     });
 </script>
 
 <style>
-    .post-card { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .post-card { 
+        transition: opacity 0.4s ease, transform 0.4s ease; 
+        backface-visibility: hidden;
+    }
 </style>
