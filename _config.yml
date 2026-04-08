@@ -1,10 +1,20 @@
 title: Global Calc Hub
-description: Professional Precision Tools for Finance and Units.
+description: "Data-driven articles, life hacks, and smart insights on Finance, Tech, Health, and more. Plus, a suite of free professional tools."
 url: "https://globalcalcpro.com"
-baseurl: "" # חשוב מאוד: להשאיר ריק! האתר עכשיו בדומיין ראשי
+baseurl: ""
 
-permalink: /:title.html
+# הגדרת התפריט הראשי (נוכל לשנות מכאן)
+navigation:
+  - title: Finance
+    url: /blog/?category=Finance
+  - title: Tech
+    url: /blog/?category=Tech
+  - title: Lifestyle
+    url: /blog/?category=Lifestyle
+  - title: Free Tools
+    url: /tools.html
 
+# הגדרת התוספים של ג'קיל
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
