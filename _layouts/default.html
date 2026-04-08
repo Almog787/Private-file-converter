@@ -5,25 +5,35 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     
     {% seo %}
+    <!-- דרישת חובה עבור Google Discover להצגת תמונות גדולות בפיד -->
     <meta name="robots" content="max-image-preview:large">
+    
+    <!-- תגיות שיתוף לרשתות חברתיות (Open Graph) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ page.title }} | Global Calc Hub">
+    <meta property="og:description" content="{{ page.description }}">
+    <meta property="og:image" content="{{ page.image | absolute_url }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta name="twitter:card" content="summary_large_image">
+    
     <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
     
     <!-- Google tag (gtag.js) & Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBS74DCCQ8"></script>
     <script>
-      window.dataLayer = window.dataLayer ||[];
+      window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-VBS74DCCQ8');
     </script>
 
-    <!-- Google Fonts -->
+    <!-- פונטים וביצועים (PageSpeed Optimization) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400" rel="stylesheet" media="print" onload="this.media='all'"/>
     
-    <!-- קובץ CSS מותאם אישית -->
+    <!-- טעינת ה-CSS המותאם אישית שנבנה ע"י Tailwind -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     
     <style> 
@@ -32,25 +42,30 @@
 </head>
 <body class="mesh-gradient-bg font-body text-slate-900 flex flex-col min-h-screen">
 
+    <!-- Header / Navigation -->
     <header class="w-full bg-white/80 backdrop-blur-xl border-b border-slate-100 py-4 sticky top-0 z-50">
         <nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
             <a href="{{ '/' | relative_url }}" class="text-2xl font-bold font-headline tracking-tighter text-primary hover:opacity-80 transition-opacity">Global Calc Hub</a>
             
-            <!-- תפריט הניווט החדש, מבוסס קטגוריות תוכן -->
+            <!-- תפריט ממוקד קטגוריות וכלים -->
             <div class="hidden md:flex flex-wrap items-center gap-x-8 gap-y-2 font-headline font-semibold text-sm">
-                {% for item in site.navigation %}
-                    <a href="{{ item.url | relative_url }}" class="hover:text-primary transition-colors">{{ item.title }}</a>
-                {% endfor %}
+                <a href="{{ '/mortgage-calculator.html' | relative_url }}" class="hover:text-primary transition-colors">Mortgage</a>
+                <a href="{{ '/compound-interest.html' | relative_url }}" class="hover:text-primary transition-colors">Compound Interest</a>
+                <a href="{{ '/percentage.html' | relative_url }}" class="hover:text-primary transition-colors">Percentage</a>
+                <a href="{{ '/tools.html' | relative_url }}" class="hover:text-primary transition-colors font-bold">All Tools</a>
+                <a href="{{ '/blog.html' | relative_url }}" class="hover:text-primary transition-colors">Blog</a>
             </div>
         </nav>
     </header>
 
+    <!-- הזרקת התוכן של כל עמוד באתר -->
     {{ content }}
 
+    <!-- Footer -->
     <footer class="text-center py-12 text-slate-400 text-sm mt-auto bg-white border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="font-headline font-bold text-slate-900 text-lg">Global Calc Hub</div>
-            <p>© 2026 Precision Engineering. All rights reserved.</p>
+            <div class="font-headline font-bold text-slate-900 text-lg text-left">Global Calc Hub</div>
+            <p>© 2026 Calculated Insights. All rights reserved.</p>
             <div class="flex gap-6">
                 <a href="{{ '/privacy.html' | relative_url }}" class="hover:text-primary transition-colors">Privacy</a>
                 <a href="{{ '/terms.html' | relative_url }}" class="hover:text-primary transition-colors">Terms</a>
