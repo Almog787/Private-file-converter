@@ -1,34 +1,20 @@
-# --------- הגדרות ראשיות של האתר ---------
 title: Global Calc Hub
-description: "Data-driven articles, life hacks, and smart insights on Finance, Tech, Health, and more. Plus, a suite of free professional tools."
+description: "Smart insights & professional tools."
 url: "https://globalcalcpro.com"
 baseurl: ""
 
-# --------- תפריט הניווט הראשי (מעודכן עם קישורים תקינים) ---------
 navigation:
   - title: Finance
-    url: /blog.html?category=Finance
+    url: "/blog.html?category=Finance"
   - title: Tech
-    url: /blog.html?category=Tech
+    url: "/blog.html?category=Tech"
   - title: Lifestyle
-    url: /blog.html?category=Lifestyle
+    url: "/blog.html?category=Lifestyle"
   - title: Free Tools
-    url: /tools.html
+    url: "/tools.html"
 
-# --------- הגדרות טכניות של Jekyll ---------
-# מבנה הקישורים למאמרים
-permalink: /:title.html
-
-# תוספים מובנים של GitHub Pages ל-SEO
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
-# קבצים ותיקיות ש-Jekyll יתעלם מהם בזמן הבנייה
-exclude:
-  - .github/
-  - node_modules/
-  - package.json
-  - package-lock.json
-  - tailwind.config.js
-  - README.md
+exclude: [node_modules, package.json, package-lock.json, tailwind.config.js]
