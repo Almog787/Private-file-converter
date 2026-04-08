@@ -1,84 +1,45 @@
 ---
 layout: default
-title: "Global Calc Hub | Financial Tools & Professional Calculators"
-description: "Access a suite of free tools online, including a precise mortgage calculator, compound interest calculator, percentage calculator, and universal unit converter."
+title: "Calculated Insights for a Smarter Life"
+description: "Explore data-driven articles on Finance, Tech, Health, and Global Lifestyle. Plus, access our suite of free professional tools."
 ---
-<main class="pt-20 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
+<main class="pt-12 pb-20 px-4 md:px-6 max-w-7xl mx-auto flex-grow w-full">
     
-    <!-- AdSense Leaderboard Placeholder -->
-    <div class="w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-12 rounded-xl hidden md:flex">
-        AdSense Placement (728x90)
-    </div>
-
-    <!-- Hero Section -->
-    <section class="mb-12 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold font-headline mb-4 tracking-tight">Ethereal <span class="text-primary">Precision.</span></h1>
-        <p class="text-slate-500 max-w-2xl mx-auto text-lg">Professional-grade calculation tools & financial insights for a smarter world.</p>
+    <!-- אזור המאמר הנבחר (Featured Article) -->
+    {% assign latest_post = site.posts.first %}
+    {% if latest_post %}
+    <section class="mb-16">
+        <a href="{{ latest_post.url | relative_url }}" class="block group">
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10">
+                <div class="h-[50vh] md:h-[70vh]">
+                    <img src="{{ latest_post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="{{ latest_post.title }}">
+                </div>
+                <!-- שכבת צבע להדגשת הטקסט -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                <!-- תוכן המאמר הנבחר -->
+                <div class="absolute bottom-0 left-0 p-8 md:p-12 text-white max-w-3xl">
+                    <span class="text-sm font-bold uppercase tracking-widest bg-primary/80 backdrop-blur-sm px-4 py-1.5 rounded-full inline-block mb-4">{{ latest_post.tag }}</span>
+                    <h1 class="text-3xl md:text-5xl font-bold font-headline mb-4 leading-tight group-hover:underline">{{ latest_post.title }}</h1>
+                    <p class="text-lg text-slate-200 hidden md:block line-clamp-2">{{ latest_post.description }}</p>
+                </div>
+            </div>
+        </a>
     </section>
+    {% endif %}
 
-    <!-- סרגל כלים במבנה 2x2 -->
-    <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-20">
-        <!-- Mortgage Calculator Card -->
-        <a href="{{ '/mortgage-calculator.html' | relative_url }}" class="bg-white p-6 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all flex items-center gap-5 group">
-            <div class="bg-blue-50 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                <span class="material-symbols-outlined text-4xl block">real_estate_agent</span>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold font-headline text-slate-900">Mortgage Calculator</h3>
-                <p class="text-sm text-slate-500 line-clamp-1">Estimate monthly loan payments.</p>
-            </div>
-        </a>
-
-        <!-- Compound Interest Card -->
-        <a href="{{ '/compound-interest.html' | relative_url }}" class="bg-white p-6 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all flex items-center gap-5 group">
-            <div class="bg-blue-50 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                <span class="material-symbols-outlined text-4xl block">payments</span>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold font-headline text-slate-900">Compound Interest</h3>
-                <p class="text-sm text-slate-500 line-clamp-1">Calculate your future wealth.</p>
-            </div>
-        </a>
-
-        <!-- Percentage Calculator Card -->
-        <a href="{{ '/percentage.html' | relative_url }}" class="bg-white p-6 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all flex items-center gap-5 group">
-            <div class="bg-blue-50 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                <span class="material-symbols-outlined text-4xl block">percent</span>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold font-headline text-slate-900">Percentage Finder</h3>
-                <p class="text-sm text-slate-500 line-clamp-1">Fast discounts & math tricks.</p>
-            </div>
-        </a>
-
-        <!-- Unit Converter Card -->
-        <a href="{{ '/unit-converter.html' | relative_url }}" class="bg-white p-6 rounded-3xl shadow-xl shadow-blue-900/5 border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all flex items-center gap-5 group">
-            <div class="bg-blue-50 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                <span class="material-symbols-outlined text-4xl block">straighten</span>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold font-headline text-slate-900">Unit Converter</h3>
-                <p class="text-sm text-slate-500 line-clamp-1">Metric & Imperial made easy.</p>
-            </div>
-        </a>
-    </div>
-
-    <hr class="border-slate-100 mb-16 max-w-4xl mx-auto">
-    
-    <!-- Latest Articles Section (מציג 2 מאמרים) -->
-    <section class="max-w-6xl mx-auto mb-20">
+    <!-- גריד של שאר המאמרים האחרונים -->
+    <section>
         <div class="flex items-center justify-between mb-8">
-            <h2 class="text-2xl font-bold font-headline">Latest Insights</h2>
+            <h2 class="text-2xl md:text-3xl font-bold font-headline">Latest Articles</h2>
             <a href="{{ '/blog.html' | relative_url }}" class="text-primary font-bold flex items-center gap-1 hover:underline">
-                View All Articles <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
             </a>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- לולאה של Jekyll שלוקחת את 2 המאמרים האחרונים בלבד -->
-            {% for post in site.posts limit:2 %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for post in site.posts offset:1 limit:6 %}
             <a href="{{ post.url | relative_url }}" class="bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all group shadow-sm flex flex-col h-full border border-slate-50">
-                <div class="h-56 overflow-hidden relative">
+                <div class="h-48 overflow-hidden relative">
                     {% if post.image %}
                         <img src="{{ post.image }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ post.title }}">
                     {% else %}
@@ -91,20 +52,13 @@ description: "Access a suite of free tools online, including a precise mortgage 
                     </div>
                 </div>
                 <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold font-headline mb-3 text-slate-900 group-hover:text-primary transition-colors line-clamp-2">{{ post.title }}</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-3 flex-grow">{{ post.description }}</p>
+                    <h3 class="text-lg font-bold font-headline mb-3 text-slate-900 group-hover:text-primary transition-colors line-clamp-2">{{ post.title }}</h3>
+                    <p class="text-slate-500 text-xs mb-4 line-clamp-3 flex-grow">{{ post.description }}</p>
                     <span class="text-[10px] text-slate-400 uppercase font-bold tracking-tight border-t border-slate-100 pt-4 block">{{ post.date | date: "%B %d, %Y" }}</span>
                 </div>
             </a>
             {% endfor %}
         </div>
     </section>
-    
-    <!-- SEO Content Section -->
-    <article class="max-w-3xl mx-auto prose prose-slate max-w-none border-t border-slate-100 pt-16 mt-20">
-        <h2 class="text-2xl font-bold font-headline mb-4">Empowering Your Financial Decisions</h2>
-        <p class="text-slate-600 mb-4 leading-relaxed">
-            At Global Calc Hub, we blend professional-grade financial tools online with deep geopolitical and economic insights. Whether you are using our compound interest calculator to plan your retirement, or reading up on how the global economy affects your gas prices today, our goal is to provide clarity in a complex world.
-        </p>
-    </article>
+
 </main>
