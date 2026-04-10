@@ -1,49 +1,84 @@
-// test/calculators.spec.js
 const { test, expect } = require('@playwright/test');
 
-test.describe('Calculators E2E Tests', () => {
+// מושך את כתובת השרת מתוך קובץ ה-Action, או משתמש בברירת מחדל של 4000
+const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4000';
 
-  // בדיקה 1: מחשבון ריבית דריבית
-  test('Compound Interest Calculator works correctly', async ({ page }) => {
-    // 1. הגולש הווירטואלי נכנס לעמוד המחשבון
-    await page.goto('/compound-interest/');
+test.describe('Global Calc Hub - Core Calculators Logic Tests', () => {
 
-    // 2. הוא מזין נתונים בשדות
-    await page.fill('#p', '10000'); // סכום התחלתי
-    await page.fill('#r', '7');     // ריבית
-    await page.fill('#t', '10');    // שנים
+  // ----------------------------------------------------
+  // בדיקה 1: מחשבון ריבית דריבית (Compound Interest)
+  // ----------------------------------------------------
+  test('Compound Interest Calculator calculates correct future value', async ({ page }) => {
+    
+    // ניווט לעמוד
+    await page.goto(`${baseURL}/compound-interest/`);
 
-    // 3. הוא לוחץ על כפתור החישוב
+    // מציאת השדות וניקוי ערכי ברירת המחדל לפני ההקלדה
+    const principalInput = page.locator('#p');
+    const rateInput = page.locator('#r');
+    const timeInput = page.locator('#t');
+
+    await principalInput.fill('');
+    await principalInput.type('10000'); // סכום התחלתי
+
+    await rateInput.fill('');
+    await rateInput.type('7'); // אחוז ריבית שנתית
+
+    await timeInput.fill('');
+    await timeInput.type('10'); // כמות שנים
+
+    // לחיצה על כפתור החישוב
     await page.click('button:has-text("Calculate")');
 
-    // 4. המערכת מוודאת שהתוצאה המתמטית שמוצגת מדויקת
+    // וידוא שהתוצאה המוצגת היא בדיוק לפי הנוסחה המתמטית
+    // 10000 * (1 + 0.07)^10 = $19,671.51
     await expect(page.locator('#res-interest-val')).toHaveText('$19,671.51');
+    
+    // וידוא ששורת הרווח מתעדכנת בהתאם
+    await expect(page.locator('#res-interest-gain')).toHaveText('+$9,672 in profit');
   });
 
-  // בדיקה 2: מחשבון אחוזים
-  test('Percentage Calculator works correctly', async ({ page }) => {
-    await page.goto('/percentage/');
+  // ----------------------------------------------------
+  // בדיקה 2: מחשבון אחוזים (Percentage Calculator)
+  // ----------------------------------------------------
+  test('Percentage Calculator finds the correct percentage of a total', async ({ page }) => {
+    
+    await page.goto(`${baseURL}/percentage/`);
 
-    // בודקים: כמה זה 15% מתוך 500?
-    await page.fill('#perc-val', '15');
-    await page.fill('#perc-total', '500');
+    // הקלדת הנתונים לבדיקה: כמה זה 15% מתוך 500?
+    const percentValInput = page.locator('#perc-val');
+    const percentTotalInput = page.locator('#perc-total');
+
+    await percentValInput.fill('');
+    await percentValInput.type('15');
+
+    await percentTotalInput.fill('');
+    await percentTotalInput.type('500');
 
     await page.click('button:has-text("Calculate")');
 
-    // מוודאים שהתוצאה היא בדיוק 75
+    // 15% of 500 = 75
     await expect(page.locator('#res-percent-val')).toHaveText('75');
   });
 
-  // בדיקה 3: ממיר יחידות
-  test('Unit Converter works correctly (Weight)', async ({ page }) => {
-    await page.goto('/unit-converter/');
+  // ----------------------------------------------------
+  // בדיקה 3: ממיר יחידות (Unit Converter)
+  // ----------------------------------------------------
+  test('Unit Converter instantly converts Kilograms to Pounds', async ({ page }) => {
+    
+    await page.goto(`${baseURL}/unit-converter/`);
 
-    // המשתמש מקליד 1 ק"ג
-    await page.fill('#input-1', '1');
+    // נוודא ששדה הבחירה (Select) מוגדר על 'weight'
+    await page.selectOption('#unit-type', 'weight');
 
-    // בממיר יחידות החישוב הוא אוטומטי בעת ההקלדה.
-    // נוודא ששדה הפאונדים התעדכן אוטומטית ל-2.20
-    await expect(page.locator('#input-2')).toHaveValue('2.20');
+    // הקלדה בשדה של הקילוגרמים (החישוב מתבצע אוטומטית בהקלדה, אין כפתור Calculate)
+    const kgInput = page.locator('#input-1');
+    await kgInput.fill('');
+    await kgInput.type('1'); // 1 קילוגרם
+
+    // השדה השני (LBS) אמור להתעדכן מיד ל-2.20
+    const lbsInput = page.locator('#input-2');
+    await expect(lbsInput).toHaveValue('2.20');
   });
 
 });
