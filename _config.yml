@@ -4,6 +4,10 @@ description: "Data-driven insights, life hacks, and professional tools for a sma
 url: "https://globalcalcpro.com"
 baseurl: "" # חובה להשאיר ריק עבור דומיין פרטי
 
+# --------- הגדרות תוכן ---------
+# קריטי: מאפשר למנוע לכלול מאמרים שיש להם תאריך עתידי (מופעל ע"י ה-Action הלילי שלנו)
+future: true
+
 # --------- ארכיטקטורת קישורים (SEO) ---------
 # המבנה הזה יוצר קישורים נקיים ללא סיומת .html ומסדר אותם לפי תאריך
 # דוגמה: globalcalcpro.com/2026/04/10/article-name/
@@ -15,17 +19,21 @@ plugins:
   - jekyll-seo-tag
 
 # --------- ניהול קבצים (Exclusions) ---------
-# קבצים ש-Jekyll יתעלם מהם ולא ינסה להפוך לדפי אינטרנט
+# קבצים ותיקיות ש-Jekyll יתעלם מהם ולא ינסה להפוך לדפי אינטרנט (חוסך זמן ומונע שגיאות)
 exclude:
   - .github/
   - node_modules/
+  - test/                # החרגת תיקיית בדיקות ה-E2E של Playwright
   - package.json
   - package-lock.json
   - tailwind.config.js
-  - _assets/           # תיקיית המקור של ה-CSS
+  - playwright.config.js # החרגת קובץ ההגדרות של Playwright
+  - _assets/             # תיקיית המקור של ה-CSS
   - README.md
   - article-template.html
-  - vendor/            # אם קיים בבנייה מקומית
+  - vendor/              # אם קיים בבנייה מקומית
+  - seo_data.json        # אם סקריפט ה-AI השאיר שאריות
+  - SEO_CHANGELOG.md
 
 # --------- הגדרות עיבוד תוכן ---------
 markdown: kramdown
