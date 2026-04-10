@@ -22,24 +22,22 @@ jobs:
         with:
           node-version: "20"
 
-      # התיקון כאן: שונה מ-npm ci ל-npm install
       - name: Install dependencies
         run: npm install
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
+      # בניית האתר חיונית כי השרת של הבדיקות קורא מתוך תיקיית _site
       - name: Build Jekyll Site
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
 
+      # פשוט מריצים את הבדיקה. Playwright כבר יפעיל את השרת לבד!
       - name: Run Playwright Tests
-        run: |
-          npx serve -p 4000 _site &
-          sleep 5
-          npm run test
+        run: npm run test
         env:
           BASE_URL: http://127.0.0.1:4000
 
