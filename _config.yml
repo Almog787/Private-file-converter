@@ -1,8 +1,10 @@
+# --------- הגדרות ראשיות של האתר ---------
 title: Global Calc Hub
-description: "Smart insights & professional tools."
+description: "Data-driven insights and professional tools for a smarter life."
 url: "https://globalcalcpro.com"
-baseurl: ""
+baseurl: "" # יישאר ריק כי האתר בדומיין ראשי
 
+# --------- תפריט הניווט הראשי ---------
 navigation:
   - title: Finance
     url: "/blog.html?category=Finance"
@@ -13,8 +15,21 @@ navigation:
   - title: Free Tools
     url: "/tools.html"
 
+# --------- הגדרות טכניות של Jekyll ---------
+# מבנה הקישורים למאמרים (נקי וידידותי ל-SEO)
+permalink: /:year/:month/:slug/
+
+# תוספים מובנים של GitHub Pages ל-SEO
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
-exclude: [node_modules, package.json, package-lock.json, tailwind.config.js]
+# --- כאן התיקון הקריטי ---
+# קבצים ותיקיות ש-Jekyll יתעלם מהם בזמן הבנייה כדי למנוע שגיאות
+exclude:
+  - .github/
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - tailwind.config.js
+  - README.md
