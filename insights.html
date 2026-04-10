@@ -1,37 +1,40 @@
 ---
 layout: default
-title: "Knowledge Base | Insights & Guides"
+title: "Financial Insights & Guides"
 description: "Master your life with calculated insights on Finance, Tech, and Lifestyle."
+permalink: /insights/
 ---
 
 <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex-grow w-full">
     <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-6xl font-bold font-headline mb-4 tracking-tight">Knowledge <span class="text-primary">Base.</span></h1>
-        <p class="text-slate-500 max-w-2xl mx-auto text-lg">Calculated insights for a smarter life.</p>
+        <h1 class="text-4xl md:text-6xl font-bold font-headline mb-4 tracking-tight">Calculated <span class="text-primary">Insights.</span></h1>
+        <p class="text-slate-500 max-w-2xl mx-auto text-lg">Data-driven articles and expert analysis to empower your decisions.</p>
     </div>
 
-    <!-- כפתורי סינון קטגוריות -->
+    <!-- כפתורי סינון (נוצרים אוטומטית בצורה חכמה על ידי מנוע Jekyll) -->
     <div class="flex flex-wrap justify-center gap-3 mb-16" id="category-filters">
         <button onclick="filterCategory('all')" class="filter-btn active px-6 py-2 rounded-full font-bold transition-all shadow-md bg-primary text-white" data-target="all">
-            All Posts
+            All Insights
         </button>
-        <!-- יצירת כפתורים אוטומטית מכל ה-tags שקיימים באתר -->
-        {% assign all_tags = site.posts | map: 'tags' | join: ',' | split: ',' | uniq | sort %}
-        {% for tag in all_tags %}
-            {% if tag != "" %}
-            <button onclick="filterCategory('{{ tag | strip }}')" class="filter-btn px-6 py-2 rounded-full bg-white border border-slate-200 text-slate-600 font-semibold hover:border-primary hover:text-primary transition-all shadow-sm" data-target="{{ tag | strip }}">
-                {{ tag | strip }}
-            </button>
-            {% endif %}
+        <!-- שימוש ב-site.tags המובנה של ג'קיל מבטיח ששום תגית לא תפוספס -->
+        {% for tag in site.tags %}
+        <button onclick="filterCategory('{{ tag[0] | downcase }}')" class="filter-btn px-6 py-2 rounded-full bg-white border border-slate-200 text-slate-600 font-semibold hover:border-primary hover:text-primary transition-all shadow-sm" data-target="{{ tag[0] | downcase }}">
+            {{ tag[0] }}
+        </button>
         {% endfor %}
     </div>
 
     <!-- גריד המאמרים -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
         {% for post in site.posts %}
-        <!-- כאן הקסם: data-categories מכיל את כל התגיות מופרדות ברווחים -->
-        <div class="post-card {% if forloop.first %}md:col-span-2 lg:col-span-3{% endif %}" 
-             data-categories="{{ post.tags | join: ' ' }} {{ post.tag }}">
+        
+        <!-- בניית מחרוזת קטגוריות חכמה שתומכת גם ב-tag וגם ב-tags -->
+        {% capture post_categories %}
+            {% if post.tags %}{{ post.tags | join: ' ' | downcase }}{% endif %}
+            {% if post.tag %}{{ post.tag | downcase }}{% endif %}
+        {% endcapture %}
+
+        <div class="post-card {% if forloop.first %}md:col-span-2 lg:col-span-3{% endif %}" data-categories="{{ post_categories }}">
             <a href="{{ post.url | relative_url }}" class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 hover:shadow-xl transition-all group flex flex-col {% if forloop.first %}lg:flex-row{% endif %} h-full shadow-sm">
                 <div class="{% if forloop.first %}lg:w-3/5 h-72 lg:h-auto{% else %}h-56{% endif %} overflow-hidden relative shrink-0">
                     {% if post.image %}
@@ -42,9 +45,14 @@ description: "Master your life with calculated insights on Finance, Tech, and Li
                         </div>
                     {% endif %}
                     <div class="absolute top-4 left-4 flex flex-wrap gap-2">
-                        {% for t in post.tags %}
-                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary shadow-sm uppercase">{{ t }}</span>
-                        {% endfor %}
+                        <!-- הצגת תגיות על התמונה -->
+                        {% if post.tags %}
+                            {% for t in post.tags %}
+                                <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary shadow-sm uppercase">{{ t }}</span>
+                            {% endfor %}
+                        {% elsif post.tag %}
+                            <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary shadow-sm uppercase">{{ post.tag }}</span>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="p-8 flex flex-col flex-grow justify-center">
@@ -59,14 +67,17 @@ description: "Master your life with calculated insights on Finance, Tech, and Li
 </main>
 
 <script>
-    function filterCategory(selectedCategory) {
+    // מערכת סינון חכמה ומתוקנת (אטומה לאותיות גדולות/קטנות)
+    function filterCategory(category) {
+        if (!category) return;
+        const normalizedCategory = category.toLowerCase().trim();
         const cards = document.querySelectorAll('.post-card');
         const buttons = document.querySelectorAll('.filter-btn');
 
         // 1. עדכון עיצוב כפתורים
         buttons.forEach(btn => {
             const btnTarget = btn.getAttribute('data-target');
-            if (btnTarget === selectedCategory) {
+            if (btnTarget === normalizedCategory) {
                 btn.classList.add('bg-primary', 'text-white', 'shadow-md');
                 btn.classList.remove('bg-white', 'text-slate-600');
             } else {
@@ -75,21 +86,17 @@ description: "Master your life with calculated insights on Finance, Tech, and Li
             }
         });
 
-        // 2. לוגיקת סינון חכמה - תומכת בריבוי תגיות
+        // 2. סינון הכרטיסיות
         cards.forEach(card => {
-            // שולף את רשימת הקטגוריות של הכרטיסייה
-            const cardCategories = card.getAttribute('data-categories').toLowerCase().split(' ');
-            const normalizedSelected = selectedCategory.toLowerCase();
-
-            if (selectedCategory === 'all' || cardCategories.includes(normalizedSelected)) {
+            const cardCategories = card.getAttribute('data-categories') || "";
+            
+            if (normalizedCategory === 'all' || cardCategories.includes(normalizedCategory)) {
                 card.style.display = 'block';
-                // אנימציית הופעה
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'scale(1)';
                 }, 10);
             } else {
-                // אנימציית העלמה
                 card.style.opacity = '0';
                 card.style.transform = 'scale(0.95)';
                 setTimeout(() => {
@@ -104,7 +111,8 @@ description: "Master your life with calculated insights on Finance, Tech, and Li
         const urlParams = new URLSearchParams(window.location.search);
         const categoryParam = urlParams.get('category');
         if (categoryParam) {
-            filterCategory(categoryParam);
+            // הוספת דיליי קטנטן מוודא שהעמוד נטען לפני הסינון
+            setTimeout(() => filterCategory(categoryParam), 50);
         }
     });
 </script>
