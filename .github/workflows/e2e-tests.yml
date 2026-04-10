@@ -1,50 +1,69 @@
-name: E2E Calculator Tests
+name: "QA: Logic & Link Checker"
 
 on:
   push:
     branches: ["main"]
-    paths:
-      - '**/*.html'
-      - 'test/**'
-      - 'package.json'
-  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch: # מאפשר הרצה ידנית לבדיקה
 
 jobs:
-  test:
-    name: Run Playwright Tests
+  quality-assurance:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
+      # 1. התקנת תלויות (Tailwind, Playwright, Serve)
       - name: Install dependencies
         run: npm install
 
+      # 2. בניית ה-CSS
+      - name: Build Tailwind CSS
+        run: npm run build
+
+      # 3. התקנת דפדפן לבדיקות לוגיקה
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
-      # בניית האתר חיונית כי השרת של הבדיקות קורא מתוך תיקיית _site
+      # 4. בניית אתר Jekyll (כדי שיהיו קבצים לסריקה)
       - name: Build Jekyll Site
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
 
-      # פשוט מריצים את הבדיקה. Playwright כבר יפעיל את השרת לבד!
-      - name: Run Playwright Tests
+      # 5. הרצת בדיקות לוגיקה (המחשבונים)
+      - name: Run Playwright Logic Tests
         run: npm run test
         env:
           BASE_URL: http://127.0.0.1:4000
 
-      - name: Upload Playwright Report
+      # 6. בדיקת קישורים שבורים (Lychee)
+      # הכלי סורק את כל קבצי ה-HTML בתיקיית _site שנוצרה
+      - name: Check for Broken Links
+        uses: lycheeverse/lychee-action@v1.9.0
+        with:
+          # סורק את כל דפי ה-HTML. 
+          # --offline: בודק רק קישורים פנימיים באתר (מהיר מאוד)
+          # --verbose: מציג פירוט של כל קישור שנבדק
+          args: --verbose --no-progress './_site/**/*.html'
+          fail: true # אם נמצא קישור שבור, האקשן ייכשל (יהיה אדום)
+
+      # 7. העלאת דוח בדיקות (במקרה של כישלון באחד השלבים)
+      - name: Upload Test Results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: qa-reports
+          path: |
+            playwright-report/
+            lychee/
           retention-days: 7
