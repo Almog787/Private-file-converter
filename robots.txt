@@ -1,4 +1,12 @@
+---
+layout: null
+sitemap: false
+---
+# הוראות לכל סוגי הבוטים
 User-agent: *
+
+# אישור סריקה לכל חלקי האתר
 Allow: /
 
-Sitemap: https://globalcalcpro.com/sitemap.xml
+# הפניה מפורשת וברורה למפת האתר
+Sitemap: {{ site.url }}/sitemap.xml
