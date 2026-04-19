@@ -1,0 +1,78 @@
+---
+layout: default
+title: "404 - Page Not Found | Global Calc Hub"
+description: "The page you are looking for does not exist. Explore our professional calculators and financial insights."
+permalink: /404.html
+---
+
+<main class="pt-20 pb-32 px-6 max-w-7xl mx-auto flex-grow w-full flex flex-col items-center justify-center min-h-[70vh]">
+    
+    <!-- ה-404 הענק השקוף למחצה -->
+    <div class="relative flex justify-center w-full mb-8">
+        <h1 class="text-[12rem] md:text-[18rem] font-bold font-headline leading-none text-slate-900/5 select-none tracking-tighter absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
+            404
+        </h1>
+        <div class="z-10 text-center mt-12 md:mt-24">
+            <span class="material-symbols-outlined text-6xl text-primary mb-6 block">explore_off</span>
+            <h2 class="text-4xl md:text-5xl font-bold font-headline mb-6 text-slate-900 tracking-tight">Coordinates Unknown.</h2>
+            <p class="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">
+                The page you are looking for has been moved, deleted, or simply never existed in our database. Let us point you back in the right direction.
+            </p>
+        </div>
+    </div>
+
+    <!-- כפתור חזרה מהיר -->
+    <div class="mt-10 mb-20 z-10">
+        <a href="{{ '/' | relative_url }}" class="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 hover:shadow-lg hover:-translate-y-1 transition-all">
+            <span class="material-symbols-outlined text-sm">arrow_back</span>
+            Return to Homepage
+        </a>
+    </div>
+
+    <!-- מיני-תפריט: הצעות חלופיות לגולש כדי למנוע נטישה -->
+    <div class="w-full max-w-5xl z-10 border-t border-slate-100 pt-16">
+        <p class="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-10">Or explore our most popular destinations</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- הפניה לכלים -->
+            <a href="{{ '/tools/' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-lg shadow-blue-900/5 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all group flex flex-col items-center text-center">
+                <div class="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-3xl">grid_view</span>
+                </div>
+                <h3 class="text-xl font-bold font-headline text-slate-900 mb-2">Professional Tools</h3>
+                <p class="text-sm text-slate-500">Access our suite of free financial and unit calculators.</p>
+            </a>
+
+            <!-- הפניה למאמר האחרון (דינמי!) -->
+            {% assign latest_post = site.posts.first %}
+            {% if latest_post %}
+            <a href="{{ latest_post.url | relative_url }}" class="bg-white p-8 rounded-3xl shadow-lg shadow-blue-900/5 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all group flex flex-col items-center text-center">
+                <div class="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-3xl">{{ latest_post.icon | default: 'article' }}</span>
+                </div>
+                <h3 class="text-xl font-bold font-headline text-slate-900 mb-2">Latest Insight</h3>
+                <p class="text-sm text-slate-500 line-clamp-2">Read: {{ latest_post.title }}</p>
+            </a>
+            {% else %}
+            <a href="{{ '/insights/' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-lg shadow-blue-900/5 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all group flex flex-col items-center text-center">
+                <div class="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-3xl">article</span>
+                </div>
+                <h3 class="text-xl font-bold font-headline text-slate-900 mb-2">Financial Insights</h3>
+                <p class="text-sm text-slate-500">Read our latest data-driven articles and guides.</p>
+            </a>
+            {% endif %}
+
+            <!-- הפניה למחשבון פופולרי ספציפי -->
+            <a href="{{ '/compound-interest/' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-lg shadow-blue-900/5 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-transform group flex flex-col items-center text-center">
+                <div class="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-3xl">payments</span>
+                </div>
+                <h3 class="text-xl font-bold font-headline text-slate-900 mb-2">Compound Interest</h3>
+                <p class="text-sm text-slate-500">Calculate and visualize your future wealth growth.</p>
+            </a>
+
+        </div>
+    </div>
+</main>
