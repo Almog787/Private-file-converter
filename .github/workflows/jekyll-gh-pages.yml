@@ -54,6 +54,15 @@ jobs:
         with:
           path: './_site'
 
+
+          
+      # -------------- השלב החדש: שולח את האתר לגוגל --------------
+      - name: Ping Google Indexing API
+        run: npm run index
+        env:
+          GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+      # -----------------------------------------------------------
+
   deploy:
     environment:
       name: github-pages
