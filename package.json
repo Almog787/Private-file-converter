@@ -1,15 +1,17 @@
 {
   "name": "global-calc-pro-assets",
   "version": "1.0.0",
-  "description": "Tailwind CSS build process and E2E Testing",
+  "description": "Tailwind CSS build and E2E Testing",
   "scripts": {
     "build": "tailwindcss -i ./_assets/css/style.css -o ./assets/css/style.css --minify",
-    "test": "playwright test"
+    "test": "playwright test",
+    "index": "node google-indexer.js"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "googleapis": "^144.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1",
