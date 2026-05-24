@@ -28,8 +28,18 @@ jobs:
       - name: Run OpenClaw SEO & UI Optimization
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AGENT_TASK: >-
+            OBJECTIVE: Scan the repository for existing Jekyll and calculator files, optimize them for SEO, accessibility (Google Lighthouse standards), and user retention, and log actions in memory.
+            DIRECTORIES TO IGNORE: .git, node_modules, _site, .github.
+            STEPS:
+            1. Read 'agent_memory.json' if it exists to align with previous updates.
+            2. Analyze '_config.yml' and top-level HTML/Markdown files to check for missing SEO meta tags, descriptions, and structural layout issues.
+            3. Scan all HTML and JavaScript files related to calculators (e.g., look for interactive tools, calculators, or index.html) to improve user experience, add clear instructions, optimize UI components, and fix script bugs.
+            4. Upgrade CSS/HTML layout elements to enhance mobile responsiveness and visual appeal.
+            5. Append a summary of all optimized files and implemented improvements to 'agent_memory.json'.
+            6. Terminate execution immediately and output 'OPTIMIZATION_COMPLETE'.
         run: |
-          openclaw --headless --yes --task "OBJECTIVE: Scan the repository for existing Jekyll and calculator files, optimize them for SEO, accessibility (Google Lighthouse standards), and user retention, and log actions in memory. DIRECTORIES TO IGNORE: .git, node_modules, _site, .github. STEPS: 1. Read 'agent_memory.json' if it exists to align with previous updates. 2. Analyze '_config.yml' and top-level HTML/Markdown files to check for missing SEO meta tags, descriptions, and structural layout issues. 3. Scan all HTML and JavaScript files related to calculators (e.g., look for interactive tools, calculators, or index.html) to improve user experience, add clear instructions, optimize UI components, and fix script bugs. 4. Upgrade CSS/HTML layout elements to enhance mobile responsiveness and visual appeal. 5. Append a summary of all optimized files and implemented improvements to 'agent_memory.json'. 6. Terminate execution immediately and output 'OPTIMIZATION_COMPLETE'."
+          openclaw --headless --yes --task "$AGENT_TASK"
 
       - name: Commit and Push Optimized Code
         run: |
