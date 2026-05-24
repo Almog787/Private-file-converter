@@ -10,7 +10,7 @@ from smolagents import CodeAgent, tool, LiteLLMModel
 @tool
 def fetch_google_trends(geo: str = "US") -> str:
     """
-    Feaches the top daily trending searches from Google Trends via RSS.
+    Fetches the top daily trending searches from Google Trends via RSS.
     
     Args:
         geo: The geographic location code (e.g., 'US', 'GB', 'IL', 'Global'). Defaults to 'US'.
@@ -43,14 +43,13 @@ def main():
     if not api_key:
         raise ValueError("GEMINI_API_KEY environment variable is missing.")
 
-    # הגדרת המודל באמצעות LiteLLM שמובנה בתוך smolagents
-    # אנו משתמשים בפורמט הסטנדרטי "gemini/gemini-1.5-flash" (או gemini-2.5/gemini-3.5 לפי הגישה הרצויה)
+    # תיקון קריטי: הגדרת מזהה המודל בפורמט התואם ל-LiteLLM עבור גוגל
     model = LiteLLMModel(
-        model_id="gemini/gemini-1.5-flash", 
+        model_id="gemini/gemini-2.5-flash", 
         api_key=api_key
     )
 
-    # אתחול הסוכן עם הגבלות הריצה הרגילות שלנו
+    # אתחול הסוכן עם הגבלות הריצה
     agent = CodeAgent(
         tools=[fetch_google_trends],
         model=model,
@@ -85,7 +84,7 @@ def main():
     - Once you have successfully updated the files and written the new post, end your execution.
     """
 
-    print("Initiating repository scan and autonomous enhancement with LiteLLM-Gemini...")
+    print("Initiating repository scan and autonomous enhancement with fixed LiteLLM path...")
     agent.run(task_prompt)
     print("Autonomous enhancement successfully completed.")
 
