@@ -1,0 +1,54 @@
+name: Autonomous Content & Dev Agent
+
+on:
+  schedule:
+    # Runs automatically every day at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Allows manual triggering from the Actions tab
+
+permissions:
+  contents: write # CRITICAL: Grants the workflow permission to push code changes
+
+jobs:
+  audit-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12 # Hard failsafe to prevent runner exhaustion
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1 # Optimizes performance by fetching only the latest commit
+
+      - name: Set Up Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Runtime Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install smolagents google-genai requests
+
+      - name: Execute AI Audit & Content Generation
+        env:
+          # Mask and securely pass the API key from GitHub Secrets
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python agent_run.py
+
+      - name: Commit and Push Enhanced Code
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Stage all modifications made by the agent
+          git add .
+          
+          # Graceful commit: Pipeline bypasses without failing if no files were modified
+          git commit -m "Auto-generated content and SEO updates by AI Agent" || echo "No changes to commit"
+          
+          # Push the updates back to the repository
+          git push origin main
