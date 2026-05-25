@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Financial Insights & Guides"
-description: "Master your life with calculated insights on Finance, Tech, and Lifestyle."
+title: "Calculated Insights: Finance, Tech & Lifestyle Guides"
+description: "Unlock smarter decisions with data-driven articles and expert analysis on personal finance, technology trends, and lifestyle optimization. Master your money, tech, and life."
 permalink: /insights/
 ---
 
@@ -11,41 +11,36 @@ permalink: /insights/
         <p class="text-slate-500 max-w-2xl mx-auto text-lg">Data-driven articles and expert analysis to empower your decisions.</p>
     </div>
 
-    <!-- כפתורי סינון (נוצרים אוטומטית בצורה חכמה על ידי מנוע Jekyll) -->
-    <div class="flex flex-wrap justify-center gap-3 mb-16" id="category-filters">
-        <button onclick="filterCategory('all')" class="filter-btn active px-6 py-2 rounded-full font-bold transition-all shadow-md bg-primary text-white" data-target="all">
+    <div class="flex flex-wrap justify-center gap-3 mb-16" id="category-filters" role="group" aria-label="Filter insights by category">
+        <button onclick="filterCategory('all')" class="filter-btn active px-6 py-2 rounded-full font-bold transition-all shadow-md bg-primary text-white" data-target="all" aria-pressed="true">
             All Insights
         </button>
-        <!-- שימוש ב-site.tags המובנה של ג'קיל מבטיח ששום תגית לא תפוספס -->
         {% for tag in site.tags %}
-        <button onclick="filterCategory('{{ tag[0] | downcase }}')" class="filter-btn px-6 py-2 rounded-full bg-white border border-slate-200 text-slate-600 font-semibold hover:border-primary hover:text-primary transition-all shadow-sm" data-target="{{ tag[0] | downcase }}">
+        <button onclick="filterCategory('{{ tag[0] | downcase }}')" class="filter-btn px-6 py-2 rounded-full bg-white border border-slate-200 text-slate-600 font-semibold hover:border-primary hover:text-primary transition-all shadow-sm" data-target="{{ tag[0] | downcase }}" aria-pressed="false">
             {{ tag[0] }}
         </button>
         {% endfor %}
     </div>
 
-    <!-- גריד המאמרים -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
         {% for post in site.posts %}
         
-        <!-- בניית מחרוזת קטגוריות חכמה שתומכת גם ב-tag וגם ב-tags -->
         {% capture post_categories %}
             {% if post.tags %}{{ post.tags | join: ' ' | downcase }}{% endif %}
             {% if post.tag %}{{ post.tag | downcase }}{% endif %}
         {% endcapture %}
 
-        <div class="post-card {% if forloop.first %}md:col-span-2 lg:col-span-3{% endif %}" data-categories="{{ post_categories }}">
+        <div class="post-card {% if forloop.first %}md:col-span-2 lg:col-span-3{% endif %}" data-categories="{{ post_categories | strip }}">
             <a href="{{ post.url | relative_url }}" class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 hover:shadow-xl transition-all group flex flex-col {% if forloop.first %}lg:flex-row{% endif %} h-full shadow-sm">
                 <div class="{% if forloop.first %}lg:w-3/5 h-72 lg:h-auto{% else %}h-56{% endif %} overflow-hidden relative shrink-0">
                     {% if post.image %}
-                        <img src="{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}">
+                        <img src="{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}" loading="lazy">
                     {% else %}
-                        <div class="w-full h-full bg-slate-50 flex items-center justify-center">
+                        <div class="w-full h-full bg-slate-50 flex items-center justify-center" aria-label="Article icon: {{ post.icon | default: 'article' }}">
                             <span class="material-symbols-outlined text-6xl text-slate-200">{{ post.icon | default: 'article' }}</span>
                         </div>
                     {% endif %}
                     <div class="absolute top-4 left-4 flex flex-wrap gap-2">
-                        <!-- הצגת תגיות על התמונה -->
                         {% if post.tags %}
                             {% for t in post.tags %}
                                 <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-primary shadow-sm uppercase">{{ t }}</span>
@@ -67,26 +62,25 @@ permalink: /insights/
 </main>
 
 <script>
-    // מערכת סינון חכמה ומתוקנת (אטומה לאותיות גדולות/קטנות)
     function filterCategory(category) {
         if (!category) return;
         const normalizedCategory = category.toLowerCase().trim();
         const cards = document.querySelectorAll('.post-card');
         const buttons = document.querySelectorAll('.filter-btn');
 
-        // 1. עדכון עיצוב כפתורים
         buttons.forEach(btn => {
             const btnTarget = btn.getAttribute('data-target');
             if (btnTarget === normalizedCategory) {
-                btn.classList.add('bg-primary', 'text-white', 'shadow-md');
-                btn.classList.remove('bg-white', 'text-slate-600');
+                btn.classList.add('bg-primary', 'text-white', 'shadow-md', 'font-bold');
+                btn.classList.remove('bg-white', 'border', 'border-slate-200', 'text-slate-600', 'font-semibold', 'hover:border-primary', 'hover:text-primary', 'shadow-sm');
+                btn.setAttribute('aria-pressed', 'true');
             } else {
-                btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
-                btn.classList.add('bg-white', 'text-slate-600');
+                btn.classList.remove('bg-primary', 'text-white', 'shadow-md', 'font-bold');
+                btn.classList.add('bg-white', 'border', 'border-slate-200', 'text-slate-600', 'font-semibold', 'hover:border-primary', 'hover:text-primary', 'shadow-sm');
+                btn.setAttribute('aria-pressed', 'false');
             }
         });
 
-        // 2. סינון הכרטיסיות
         cards.forEach(card => {
             const cardCategories = card.getAttribute('data-categories') || "";
             
@@ -106,13 +100,24 @@ permalink: /insights/
         });
     }
 
-    // הפעלה בעת טעינת דף (תומך בקישורים מהתפריט העליון)
     window.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const categoryParam = urlParams.get('category');
         if (categoryParam) {
-            // הוספת דיליי קטנטן מוודא שהעמוד נטען לפני הסינון
-            setTimeout(() => filterCategory(categoryParam), 50);
+            setTimeout(() => {
+                filterCategory(categoryParam);
+                // Ensure the correct button visually reflects the URL parameter
+                const targetButton = document.querySelector(`.filter-btn[data-target="${categoryParam.toLowerCase()}"]`);
+                if (targetButton) {
+                    targetButton.click(); // Simulate click to trigger filter and styling
+                }
+            }, 50);
+        } else {
+            // Ensure "All Insights" is correctly set as active on initial load if no category param
+            const allButton = document.querySelector('.filter-btn[data-target="all"]');
+            if (allButton && !allButton.classList.contains('bg-primary')) {
+                 filterCategory('all');
+            }
         }
     });
 </script>

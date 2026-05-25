@@ -1,0 +1,22 @@
+[
+  {
+    "run_timestamp": "2026-05-25T18:46:09.204Z",
+    "status": "OPTIMIZATION_COMPLETE",
+    "files_improved": [
+      "index.html",
+      "_config.yml",
+      "404.html",
+      "compound-interest.html",
+      "google-indexer.js",
+      "insights.html",
+      "mortgage-calculator.html",
+      "percentage.html",
+      "playwright.config.js",
+      "privacy.html",
+      "tailwind.config.js",
+      "terms.html",
+      "tools.html",
+      "unit-converter.html"
+    ]
+  }
+]

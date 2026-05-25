@@ -3,6 +3,27 @@ layout: default
 title: "Free Percentage Calculator | Fast & Accurate Percent Finder"
 description: "Calculate percentages instantly. Find out what X percent of Y is, calculate discounts, markups, and solve math problems with our free percentage calculator."
 ---
+<link rel="canonical" href="https://yourwebsite.com/percentage-calculator/">
+
+<!-- Open Graph / Social Media Tags -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Percentage Calculator | Fast & Accurate Percent Finder">
+<meta property="og:description" content="Calculate percentages instantly. Find out what X percent of Y is, calculate discounts, markups, and solve math problems with our free percentage calculator.">
+<meta property="og:url" content="https://yourwebsite.com/percentage-calculator/">
+<meta property="og:site_name" content="Your Website Name">
+<meta property="og:image" content="https://yourwebsite.com/assets/img/percentage-calculator-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Percentage Calculator Interface">
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@yourtwitterhandle">
+<meta name="twitter:creator" content="@yourtwitterhandle">
+<meta name="twitter:title" content="Free Percentage Calculator | Fast & Accurate Percent Finder">
+<meta name="twitter:description" content="Calculate percentages instantly. Find out what X percent of Y is, calculate discounts, markups, and solve math problems with our free percentage calculator.">
+<meta name="twitter:image" content="https://yourwebsite.com/assets/img/percentage-calculator-share.jpg">
 
 <!-- Schema Markup for Calculator & FAQ -->
 <script type="application/ld+json">
@@ -12,18 +33,59 @@ description: "Calculate percentages instantly. Find out what X percent of Y is, 
     {
       "@type": "WebApplication",
       "name": "Percentage Calculator",
-      "applicationCategory": "EducationalApplication"
+      "url": "https://yourwebsite.com/percentage-calculator/",
+      "description": "An online tool to quickly and accurately calculate percentages, discounts, markups, and solve various percentage-related math problems.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires HTML5 and JavaScript enabled browser.",
+      "inLanguage": "en-US",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Your Website Name",
+        "url": "https://yourwebsite.com/"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     },
     {
       "@type": "FAQPage",
-      "mainEntity":[{
-        "@type": "Question",
-        "name": "How do you calculate a percentage?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "To calculate a percentage, you divide the value by the total value and then multiply the result by 100. The formula is: (Value / Total Value) × 100 = Percentage."
+      "mainEntity":[
+        {
+          "@type": "Question",
+          "name": "How do you calculate a percentage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To calculate a percentage, you divide the value by the total value and then multiply the result by 100. The formula is: (Value / Total Value) × 100 = Percentage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate 20% of a number manually?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A quick trick is to move the decimal point one place to the left to find 10%, and then multiply that number by 2. For example, 10% of 50 is 5. Multiply 5 by 2, and you get 10."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the formula for calculating percentage increase or decrease?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To calculate percentage increase: ((New Value - Original Value) / Original Value) × 100. For percentage decrease: ((Original Value - New Value) / Original Value) × 100."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are percentages important in daily life?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Percentages are crucial for understanding discounts, sales tax, tips, interest rates, statistics, and financial reports. They help simplify comparisons and express proportional relationships effectively."
+          }
         }
-      }]
+      ]
     }
   ]
 }
@@ -33,27 +95,27 @@ description: "Calculate percentages instantly. Find out what X percent of Y is, 
     
     <div class="text-center mb-10">
         <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Percentage Calculator</h1>
-        <p class="text-slate-500">Fast and accurate tool for everyday percentage problems.</p>
+        <p class="text-slate-500 text-lg">Your fast, accurate, and easy-to-use tool for all everyday percentage problems.</p>
     </div>
 
     <!-- AdSense Leaderboard Placeholder -->
-    <div class="w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-8 rounded-xl hidden md:flex">Ad Placement (728x90)</div>
+    <div class="w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-8 rounded-xl hidden md:flex" role="img" aria-label="Ad Placement for 728x90 leaderboard banner">Ad Placement (728x90)</div>
 
     <!-- The Calculator UI -->
     <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl shadow-blue-900/5 overflow-hidden border border-slate-100 p-8 md:p-12 mb-16">
         <div class="grid md:grid-cols-2 gap-10">
             <div class="space-y-5">
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">What is (%)</label>
-                    <input id="perc-val" type="number" placeholder="e.g. 15" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="perc-val" class="text-xs font-bold text-slate-400 uppercase mb-2 block">What is (%)</label>
+                    <input id="perc-val" type="number" min="0" step="any" placeholder="e.g. 15" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20" aria-label="Enter percentage value">
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Of Total Amount</label>
-                    <input id="perc-total" type="number" placeholder="e.g. 500" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="perc-total" class="text-xs font-bold text-slate-400 uppercase mb-2 block">Of Total Amount</label>
+                    <input id="perc-total" type="number" min="0" step="any" placeholder="e.g. 500" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20" aria-label="Enter total amount">
                 </div>
-                <button onclick="calcPercent()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-primary/30">Calculate</button>
+                <button type="button" id="calculate-btn" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-primary/30">Calculate</button>
             </div>
-            <div class="bg-slate-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-slate-100">
+            <div class="bg-slate-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-slate-100" role="status" aria-live="polite">
                 <span class="text-sm font-bold text-slate-400 uppercase mb-2">Result</span>
                 <div id="res-percent-val" class="text-5xl font-headline font-bold text-primary">0.00</div>
             </div>
@@ -62,47 +124,97 @@ description: "Calculate percentages instantly. Find out what X percent of Y is, 
 
     <!-- SEO Content Area -->
     <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm prose prose-slate max-w-none">
-        <h2 class="text-3xl font-bold font-headline mb-6">Mastering Percentages in Daily Life</h2>
+        <h2 class="text-3xl font-bold font-headline mb-6">Mastering Percentages in Daily Life with Our Calculator</h2>
         <p class="text-slate-600 mb-6 leading-relaxed">
-            The word "percent" comes from the Latin "per centum," meaning "by the hundred." Whether you're calculating a tip at a restaurant, figuring out a discount during a sale, or analyzing data for work, understanding percentages is a crucial daily skill. Our tool simplifies this process so you don't have to do the mental math.
+            The word "percent" comes from the Latin "per centum," meaning "by the hundred." Whether you're calculating a tip at a restaurant, figuring out a discount during a sale, or analyzing data for work, understanding percentages is a crucial daily skill. Our <strong class="font-semibold text-primary">free percentage calculator</strong> simplifies this process so you don't have to do the mental math, making it fast and accurate for everyone.
         </p>
 
         <!-- AdSense In-Article Placeholder -->
-        <div class="w-full h-[250px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm my-8 rounded-xl">In-Article Ad Placement</div>
+        <div class="w-full h-[250px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm my-8 rounded-xl" role="img" aria-label="In-article ad placement">In-Article Ad Placement</div>
 
         <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Common Uses for This Calculator</h3>
         <ul class="list-disc list-inside text-slate-600 mb-6 space-y-2">
-            <li><strong>Shopping Discounts:</strong> Easily find out how much you save when an item is 20% off.</li>
-            <li><strong>Tipping:</strong> Calculate a standard 15%, 18%, or 20% tip on your bill.</li>
-            <li><strong>Taxes:</strong> Add sales tax to the base price of your purchases.</li>
-            <li><strong>Business Margins:</strong> Determine profit margins and markups quickly.</li>
+            <li><strong>Shopping Discounts:</strong> Easily find out how much you save when an item is 20% off or calculate sale prices quickly.</li>
+            <li><strong>Tipping:</strong> Calculate a standard 15%, 18%, or 20% tip on your restaurant bill or service charges.</li>
+            <li><strong>Taxes:</strong> Add sales tax, VAT, or other percentage-based taxes to the base price of your purchases.</li>
+            <li><strong>Business Margins:</strong> Determine profit margins, markups, and calculate commissions efficiently.</li>
+            <li><strong>Financial Calculations:</strong> Understand interest rates, loan payments, and savings growth.</li>
+            <li><strong>Academic & Data Analysis:</strong> Solve homework problems, analyze survey results, or interpret statistical data.</li>
         </ul>
 
         <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Frequently Asked Questions</h3>
         <div class="space-y-4 not-prose">
-            <div class="border-l-4 border-primary pl-4">
+            <div class="border-l-4 border-primary pl-4" id="faq1">
+                <h4 class="font-bold text-slate-900">How do you calculate a percentage?</h4>
+                <p class="text-slate-600 text-sm mt-1">To calculate a percentage, you divide the value by the total value and then multiply the result by 100. The formula is: <code>(Value / Total Value) × 100 = Percentage</code>.</p>
+            </div>
+            <div class="border-l-4 border-primary pl-4" id="faq2">
                 <h4 class="font-bold text-slate-900">How do I calculate 20% of a number manually?</h4>
-                <p class="text-slate-600 text-sm mt-1">A quick trick is to move the decimal point one place to the left to find 10%, and then multiply that number by 2. For example, 10% of 50 is 5. Multiply 5 by 2, and you get 10.</p>
+                <p class="text-slate-600 text-sm mt-1">A quick trick is to find 10% first by moving the decimal point one place to the left, and then multiply that number by 2. For example, 10% of 50 is 5. Multiply 5 by 2, and you get 10.</p>
+            </div>
+            <div class="border-l-4 border-primary pl-4" id="faq3">
+                <h4 class="font-bold text-slate-900">What is the formula for percentage increase or decrease?</h4>
+                <p class="text-slate-600 text-sm mt-1">For percentage increase: <code>((New Value - Original Value) / Original Value) × 100</code>. For percentage decrease: <code>((Original Value - New Value) / Original Value) × 100</code>.</p>
             </div>
         </div>
     </article>
 </main>
 
 <script>
-    function calcPercent() {
-        const v = parseFloat(document.getElementById('perc-val').value);
-        const t = parseFloat(document.getElementById('perc-total').value);
-        if(isNaN(v) || isNaN(t)) return;
-        
-        const result = (v / 100) * t;
-        
-        // Check if result is a whole number to format accordingly
-        if (result % 1 === 0) {
-            document.getElementById('res-percent-val').innerText = result.toLocaleString();
-        } else {
-            document.getElementById('res-percent-val').innerText = result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.addEventListener('DOMContentLoaded', () => {
+        const percValInput = document.getElementById('perc-val');
+        const percTotalInput = document.getElementById('perc-total');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultDisplay = document.getElementById('res-percent-val');
+
+        function calcPercent() {
+            const v = parseFloat(percValInput.value);
+            const t = parseFloat(percTotalInput.value);
+
+            // Handle invalid inputs: NaN or division by zero
+            if (isNaN(v) || isNaN(t)) {
+                resultDisplay.innerText = "N/A";
+                resultDisplay.classList.add('text-red-500');
+                return;
+            }
+            if (t === 0) {
+                 resultDisplay.innerText = "Error: Total cannot be zero";
+                 resultDisplay.classList.add('text-red-500');
+                 return;
+            }
+            
+            // Ensure values are non-negative for this "X% of Y" calculator type
+            const value = Math.max(0, v); 
+            const total = Math.max(0, t);
+
+            const result = (value / 100) * total;
+            
+            resultDisplay.classList.remove('text-red-500'); // Remove error highlight if present
+            
+            // Format result: whole numbers if possible, otherwise 2 decimal places
+            if (result % 1 === 0) {
+                resultDisplay.innerText = result.toLocaleString();
+            } else {
+                resultDisplay.innerText = result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            }
+            
+            // Send analytics event if gtag is available
+            if (typeof gtag === 'function') {
+                gtag('event', 'calculate', { 'event_category': 'Engagement', 'event_label': 'Percentage' });
+            }
         }
-        
-        gtag('event', 'calculate', { 'event_category': 'Engagement', 'event_label': 'Percentage' });
-    }
+
+        // Attach event listeners for click and 'Enter' key press
+        calculateBtn.addEventListener('click', calcPercent);
+        percValInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                calcPercent();
+            }
+        });
+        percTotalInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                calcPercent();
+            }
+        });
+    });
 </script>

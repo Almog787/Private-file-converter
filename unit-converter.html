@@ -1,8 +1,24 @@
 ---
 layout: default
 title: "Universal Unit Converter | Weight, Length & Temperature"
-description: "Instantly convert between metric and imperial units. Free converter for Kilograms to Pounds, Meters to Feet, and Celsius to Fahrenheit."
+description: "Instantly convert between metric and imperial units. Free online converter for Kilograms to Pounds, Meters to Feet, and Celsius to Fahrenheit. Accurate, fast, and easy to use for all your conversion needs."
 ---
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.yourwebsite.com/unit-converter/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.yourwebsite.com/unit-converter/">
+<meta property="og:title" content="Universal Unit Converter | Weight, Length & Temperature">
+<meta property="og:description" content="Instantly convert between metric and imperial units. Free online converter for Kilograms to Pounds, Meters to Feet, and Celsius to Fahrenheit. Accurate, fast, and easy to use for all your conversion needs.">
+<meta property="og:image" content="https://www.yourwebsite.com/images/unit-converter-social-share.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://www.yourwebsite.com/unit-converter/">
+<meta property="twitter:title" content="Universal Unit Converter | Weight, Length & Temperature">
+<meta property="twitter:description" content="Instantly convert between metric and imperial units. Free online converter for Kilograms to Pounds, Meters to Feet, and Celsius to Fahrenheit. Accurate, fast, and easy to use for all your conversion needs.">
+<meta property="twitter:image" content="https://www.yourwebsite.com/images/unit-converter-social-share.jpg">
 
 <!-- Schema Markup -->
 <script type="application/ld+json">
@@ -10,7 +26,20 @@ description: "Instantly convert between metric and imperial units. Free converte
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Universal Unit Converter",
-  "applicationCategory": "UtilitiesApplication"
+  "url": "https://www.yourwebsite.com/unit-converter/",
+  "description": "An online tool for instant conversion between metric and imperial units, including weight, length, and temperature. Convert Kilograms to Pounds, Meters to Feet, Celsius to Fahrenheit accurately.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript. Works on modern browsers like Chrome, Firefox, Safari, Edge, etc.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.yourwebsite.com/unit-converter/?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
+  "inLanguage": "en-US"
 }
 </script>
 
@@ -18,7 +47,7 @@ description: "Instantly convert between metric and imperial units. Free converte
     
     <div class="text-center mb-10">
         <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Universal Unit Converter</h1>
-        <p class="text-slate-500">Bridge the gap between Metric and Imperial systems instantly.</p>
+        <p class="text-slate-500">Bridge the gap between Metric and Imperial systems instantly for <strong class="text-primary-700">weight</strong>, <strong class="text-primary-700">length</strong>, and <strong class="text-primary-700">temperature</strong>.</p>
     </div>
 
     <!-- AdSense Leaderboard Placeholder -->
@@ -28,8 +57,8 @@ description: "Instantly convert between metric and imperial units. Free converte
     <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl shadow-blue-900/5 overflow-hidden border border-slate-100 p-8 md:p-12 mb-16">
         <div class="space-y-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-100 pb-6">
-                <h2 class="text-2xl font-bold font-headline">Select Conversion</h2>
-                <select id="unit-type" onchange="initUnitLabels()" class="bg-slate-100 border-none rounded-full px-6 py-3 font-bold text-primary focus:ring-2 focus:ring-primary/20 cursor-pointer">
+                <h2 class="text-2xl font-bold font-headline">Select Conversion Type</h2>
+                <select id="unit-type" onchange="initUnitLabels()" class="bg-slate-100 border-none rounded-full px-6 py-3 font-bold text-primary focus:ring-2 focus:ring-primary/20 cursor-pointer" aria-label="Select unit type for conversion">
                     <option value="weight">Weight (KG ↔ LBS)</option>
                     <option value="length">Length (M ↔ FT)</option>
                     <option value="temp">Temperature (C° ↔ F°)</option>
@@ -38,14 +67,14 @@ description: "Instantly convert between metric and imperial units. Free converte
             
             <div class="grid md:grid-cols-[1fr_auto_1fr] gap-8 items-center bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
                 <div class="space-y-2">
-                    <label id="label-1" class="text-xs font-bold text-slate-400 uppercase ml-2">Kilograms (KG)</label>
+                    <label id="label-1" for="input-1" class="text-xs font-bold text-slate-400 uppercase ml-2">Kilograms (KG)</label>
                     <input id="input-1" type="number" oninput="convertMaster(1)" placeholder="0.00" class="w-full bg-white border border-slate-200 rounded-xl p-6 text-3xl font-headline focus:ring-2 focus:ring-primary/20 shadow-sm transition-all text-center">
                 </div>
                 <div class="flex justify-center transform rotate-90 md:rotate-0">
-                    <span class="material-symbols-outlined text-primary text-4xl bg-blue-50 p-3 rounded-full">sync_alt</span>
+                    <span class="material-symbols-outlined text-primary text-4xl bg-blue-50 p-3 rounded-full" aria-label="Swap units" title="Swap Units">sync_alt</span>
                 </div>
                 <div class="space-y-2">
-                    <label id="label-2" class="text-xs font-bold text-slate-400 uppercase ml-2">Pounds (LBS)</label>
+                    <label id="label-2" for="input-2" class="text-xs font-bold text-slate-400 uppercase ml-2">Pounds (LBS)</label>
                     <input id="input-2" type="number" oninput="convertMaster(2)" placeholder="0.00" class="w-full bg-white border border-slate-200 rounded-xl p-6 text-3xl font-headline focus:ring-2 focus:ring-primary/20 shadow-sm transition-all text-center">
                 </div>
             </div>
@@ -54,29 +83,73 @@ description: "Instantly convert between metric and imperial units. Free converte
 
     <!-- SEO Content Area -->
     <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm prose prose-slate max-w-none">
-        <h2 class="text-3xl font-bold font-headline mb-6">Navigating Global Measurements</h2>
+        <h2 class="text-3xl font-bold font-headline mb-6">Navigating Global Measurements with Ease</h2>
         <p class="text-slate-600 mb-6 leading-relaxed">
-            The world primarily uses two systems of measurement: the Metric System (used by most of the world) and the Imperial System (used mainly in the United States). Whether you are following a recipe, planning a road trip abroad, or importing goods, converting units accurately is essential to avoid costly mistakes.
+            In our increasingly interconnected world, accurate unit conversion is no longer just a convenience—it's a necessity. Whether you're dealing with international recipes, engineering specifications, travel plans, or e-commerce, bridging the gap between the Metric System (used by most of the world) and the Imperial System (predominantly in the United States) is critical. Our Universal Unit Converter simplifies this process, providing instant and precise conversions for everyday and specialized needs. Forget manual calculations or complicated formulas; get accurate results for <strong class="text-primary-700">Kilograms to Pounds</strong>, <strong class="text-primary-700">Meters to Feet</strong>, <strong class="text-primary-700">Celsius to Fahrenheit</strong>, and more, all in one user-friendly interface.
         </p>
 
         <!-- AdSense In-Article Placeholder -->
         <div class="w-full h-[250px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm my-8 rounded-xl">In-Article Ad Placement</div>
 
-        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Standard Conversion Ratios</h3>
-        <p class="text-slate-600 mb-6">Our converter is built on universally accepted mathematical constants for perfect accuracy:</p>
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Standard Conversion Ratios for Flawless Accuracy</h3>
+        <p class="text-slate-600 mb-6">Our converter is built on universally accepted mathematical constants, ensuring every conversion is perfectly accurate and reliable. Here are the core ratios:</p>
         <ul class="list-none space-y-3 text-slate-600 pl-0 not-prose">
-            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">⚖️ <strong>Weight:</strong> 1 Kilogram = 2.20462 Pounds</li>
-            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">📏 <strong>Length:</strong> 1 Meter = 3.28084 Feet</li>
-            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">🌡️ <strong>Temperature:</strong> (Celsius × 9/5) + 32 = Fahrenheit</li>
+            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">⚖️ <strong>Weight Conversion:</strong> 1 Kilogram (KG) = 2.20462 Pounds (LBS). Convert <strong class="text-primary-700">KG to LBS</strong> or <strong class="text-primary-700">LBS to KG</strong> effortlessly.</li>
+            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">📏 <strong>Length Conversion:</strong> 1 Meter (M) = 3.28084 Feet (FT). Ideal for converting <strong class="text-primary-700">Meters to Feet</strong> or <strong class="text-primary-700">Feet to Meters</strong>.</li>
+            <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">🌡️ <strong>Temperature Conversion:</strong> To convert Celsius to Fahrenheit, use the formula (Celsius × 9/5) + 32. For Fahrenheit to Celsius, use (Fahrenheit - 32) × 5/9. Perfect for <strong class="text-primary-700">Celsius to Fahrenheit</strong> and <strong class="text-primary-700">Fahrenheit to Celsius</strong>.</li>
         </ul>
+
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Common Unit Conversion Scenarios</h3>
+        <p class="text-slate-600 mb-4">Understanding when and why you need a unit converter can save time and prevent errors. Here are a few common situations:</p>
+        <ul class="list-disc list-inside space-y-2 text-slate-600">
+            <li><strong>Cooking & Baking:</strong> Recipes from different regions often use varying units for ingredients (e.g., grams vs. ounces, milliliters vs. fluid ounces). Our converter helps you switch seamlessly.</li>
+            <li><strong>Travel & Tourism:</strong> Understanding distances (kilometers vs. miles), temperatures (Celsius vs. Fahrenheit), and weights (kilograms vs. pounds) is crucial when abroad. Plan your trips with confidence.</li>
+            <li><strong>Science & Engineering:</strong> Precise conversions are fundamental for academic research, product development, and construction projects across international teams. Ensure consistency with our tool.</li>
+            <li><strong>International Trade:</strong> Shipping weights and dimensions often need to be converted to comply with different country regulations, streamlining logistics.</li>
+            <li><strong>Education:</strong> Students and educators can use the converter to understand different measurement systems and solve problems effectively.</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Frequently Asked Questions (FAQ)</h3>
+        <div class="space-y-4" itemscope itemtype="https://schema.org/FAQPage">
+            <div class="border border-slate-100 rounded-lg p-4 bg-slate-50" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                <h4 class="font-bold text-lg mb-2" itemprop="name">How accurate is this online unit converter?</h4>
+                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <p class="text-slate-600" itemprop="text">Our Universal Unit Converter uses precise, universally recognized mathematical constants and formulas to ensure highly accurate conversions for all supported unit types. Results are typically rounded to two decimal places for weight and length, and one for temperature, for practical usability while maintaining high precision.</p>
+                </div>
+            </div>
+            <div class="border border-slate-100 rounded-lg p-4 bg-slate-50" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                <h4 class="font-bold text-lg mb-2" itemprop="name">Which unit systems and types does it support?</h4>
+                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <p class="text-slate-600" itemprop="text">Currently, our Universal Unit Converter supports conversions between the Metric System and the Imperial System for common measurements like weight (Kilograms ↔ Pounds), length (Meters ↔ Feet), and temperature (Celsius ↔ Fahrenheit). We aim to expand our offerings in the future.</p>
+                </div>
+            </div>
+            <div class="border border-slate-100 rounded-lg p-4 bg-slate-50" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                <h4 class="font-bold text-lg mb-2" itemprop="name">Is this unit converter free to use?</h4>
+                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <p class="text-slate-600" itemprop="text">Yes, our Universal Unit Converter is completely free to use for unlimited conversions. We are committed to providing a helpful and accessible tool for everyone, whether for personal, educational, or professional use.</p>
+                </div>
+            </div>
+            <div class="border border-slate-100 rounded-lg p-4 bg-slate-50" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                <h4 class="font-bold text-lg mb-2" itemprop="name">Do I need to download an app or software to use this converter?</h4>
+                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <p class="text-slate-600" itemprop="text">No, our converter is a web-based tool that works directly in your browser on any device (desktop computer, tablet, or smartphone). There's no need to download or install any software, making it convenient and accessible from anywhere with an internet connection.</p>
+                </div>
+            </div>
+            <div class="border border-slate-100 rounded-lg p-4 bg-slate-50" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                <h4 class="font-bold text-lg mb-2" itemprop="name">How do I switch between Kilograms and Pounds or Meters and Feet?</h4>
+                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <p class="text-slate-600" itemprop="text">Simply type a value into either input field. The converter automatically detects which unit you are providing and converts it to the other. For example, if you type into the "Kilograms" field, it will instantly show the equivalent in "Pounds" and vice-versa. You can also use the 'Swap Units' icon for visual confirmation.</p>
+                </div>
+            </div>
+        </div>
     </article>
 </main>
 
 <script>
     const unitConfigs = {
-        weight: { l1: "Kilograms (KG)", l2: "Pounds (LBS)", ratio: 2.20462, mode: 'mult' },
-        length: { l1: "Meters (M)", l2: "Feet (FT)", ratio: 3.28084, mode: 'mult' },
-        temp: { l1: "Celsius (C°)", l2: "Fahrenheit (F°)", mode: 'temp' }
+        weight: { l1: "Kilograms (KG)", l2: "Pounds (LBS)", ratio: 2.20462262, mode: 'mult', fixed: 2 },
+        length: { l1: "Meters (M)", l2: "Feet (FT)", ratio: 3.28084, mode: 'mult', fixed: 2 },
+        temp: { l1: "Celsius (C°)", l2: "Fahrenheit (F°)", mode: 'temp', fixed: 1 }
     };
 
     function initUnitLabels() {
@@ -93,17 +166,33 @@ description: "Instantly convert between metric and imperial units. Free converte
         const in1 = document.getElementById('input-1');
         const in2 = document.getElementById('input-2');
 
+        let val1 = parseFloat(in1.value);
+        let val2 = parseFloat(in2.value);
+
         if (config.mode === 'mult') {
-            if (source === 1) in2.value = in1.value ? (in1.value * config.ratio).toFixed(2) : "";
-            else in1.value = in2.value ? (in2.value / config.ratio).toFixed(2) : "";
+            if (source === 1) {
+                if (!isNaN(val1)) in2.value = (val1 * config.ratio).toFixed(config.fixed);
+                else in2.value = "";
+            } else {
+                if (!isNaN(val2)) in1.value = (val2 / config.ratio).toFixed(config.fixed);
+                else in1.value = "";
+            }
         } else if (config.mode === 'temp') {
-            if (source === 1) in2.value = in1.value ? ((in1.value * 9/5) + 32).toFixed(1) : "";
-            else in1.value = in2.value ? ((in2.value - 32) * 5/9).toFixed(1) : "";
+            if (source === 1) {
+                if (!isNaN(val1)) in2.value = ((val1 * 9/5) + 32).toFixed(config.fixed);
+                else in2.value = "";
+            } else {
+                if (!isNaN(val2)) in1.value = ((val2 - 32) * 5/9).toFixed(config.fixed);
+                else in1.value = "";
+            }
         }
         
-        gtag('event', 'convert', { 'event_category': 'Engagement', 'event_label': type });
+        // Ensure gtag is defined before calling
+        if (typeof gtag === 'function') {
+            gtag('event', 'convert', { 'event_category': 'Engagement', 'event_label': type });
+        }
     }
 
-    // Initialize labels on first load
-    window.onload = initUnitLabels;
+    // Initialize labels and clear inputs on first load
+    window.addEventListener('load', initUnitLabels);
 </script>

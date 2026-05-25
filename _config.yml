@@ -1,12 +1,19 @@
 # --------- הגדרות זהות האתר ---------
 title: Global Calc Hub
-description: "Data-driven insights, life hacks, and professional tools for a smarter life. Expert analysis on Finance, Tech, and Global Economy."
+description: "Global Calc Hub offers data-driven insights, practical life hacks, and professional calculators for a smarter life. Gain expert analysis on Finance, Technology, and the Global Economy."
 url: "https://globalcalcpro.com"
 baseurl: "" # חובה להשאיר ריק עבור דומיין פרטי
+lang: en # Define the primary language for better SEO and accessibility
+logo: /assets/images/logo.png # Path to your site's logo for structured data (e.g., for jekyll-seo-tag)
 
 # --------- הגדרות תוכן ---------
 # קריטי: מאפשר למנוע לכלול מאמרים שיש להם תאריך עתידי (מופעל ע"י ה-Action הלילי שלנו)
 future: false 
+
+# --------- הגדרות SEO ו-Social Media ---------
+author: Global Calc Hub Team # Default author for posts and structured data
+twitter:
+  username: globalcalchub # Your Twitter handle (without @) for Twitter Cards
 
 # --------- ארכיטקטורת קישורים (SEO) ---------
 # המבנה הזה יוצר קישורים נקיים ללא סיומת .html ומסדר אותם לפי תאריך
@@ -38,3 +45,6 @@ exclude:
 # --------- הגדרות עיבוד תוכן ---------
 markdown: kramdown
 highlighter: rouge
+
+# --------- הגדרות זמן ---------
+timezone: Asia/Jerusalem # Set your local timezone for consistent date/time handling (e.g., for sitemap, post dates)

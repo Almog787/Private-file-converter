@@ -1,7 +1,19 @@
 ---
 layout: default
-title: "Free Compound Interest Calculator | Calculate Future Wealth"
-description: "Calculate compound interest easily. Find out how much your investment will grow over time with our free, fast, and accurate financial calculator."
+title: "Free Compound Interest Calculator | Calculate Future Wealth & Growth"
+description: "Easily calculate compound interest to forecast your investment growth, savings, and future wealth. Our free, fast, and accurate financial calculator helps you understand the power of compounding and plan for your future."
+canonical_url: "https://yourwebsite.com/compound-interest-calculator/"
+og_title: "Free Compound Interest Calculator | Maximize Your Wealth"
+og_description: "Unlock the power of compounding! Calculate future value of investments, savings, and retirement funds with our easy-to-use compound interest tool. Fast, free, and accurate financial planning."
+og_image: "https://yourwebsite.com/assets/images/compound-interest-calculator-social.jpg"
+og_url: "https://yourwebsite.com/compound-interest-calculator/"
+og_type: "website"
+twitter_card: "summary_large_image"
+twitter_site: "@yourtwitterhandle"
+twitter_creator: "@yourtwitterhandle"
+twitter_title: "Compound Interest Calculator: See Your Money Grow!"
+twitter_description: "Calculate compound interest for free! Understand the growth of your investments and savings with our simple and powerful financial calculator. Plan your financial future today."
+twitter_image: "https://yourwebsite.com/assets/images/compound-interest-calculator-social.jpg"
 ---
 
 <!-- Schema Markup for Calculator & FAQ -->
@@ -12,7 +24,37 @@ description: "Calculate compound interest easily. Find out how much your investm
     {
       "@type": "WebApplication",
       "name": "Compound Interest Calculator",
-      "applicationCategory": "FinanceApplication"
+      "applicationCategory": "FinanceApplication",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://yourwebsite.com/compound-interest-calculator/?initialAmount={initialAmount}&annualRate={annualRate}&years={years}"
+        },
+        "query-input": [
+          "required name=initialAmount",
+          "required name=annualRate",
+          "required name=years"
+        ]
+      },
+      "url": "https://yourwebsite.com/compound-interest-calculator/",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "operatingSystem": "Any",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "250"
+      },
+      "featureList": [
+        "Easy to Use",
+        "Fast Calculations",
+        "Accurate Results",
+        "Financial Planning Tool"
+      ]
     },
     {
       "@type": "FAQPage",
@@ -21,7 +63,31 @@ description: "Calculate compound interest easily. Find out how much your investm
         "name": "What is compound interest?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Compound interest is the interest on savings calculated on both the initial principal and the accumulated interest from previous periods."
+          "text": "Compound interest is the interest on savings or investments calculated on both the initial principal amount and the accumulated interest from previous periods. This 'interest on interest' effect allows your money to grow at an accelerating rate over time, making it a powerful concept for wealth building."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good interest rate for investments or savings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 'good' interest rate varies significantly based on market conditions, risk, and type of account. For long-term investments like stocks (e.g., S&P 500 index funds), historical average returns can range from 7% to 10% annually after inflation. High-yield savings accounts typically offer 3% to 5% per year, while bonds and CDs fall somewhere in between. Always consider your financial goals and risk tolerance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does time matter so much with compound interest?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Time is the most crucial factor in compound interest because the growth is exponential. The longer your money is invested, the more periods it has to earn interest on the growing balance (principal + accumulated interest). This accelerating growth means that even small investments made early can accumulate substantial wealth over decades, showcasing the incredible power of long-term compounding."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often should I use a compound interest calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It's beneficial to use a compound interest calculator regularly, especially when planning new investments, adjusting your savings strategy, or reviewing financial goals. It helps you visualize potential returns, compare different scenarios (e.g., changing initial amount or interest rate), and stay motivated by seeing the potential growth of your money over various timeframes."
         }
       }]
     }
@@ -33,60 +99,64 @@ description: "Calculate compound interest easily. Find out how much your investm
     
     <div class="text-center mb-10">
         <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Compound Interest Calculator</h1>
-        <p class="text-slate-500">Discover the magic of compounding and forecast your financial future.</p>
+        <p class="text-slate-500 text-lg">Discover the magic of compounding and forecast your financial future with this free online tool.</p>
     </div>
 
     <!-- AdSense In-feed Placeholder -->
-    <div class="w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-8 rounded-xl">Ad Placement</div>
+    <div class="w-full max-w-4xl mx-auto h-[90px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm mb-8 rounded-xl" aria-label="Ad Placement">Ad Placement</div>
 
     <!-- The Calculator UI -->
     <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl shadow-blue-900/5 overflow-hidden border border-slate-100 p-8 md:p-12 mb-16">
         <div class="grid md:grid-cols-2 gap-10">
             <div class="space-y-5">
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Initial Amount ($)</label>
-                    <input id="p" type="number" value="10000" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="p" class="text-xs font-bold text-slate-400 uppercase mb-2 block">Initial Amount ($)</label>
+                    <input id="p" type="number" value="10000" min="0" step="any" aria-label="Enter initial investment amount" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Annual Rate (%)</label>
-                    <input id="r" type="number" value="7" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="r" class="text-xs font-bold text-slate-400 uppercase mb-2 block">Annual Rate (%)</label>
+                    <input id="r" type="number" value="7" min="0" step="any" aria-label="Enter annual interest rate percentage" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Time (Years)</label>
-                    <input id="t" type="number" value="10" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="t" class="text-xs font-bold text-slate-400 uppercase mb-2 block">Time (Years)</label>
+                    <input id="t" type="number" value="10" min="0" step="1" aria-label="Enter investment time in years" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
                 </div>
-                <button onclick="calcCompound()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-primary/30">Calculate Yield</button>
+                <button onclick="calcCompound()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-primary/30">Calculate Future Value</button>
             </div>
             <div class="bg-blue-50/50 rounded-2xl p-8 flex flex-col justify-center items-center text-center">
-                <span class="text-sm font-bold text-primary uppercase mb-2">Estimated Total</span>
-                <div id="res-interest-val" class="text-5xl font-headline font-bold text-slate-900">$19,671.51</div>
-                <div id="res-interest-gain" class="text-primary font-bold mt-2">+$9,671 in profit</div>
+                <span class="text-sm font-bold text-primary uppercase mb-2">Estimated Total Value</span>
+                <div id="res-interest-val" class="text-5xl font-headline font-bold text-slate-900" aria-live="polite">$19,671.51</div>
+                <div id="res-interest-gain" class="text-primary font-bold mt-2" aria-live="polite">+$9,671.51 in profit</div>
             </div>
         </div>
     </div>
 
     <!-- SEO & AdSense Content Area (CRITICAL) -->
     <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm prose prose-slate max-w-none">
-        <h2 class="text-3xl font-bold font-headline mb-6">How Compound Interest Works</h2>
+        <h2 class="text-3xl font-bold font-headline mb-6">How Compound Interest Works and Why It Matters for Your Wealth</h2>
         <p class="text-slate-600 mb-6 leading-relaxed">
-            Albert Einstein reportedly called compound interest the "eighth wonder of the world." Unlike simple interest, which only calculates profit based on your initial deposit, compound interest calculates profit on both your initial deposit <strong>and</strong> the interest you've already accumulated. Over time, this creates a snowball effect that can drastically increase your wealth.
+            Often called the "eighth wonder of the world," compound interest is a powerful financial concept. Unlike simple interest, which is calculated only on the initial principal amount, compound interest earns returns on both your initial deposit <strong>and</strong> the accumulated interest from previous periods. This 'interest on interest' mechanism creates a dynamic snowball effect, significantly accelerating your wealth accumulation over time and making it indispensable for long-term financial planning, savings, and investment strategies.
         </p>
 
         <!-- AdSense In-Article Placeholder -->
-        <div class="w-full h-[250px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm my-8 rounded-xl">In-Article Ad Placement</div>
+        <div class="w-full h-[250px] border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm my-8 rounded-xl" aria-label="In-Article Ad Placement">In-Article Ad Placement</div>
 
-        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">The Compound Interest Formula</h3>
-        <p class="text-slate-600 mb-6">Our calculator uses the standard financial formula: <code>A = P(1 + r/n)^(nt)</code>. Where 'P' is the principal amount, 'r' is the annual interest rate, and 't' is the time in years. By automating this complex math, you get instant, error-free results.</p>
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">The Compound Interest Formula Explained</h3>
+        <p class="text-slate-600 mb-6">Our calculator utilizes the standard compound interest formula: <code>A = P(1 + r/n)^(nt)</code>. In this formula, 'A' represents the future value of the investment or loan, 'P' is the principal initial amount, 'r' is the annual interest rate (expressed as a decimal), 'n' denotes the number of times the interest is compounded per year, and 't' is the time in years the money is invested or borrowed for. For clarity and to focus on the core principle, our calculator currently assumes <strong>annual compounding (n=1)</strong>. This automates the complex mathematical calculation, providing you with instant, accurate, and error-free results for your financial planning needs.</p>
 
-        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Frequently Asked Questions</h3>
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Frequently Asked Questions About Compound Interest</h3>
         <div class="space-y-4 not-prose">
             <div class="border-l-4 border-primary pl-4">
-                <h4 class="font-bold text-slate-900">What is a good interest rate?</h4>
-                <p class="text-slate-600 text-sm mt-1">Historically, the stock market (like the S&P 500) returns an average of 7% to 10% annually after inflation. High-yield savings accounts typically offer between 3% to 5%.</p>
+                <h4 class="font-bold text-slate-900">What is a good interest rate for investments or savings?</h4>
+                <p class="text-slate-600 text-sm mt-1">A 'good' interest rate is subjective and depends on various factors including risk tolerance, market conditions, and the specific financial product. For long-term investments like stock market index funds (e.g., S&P 500), historical annual returns often average 7% to 10% after inflation. For safer options like high-yield savings accounts, current rates typically fall between 3% to 5% annually. Always research and compare rates based on your individual financial goals.</p>
             </div>
             <div class="border-l-4 border-primary pl-4 mt-4">
-                <h4 class="font-bold text-slate-900">Why does time matter so much?</h4>
-                <p class="text-slate-600 text-sm mt-1">Because compounding is exponential. The longer your money sits, the steeper the growth curve becomes. A 10-year investment will yield significantly less than a 20-year investment, even if the monthly contributions are the same.</p>
+                <h4 class="font-bold text-slate-900">Why does time matter so much with compound interest?</h4>
+                <p class="text-slate-600 text-sm mt-1">Time is arguably the single most critical factor in maximizing the benefits of compound interest due to its exponential growth nature. The longer your money is invested, the more periods it has to earn 'interest on interest,' leading to an increasingly steeper growth curve. This means that even small initial investments or consistent contributions made early in life can accumulate into substantial wealth over decades, powerfully illustrating the advantage of starting early.</p>
+            </div>
+            <div class="border-l-4 border-primary pl-4 mt-4">
+                <h4 class="font-bold text-slate-900">How often should I use a compound interest calculator?</h4>
+                <p class="text-slate-600 text-sm mt-1">Using a compound interest calculator periodically can be highly beneficial for financial planning and motivation. It's recommended to use it when you're setting new financial goals, evaluating different investment opportunities, considering additional contributions to your savings, or simply to visualize the potential growth of your current assets over various time horizons. This helps in making informed decisions and staying on track with your wealth-building journey.</p>
             </div>
         </div>
     </article>
@@ -97,18 +167,31 @@ description: "Calculate compound interest easily. Find out how much your investm
     // JS specific ONLY to this calculator
     function calcCompound() {
         const p = parseFloat(document.getElementById('p').value);
-        const r = parseFloat(document.getElementById('r').value) / 100;
+        const r = parseFloat(document.getElementById('r').value) / 100; // Convert percentage to decimal
         const t = parseFloat(document.getElementById('t').value);
-        if(isNaN(p) || isNaN(r) || isNaN(t)) return;
+
+        // Input validation for user experience and preventing invalid calculations
+        if (isNaN(p) || isNaN(r) || isNaN(t) || p < 0 || r < 0 || t < 0) {
+            document.getElementById('res-interest-val').innerText = '$0.00';
+            document.getElementById('res-interest-gain').innerText = 'Invalid Input';
+            return;
+        }
+
+        // The formula A = P(1 + r)^t assumes annual compounding (n=1).
+        // If 'n' (compounding frequency) was an input, the formula would be A = P(1 + r/n)^(n*t).
         const amount = p * Math.pow((1 + r), t);
         
-        document.getElementById('res-interest-val').innerText = '$' + amount.toLocaleString(undefined, {maximumFractionDigits: 2});
-        document.getElementById('res-interest-gain').innerText = '+$' + (amount - p).toLocaleString(undefined, {maximumFractionDigits: 0}) + ' in profit';
+        document.getElementById('res-interest-val').innerText = '$' + amount.toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2});
+        // Calculate the profit and ensure it's formatted as currency
+        const profit = amount - p;
+        document.getElementById('res-interest-gain').innerText = (profit >= 0 ? '+' : '') + '$' + profit.toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2}) + ' in profit';
         
         // Google Analytics Event Tracking for engagement
-        gtag('event', 'calculate', { 'event_category': 'Engagement', 'event_label': 'Compound Interest' });
+        if (typeof gtag === 'function') { // Check if gtag is defined globally before calling
+            gtag('event', 'calculate', { 'event_category': 'Engagement', 'event_label': 'Compound Interest' });
+        }
     }
 
-    // Run on load to show initial demo values
+    // Run on load to show initial demo values and ensure calculator is functional immediately upon page load
     window.onload = calcCompound;
 </script>

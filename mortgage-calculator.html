@@ -1,8 +1,33 @@
 ---
 layout: default
-title: "Free Mortgage & Loan Calculator"
-description: "Calculate your monthly mortgage or loan payments. See how much you'll pay in principal vs. interest over the life of your loan with our free financial tool."
+title: "Free Mortgage & Loan Calculator - Estimate Your Monthly Payments & Interest"
+description: "Calculate your estimated monthly mortgage or loan payments, total interest, and visualize principal vs. interest over the life of your loan. A powerful, free financial planning tool."
 ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://www.yourwebsite.com/mortgage-calculator/">
+    
+    <!-- Open Graph Tags for Social Media Sharing -->
+    <meta property="og:title" content="Free Mortgage & Loan Calculator - Estimate Payments & Interest">
+    <meta property="og:description" content="Calculate your estimated monthly mortgage or loan payments, total interest, and visualize principal vs. interest over the life of your loan. A powerful, free financial planning tool.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourwebsite.com/mortgage-calculator/">
+    <meta property="og:image" content="https://www.yourwebsite.com/images/mortgage-calculator-share.jpg"> <!-- Replace with an actual image URL -->
+    <meta property="og:image:alt" content="Mortgage and Loan Calculator tool preview">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@yourtwitterhandle"> <!-- Replace with your Twitter handle -->
+    <meta name="twitter:creator" content="@yourtwitterhandle"> <!-- Replace with your Twitter handle -->
+    <meta name="twitter:title" content="Free Mortgage & Loan Calculator - Estimate Payments & Interest">
+    <meta name="twitter:description" content="Calculate your estimated monthly mortgage or loan payments, total interest, and visualize principal vs. interest over the life of your loan. A powerful, free financial planning tool.">
+    <meta name="twitter:image" content="https://www.yourwebsite.com/images/mortgage-calculator-share.jpg"> <!-- Replace with an actual image URL -->
+</head>
+<body>
 
 <!-- Schema Markup for Calculator -->
 <script type="application/ld+json">
@@ -10,7 +35,36 @@ description: "Calculate your monthly mortgage or loan payments. See how much you
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Mortgage & Loan Calculator",
-  "applicationCategory": "FinanceApplication"
+  "url": "https://www.yourwebsite.com/mortgage-calculator/",
+  "image": "https://www.yourwebsite.com/images/mortgage-calculator-logo.png",
+  "description": "Calculate your estimated monthly mortgage or loan payments, total interest, and visualize principal vs. interest over the life of your loan.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript enabled web browser.",
+  "softwareRequirements": "Modern web browser",
+  "potentialAction": {
+    "@type": "CalculateAction",
+    "name": "Calculate Mortgage Payment",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.yourwebsite.com/mortgage-calculator/?loan={loanAmount}&rate={interestRate}&term={loanTerm}",
+      "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+    },
+    "query-input": [
+      {"@type": "PropertyValueSpecification", "valueRequired": true, "valueName": "loanAmount", "valuePattern": "[0-9]+", "description": "The total amount of the loan in USD."},
+      {"@type": "PropertyValueSpecification", "valueRequired": true, "valueName": "interestRate", "valuePattern": "[0-9]+(\.[0-9]+)?", "description": "The annual interest rate as a percentage."},
+      {"@type": "PropertyValueSpecification", "valueRequired": true, "valueName": "loanTerm", "valuePattern": "[0-9]+", "description": "The loan term in years."}
+    ],
+    "result": {
+      "@type": "WebContent",
+      "name": "Estimated Monthly Payment",
+      "text": "The calculated monthly payment and total interest paid."
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.yourwebsite.com/mortgage-calculator/"
+  }
 }
 </script>
 
@@ -18,7 +72,7 @@ description: "Calculate your monthly mortgage or loan payments. See how much you
     
     <div class="text-center mb-10">
         <h1 class="text-4xl md:text-5xl font-bold font-headline mb-4">Mortgage & Loan Calculator</h1>
-        <p class="text-slate-500">Find your estimated monthly payment and total interest cost.</p>
+        <p class="text-slate-500">Find your estimated monthly payment and total interest cost with our easy-to-use tool.</p>
     </div>
 
     <!-- The Calculator UI -->
@@ -27,29 +81,29 @@ description: "Calculate your monthly mortgage or loan payments. See how much you
             <!-- Inputs -->
             <div class="space-y-5">
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Loan Amount ($)</label>
-                    <input id="loan-amount" type="number" value="300000" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="loan-amount" class="text-xs font-bold text-slate-400 uppercase mb-2 block">Loan Amount ($)</label>
+                    <input id="loan-amount" name="loanAmount" type="number" value="300000" min="1000" max="10000000" step="1000" inputmode="numeric" autocomplete="off" aria-label="Enter the total loan amount" title="Enter the total amount of money you wish to borrow." class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20" autofocus>
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Annual Interest Rate (%)</label>
-                    <input id="interest-rate" type="number" value="6.5" step="0.01" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="interest-rate" class="text-xs font-bold text-slate-400 uppercase mb-2 block">Annual Interest Rate (%)</label>
+                    <input id="interest-rate" name="interestRate" type="number" value="6.5" min="0.01" max="50" step="0.01" inputmode="decimal" autocomplete="off" aria-label="Enter the annual interest rate" title="Enter the annual interest rate of your loan as a percentage." class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-2 block">Loan Term (Years)</label>
-                    <input id="loan-term" type="number" value="30" class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
+                    <label for="loan-term" class="text-xs font-bold text-slate-400 uppercase mb-2 block">Loan Term (Years)</label>
+                    <input id="loan-term" name="loanTerm" type="number" value="30" min="1" max="50" step="1" inputmode="numeric" autocomplete="off" aria-label="Enter the loan term in years" title="Enter the total duration of the loan in years." class="w-full bg-slate-50 border-none rounded-xl p-4 text-lg focus:ring-2 focus:ring-primary/20">
                 </div>
-                <button onclick="calculateMortgage()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-primary/30">Calculate</button>
+                <button onclick="calculateMortgage()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-primary/30" aria-label="Calculate Mortgage Payment">Calculate</button>
             </div>
             <!-- Results -->
             <div class="bg-blue-50/50 rounded-2xl p-8 flex flex-col justify-center items-center text-center space-y-8">
                 <div>
                     <span class="text-sm font-bold text-primary uppercase mb-2">Estimated Monthly Payment</span>
-                    <div id="monthly-payment-result" class="text-5xl font-headline font-bold text-slate-900">$0.00</div>
+                    <div id="monthly-payment-result" class="text-5xl font-headline font-bold text-slate-900" aria-live="polite" aria-atomic="true">$0.00</div>
                 </div>
                 <div class="border-t border-blue-200 w-full"></div>
                 <div>
                     <span class="text-sm font-bold text-slate-500 uppercase mb-2">Total Interest Paid</span>
-                    <div id="total-interest-result" class="text-3xl font-headline font-bold text-slate-700">$0.00</div>
+                    <div id="total-interest-result" class="text-3xl font-headline font-bold text-slate-700" aria-live="polite" aria-atomic="true">$0.00</div>
                 </div>
             </div>
         </div>
@@ -57,45 +111,90 @@ description: "Calculate your monthly mortgage or loan payments. See how much you
 
     <!-- SEO Content Area -->
     <article class="max-w-3xl mx-auto mt-12 bg-white p-8 md:p-12 rounded-3xl border border-slate-100 shadow-sm prose prose-slate max-w-none">
-        <h2 class="text-3xl font-bold font-headline mb-6">Understanding Your Mortgage</h2>
+        <h2 class="text-3xl font-bold font-headline mb-6">Understanding Your Mortgage & Loan Payments</h2>
         <p class="text-slate-600 mb-6 leading-relaxed">
-            A mortgage is often the largest financial commitment a person makes. Understanding your monthly payment is crucial for budgeting, but the real eye-opener is seeing the <strong>total interest</strong> you'll pay over the lifetime of the loan. A small difference in the interest rate can translate to tens of thousands of dollars over 30 years.
+            A mortgage or loan is often one of the largest financial commitments you'll make. Understanding your estimated monthly payment is crucial for effective budgeting and financial planning. Our free Mortgage & Loan Calculator helps you quickly determine this figure, but also reveals the often surprising <strong>total interest</strong> you'll pay over the entire life of the loan. Even a small difference in the annual interest rate can translate to tens or even hundreds of thousands of dollars over a typical 30-year term.
         </p>
 
         <h3 class="text-2xl font-bold font-headline mb-4 mt-8">How is the Monthly Payment Calculated?</h3>
-        <p class="text-slate-600 mb-6">Our calculator uses the standard amortization formula to determine your payment. This formula balances the <strong>principal</strong> (the amount you borrowed) and the <strong>interest</strong> (the cost of borrowing) over the loan term. In the early years of your mortgage, a larger portion of your payment goes toward interest. As you pay down the loan, more of your payment starts to cover the principal.</p>
+        <p class="text-slate-600 mb-6">Our intuitive calculator uses the standard amortization formula, a widely accepted method in finance, to accurately determine your monthly payment. This formula carefully balances two key components: the <strong>principal</strong> (the actual amount of money you borrowed) and the <strong>interest</strong> (the cost charged by the lender for borrowing that money) across the entire loan term. During the initial years of your mortgage or loan, a larger proportion of your monthly payment is typically allocated to cover the interest. As you diligently pay down the loan over time, an increasing share of each payment begins to go towards reducing the principal balance, gradually building your equity.</p>
+        
+        <h3 class="text-2xl font-bold font-headline mb-4 mt-8">Tips for Using the Calculator</h3>
+        <ul class="list-disc list-inside text-slate-600 mb-6">
+            <li><strong>Loan Amount:</strong> Enter the total amount you plan to borrow. This could be the purchase price minus your down payment for a mortgage.</li>
+            <li><strong>Annual Interest Rate:</strong> Input the annual percentage rate (APR) your lender offers. Remember, even small changes here can significantly impact your total cost.</li>
+            <li><strong>Loan Term:</strong> Specify the duration of your loan in years. Common terms are 15 or 30 years for mortgages, but our calculator supports various durations.</li>
+            <li><strong>Experiment:</strong> Don't hesitate to adjust the values! See how a higher down payment, a lower interest rate, or a shorter loan term can drastically reduce your total interest paid and accelerate your path to financial freedom.</li>
+        </ul>
     </article>
 </main>
 
 <script>
     function calculateMortgage() {
-        const principal = parseFloat(document.getElementById('loan-amount').value);
-        const annualRate = parseFloat(document.getElementById('interest-rate').value);
-        const years = parseFloat(document.getElementById('loan-term').value);
+        const principalInput = document.getElementById('loan-amount');
+        const annualRateInput = document.getElementById('interest-rate');
+        const yearsInput = document.getElementById('loan-term');
 
-        if (isNaN(principal) || isNaN(annualRate) || isNaN(years) || principal <= 0 || annualRate <= 0 || years <= 0) {
+        const principal = parseFloat(principalInput.value);
+        const annualRate = parseFloat(annualRateInput.value);
+        const years = parseFloat(yearsInput.value);
+
+        // Basic validation and bounds checking based on input attributes
+        const minPrincipal = parseFloat(principalInput.min || 0);
+        const maxPrincipal = parseFloat(principalInput.max || Infinity);
+        const minRate = parseFloat(annualRateInput.min || 0);
+        const maxRate = parseFloat(annualRateInput.max || Infinity);
+        const minYears = parseFloat(yearsInput.min || 0);
+        const maxYears = parseFloat(yearsInput.max || Infinity);
+
+        if (isNaN(principal) || isNaN(annualRate) || isNaN(years) ||
+            principal < minPrincipal || principal > maxPrincipal ||
+            annualRate < minRate || annualRate > maxRate ||
+            years < minYears || years > maxYears ||
+            principal <= 0 || annualRate <= 0 || years <= 0) 
+        {
             document.getElementById('monthly-payment-result').innerText = '$0.00';
             document.getElementById('total-interest-result').innerText = '$0.00';
+            // Optionally add a visual cue for invalid input, e.g., an error message or border
             return;
         }
 
         const monthlyRate = annualRate / 100 / 12;
         const numberOfPayments = years * 12;
 
-        const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+        let monthlyPayment;
+        if (monthlyRate === 0) { // Handle zero interest rate case
+            monthlyPayment = principal / numberOfPayments;
+        } else {
+            monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+        }
+        
 
         const totalPaid = monthlyPayment * numberOfPayments;
         const totalInterest = totalPaid - principal;
         
-        // עיצוב התוצאות כמטבע
-        const currencyFormat = { style: 'currency', currency: 'USD' };
+        // Format results as currency
+        const currencyFormat = { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 };
         document.getElementById('monthly-payment-result').innerText = monthlyPayment.toLocaleString('en-US', currencyFormat);
         document.getElementById('total-interest-result').innerText = totalInterest.toLocaleString('en-US', currencyFormat);
         
-        // שליחת אירוע ל-Google Analytics
-        gtag('event', 'calculate', { 'event_category': 'Engagement', 'event_label': 'Mortgage' });
+        // Send event to Google Analytics (assuming gtag is loaded on the page)
+        if (typeof gtag === 'function') {
+            gtag('event', 'calculate_mortgage', { 
+                'event_category': 'Engagement', 
+                'event_label': 'Mortgage Calculator Use',
+                'value': principal // Optional: send principal as value
+            });
+        }
     }
 
-    // הפעלת החישוב הראשוני בטעינת העמוד
-    window.onload = calculateMortgage;
+    // Call calculateMortgage() on page load to display initial results with default values
+    window.addEventListener('load', calculateMortgage);
+
+    // Optional: Recalculate on input change for dynamic updates (better UX)
+    document.getElementById('loan-amount').addEventListener('input', calculateMortgage);
+    document.getElementById('interest-rate').addEventListener('input', calculateMortgage);
+    document.getElementById('loan-term').addEventListener('input', calculateMortgage);
 </script>
+</body>
+</html>

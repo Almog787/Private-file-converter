@@ -3,25 +3,34 @@ layout: default
 title: "404 - Page Not Found | Global Calc Hub"
 description: "The page you are looking for does not exist. Explore our professional calculators and financial insights."
 permalink: /404.html
+# SEO & Open Graph Tags for 404 pages
+# Ensure search engines do not index this page, but still follow its links
+robots: noindex, follow
+# Open Graph for social media sharing
+og_title: "404 - Page Not Found | Global Calc Hub"
+og_description: "The page you are looking for does not exist. Explore our professional calculators and financial insights."
+og_type: website
+og_url: "{{ site.url }}{{ page.url }}"
+og_image: "{{ site.url }}/assets/img/social-share-default.jpg" # Optional: Specify a default social sharing image
 ---
 
 <main class="pt-20 pb-32 px-6 max-w-7xl mx-auto flex-grow w-full flex flex-col items-center justify-center min-h-[70vh]">
     
-    <!-- ה-404 הענק השקוף למחצה -->
+    <!-- The visually large, semi-transparent 404 (decorative) -->
     <div class="relative flex justify-center w-full mb-8">
-        <h1 class="text-[12rem] md:text-[18rem] font-bold font-headline leading-none text-slate-900/5 select-none tracking-tighter absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
+        <p class="text-[12rem] md:text-[18rem] font-bold font-headline leading-none text-slate-900/5 select-none tracking-tighter absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0" aria-hidden="true">
             404
-        </h1>
+        </p>
         <div class="z-10 text-center mt-12 md:mt-24">
             <span class="material-symbols-outlined text-6xl text-primary mb-6 block">explore_off</span>
-            <h2 class="text-4xl md:text-5xl font-bold font-headline mb-6 text-slate-900 tracking-tight">Coordinates Unknown.</h2>
+            <h1 class="text-4xl md:text-5xl font-bold font-headline mb-6 text-slate-900 tracking-tight">Coordinates Unknown.</h1>
             <p class="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">
                 The page you are looking for has been moved, deleted, or simply never existed in our database. Let us point you back in the right direction.
             </p>
         </div>
     </div>
 
-    <!-- כפתור חזרה מהיר -->
+    <!-- Quick Return Button -->
     <div class="mt-10 mb-20 z-10">
         <a href="{{ '/' | relative_url }}" class="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 hover:shadow-lg hover:-translate-y-1 transition-all">
             <span class="material-symbols-outlined text-sm">arrow_back</span>
@@ -29,13 +38,13 @@ permalink: /404.html
         </a>
     </div>
 
-    <!-- מיני-תפריט: הצעות חלופיות לגולש כדי למנוע נטישה -->
+    <!-- Mini-menu: Alternative suggestions to prevent user abandonment -->
     <div class="w-full max-w-5xl z-10 border-t border-slate-100 pt-16">
         <p class="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-10">Or explore our most popular destinations</p>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <!-- הפניה לכלים -->
+            <!-- Link to Tools -->
             <a href="{{ '/tools/' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-lg shadow-blue-900/5 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all group flex flex-col items-center text-center">
                 <div class="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
                     <span class="material-symbols-outlined text-3xl">grid_view</span>
@@ -44,7 +53,7 @@ permalink: /404.html
                 <p class="text-sm text-slate-500">Access our suite of free financial and unit calculators.</p>
             </a>
 
-            <!-- הפניה למאמר האחרון (דינמי!) -->
+            <!-- Link to Latest Article (dynamic!) -->
             {% assign latest_post = site.posts.first %}
             {% if latest_post %}
             <a href="{{ latest_post.url | relative_url }}" class="bg-white p-8 rounded-3xl shadow-lg shadow-blue-900/5 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all group flex flex-col items-center text-center">
@@ -64,7 +73,7 @@ permalink: /404.html
             </a>
             {% endif %}
 
-            <!-- הפניה למחשבון פופולרי ספציפי -->
+            <!-- Link to a Specific Popular Calculator -->
             <a href="{{ '/compound-interest/' | relative_url }}" class="bg-white p-8 rounded-3xl shadow-lg shadow-blue-900/5 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-transform group flex flex-col items-center text-center">
                 <div class="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
                     <span class="material-symbols-outlined text-3xl">payments</span>
