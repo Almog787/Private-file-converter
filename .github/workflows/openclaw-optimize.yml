@@ -17,51 +17,56 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
+      - name: Create OpenClaw Directory
+        run: mkdir -p .openclaw
 
-      - name: Install OpenClaw
-        run: npm install -g openclaw
-
-      - name: Create Task File
+      - name: Setup Agent Soul (Configuration)
         run: |
-          cat << 'EOF' > openclaw_task.md
-          # Objective
-          Scan the repository for existing Jekyll and calculator files, optimize them for SEO, accessibility, and user retention, and log actions in memory.
+          cat << 'EOF' > .openclaw/agent_soul.md
+          # Role
+          You are an expert Senior Frontend Developer, SEO Specialist, and Google Trends Automation Agent.
 
-          # Configuration
-          Ignore directories: .git, node_modules, _site, .github
+          # Context
+          You are running inside a GitHub Action workflow via Docker. Your workspace is mounted at `/workspace`.
+          Your task is to analyze the calculator files, make them exceptionally attractive, mobile-responsive, and optimized for Google SEO.
+          You must ignore high-noise directories like `.git`, `.github`, and `_site`.
 
-          # Execution Steps
-          1. Read 'agent_memory.json' if it exists to understand state.
-          2. Analyze '_config.yml' and top-level HTML/Markdown files for missing SEO meta tags.
-          3. Scan all HTML and JavaScript files related to calculators to improve UX, add instructions, and fix script bugs.
-          4. Upgrade CSS/HTML layout elements for mobile responsiveness.
-          5. Append a summary of updates to 'agent_memory.json'.
-          6. Terminate execution immediately and output 'OPTIMIZATION_COMPLETE'.
+          # Guidelines
+          - Always output pure file content when saving updates.
+          - Maintain the `agent_memory.json` file to track your state between runs.
           EOF
 
-      - name: Run OpenClaw SEO & UI Optimization
+      - name: Initialize Memory File if Missing
+        run: |
+          if [ ! -f agent_memory.json ]; then
+            echo "[]" > agent_memory.json
+          fi
+
+      - name: Run OpenClaw Agent via Docker
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CUSTOM_GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
         run: |
-          # שימוש בפקודת run הרשמית והזנת קובץ המשימה כארגומנט נקי
-          openclaw run openclaw_task.md --headless --yes
-
-      - name: Cleanup Task File
-        run: rm -f openclaw_task.md
+          # הרצת הסוכן מתוך קונטיינר Docker רשמי, תוך הזרקת מפתח ה-API של Gemini ומחיקת הקונטיינר בסיום
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -e ANTHROPIC_API_KEY=${{ secrets.GEMINI_API_KEY }} \
+            -e GITHUB_TOKEN=${{ secrets.CUSTOM_GITHUB_TOKEN }} \
+            openclaw/openclaw:latest openclaw-cli run \
+            --agent-profile "/workspace/.openclaw/agent_soul.md" \
+            --task "OBJECTIVE: Scan existing calculator files, optimize them for SEO, accessibility, and user retention, and log actions in memory. STEPS: 1. Read '/workspace/agent_memory.json'. 2. Analyze '_config.yml' and 'index.html' for missing SEO meta tags and descriptions. 3. Update HTML/JS calculator files to improve UX and clear instructions. 4. Append a summary of changes to '/workspace/agent_memory.json'. 5. Terminate execution immediately."
 
       - name: Commit and Push Optimized Code
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # נוודא שאנחנו מוחקים קבצים זמניים אם נוצרו, ומשאירים רק את קוד האתר והזיכרון
           git add .
           
           if git diff --staged --quiet; then
             echo "No optimizations or modifications were made by the agent."
           else
-            git commit -m "auto(agent): optimize repository code, UI layout, and SEO parameters"
+            git commit -m "auto(agent): optimize repository code, UI layout, and SEO parameters via OpenClaw Docker"
             git push origin ${{ github.ref_name }}
           fi
