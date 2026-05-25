@@ -17,56 +17,128 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Create OpenClaw Directory
-        run: mkdir -p .openclaw
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
 
-      - name: Setup Agent Soul (Configuration)
-        run: |
-          cat << 'EOF' > .openclaw/agent_soul.md
-          # Role
-          You are an expert Senior Frontend Developer, SEO Specialist, and Google Trends Automation Agent.
+      - name: Install Google Gen AI SDK
+        run: npm install @google/genai
 
-          # Context
-          You are running inside a GitHub Action workflow via Docker. Your workspace is mounted at `/workspace`.
-          Your task is to analyze the calculator files, make them exceptionally attractive, mobile-responsive, and optimized for Google SEO.
-          You must ignore high-noise directories like `.git`, `.github`, and `_site`.
-
-          # Guidelines
-          - Always output pure file content when saving updates.
-          - Maintain the `agent_memory.json` file to track your state between runs.
-          EOF
-
-      - name: Initialize Memory File if Missing
-        run: |
-          if [ ! -f agent_memory.json ]; then
-            echo "[]" > agent_memory.json
-          fi
-
-      - name: Run OpenClaw Agent via Docker
+      - name: Run OpenClaw AI Agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          CUSTOM_GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
         run: |
-          # הרצת הסוכן מתוך קונטיינר Docker רשמי, תוך הזרקת מפתח ה-API של Gemini ומחיקת הקונטיינר בסיום
-          docker run --rm \
-            -v ${{ github.workspace }}:/workspace \
-            -e ANTHROPIC_API_KEY=${{ secrets.GEMINI_API_KEY }} \
-            -e GITHUB_TOKEN=${{ secrets.CUSTOM_GITHUB_TOKEN }} \
-            openclaw/openclaw:latest openclaw-cli run \
-            --agent-profile "/workspace/.openclaw/agent_soul.md" \
-            --task "OBJECTIVE: Scan existing calculator files, optimize them for SEO, accessibility, and user retention, and log actions in memory. STEPS: 1. Read '/workspace/agent_memory.json'. 2. Analyze '_config.yml' and 'index.html' for missing SEO meta tags and descriptions. 3. Update HTML/JS calculator files to improve UX and clear instructions. 4. Append a summary of changes to '/workspace/agent_memory.json'. 5. Terminate execution immediately."
+          node - << 'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const { GoogleGenAI } = require('@google/genai');
+
+          async function runAgent() {
+            if (!process.env.GEMINI_API_KEY) {
+              console.error("CRITICAL: Missing GEMINI_API_KEY in GitHub Secrets!");
+              process.exit(1);
+            }
+
+            // אתחול ה-SDK הרשמי של גוגל ג'ן איי-איי
+            const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+            
+            // 1. ניהול הזיכרון של הסוכן
+            let memory = [];
+            const memoryPath = path.join(process.cwd(), 'agent_memory.json');
+            if (fs.existsSync(memoryPath)) {
+              try {
+                memory = JSON.parse(fs.readFileSync(memoryPath, 'utf8'));
+              } catch (e) {
+                console.log("Memory file was invalid. Resetting memory.");
+              }
+            }
+
+            console.log("Starting repository analysis for Almog787/Global-calculator-pro...");
+            
+            // 2. סריקה חכמה של קבצי המחשבונים והגדרות האתר
+            const targets = ['index.html', '_config.yml'];
+            
+            // סריקה אוטומטית של קבצי קוד נוספים בשורש המאגר (CSS, JS, HTML)
+            fs.readdirSync(process.cwd()).forEach(file => {
+              if ((file.endsWith('.js') || file.endsWith('.html') || file.endsWith('.css')) && !targets.includes(file)) {
+                targets.push(file);
+              }
+            });
+
+            const optimizedFiles = [];
+
+            // 3. לולאת הרצה על כל קובץ ושיפורו באמצעות ה-AI
+            for (const file of targets) {
+              const filePath = path.join(process.cwd(), file);
+              if (!fs.existsSync(filePath)) continue;
+
+              console.log(`Agent processing: ${file}`);
+              const currentContent = fs.readFileSync(filePath, 'utf8');
+
+              const prompt = `You are the 'OpenClaw' Autonomous AI Agent. Your objective is to optimize the following website file to maximize user retention, traffic, accessibility (Lighthouse standards), and Google SEO rankings.
+              
+              If it is an HTML or Jekyll file: Ensure proper meta tags, open-graph tags, descriptions, headers hierarchy, and Google-friendly structure exist.
+              If it is a JS/Calculator file: Optimize the code logic, make sure instructions are crystal clear for users, and fix any user experience flaws.
+              
+              CRITICAL: Return ONLY the raw, updated code/text content of the file. Do NOT wrap the response in markdown code blocks (like \`\`\`html). Do not explain your changes.
+              
+              File Name: ${file}
+              Current File Content:
+              ${currentContent}`;
+
+              try {
+                const response = await ai.models.generateContent({
+                  model: 'gemini-2.5-flash',
+                  contents: prompt,
+                });
+
+                let updatedCode = response.text.trim();
+                
+                // הגנה מפני מקרה שהמודל בכל זאת החזיר בלוק קוד של מרקדאון
+                if (updatedCode.startsWith('\`\`\`')) {
+                  updatedCode = updatedCode.replace(/^\`\`\`[a-zA-Z]*\n/, '').replace(/\n\`\`\`$/, '');
+                }
+
+                if (updatedCode && updatedCode.length > 10 && updatedCode !== currentContent) {
+                  fs.writeFileSync(filePath, updatedCode, 'utf8');
+                  optimizedFiles.push(file);
+                  console.log(`Successfully optimized and saved: ${file}`);
+                }
+              } catch (err) {
+                console.error(`Failed to process ${file}:`, err);
+              }
+            }
+
+            // 4. עדכון קובץ הזיכרון לריצה הבאה
+            if (optimizedFiles.length > 0) {
+              memory.push({
+                run_timestamp: new Date().toISOString(),
+                status: "OPTIMIZATION_COMPLETE",
+                files_improved: optimizedFiles
+              });
+              fs.writeFileSync(memoryPath, JSON.stringify(memory, null, 2), 'utf8');
+              console.log("Agent memory updated successfully.");
+            } else {
+              console.log("No structural changes were required during this run.");
+            }
+          }
+
+          runAgent().catch(err => {
+            console.error("Agent execution failed:", err);
+            process.exit(1);
+          });
+          EOF
 
       - name: Commit and Push Optimized Code
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # נוודא שאנחנו מוחקים קבצים זמניים אם נוצרו, ומשאירים רק את קוד האתר והזיכרון
           git add .
           
           if git diff --staged --quiet; then
-            echo "No optimizations or modifications were made by the agent."
+            echo "No changes detected. Repository is already fully optimized."
           else
-            git commit -m "auto(agent): optimize repository code, UI layout, and SEO parameters via OpenClaw Docker"
+            git commit -m "auto(agent): optimize site structure, calculators UX, and SEO tags via Gemini"
             git push origin ${{ github.ref_name }}
           fi
