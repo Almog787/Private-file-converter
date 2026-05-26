@@ -43,10 +43,10 @@ jobs:
               process.exit(1);
             }
 
-            // אתחול ה-SDK הרשמי
+            // אתחול ה-SDK הרשמי של Gemini
             const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
             
-            // 1. ניהול הזיכרון של הסוכן
+            // 1. קריאת קובץ הזיכרון
             let memory = [];
             const memoryPath = path.join(process.cwd(), 'agent_memory.json');
             if (fs.existsSync(memoryPath)) {
@@ -57,47 +57,77 @@ jobs:
               }
             }
 
-            console.log("Step 1: Researching Google Trends and Global News...");
-            
-            // הגדרת קונטקסט הזיכרון עבור ה-AI כדי שלא יחזור על אותם נושאים
+            console.log("Step 1: Analyzing current global trends (May 2026)...");
             const pastTopics = memory.map(run => run.published_topic || '').join(', ');
 
             const trendPrompt = `You are the Google Trends Researcher component of the OpenClaw Agent. 
-            Identify the top trending global news, calculators, or viral interactive search queries right now in May 2026.
+            Identify a major trending global news story or high-volume search trend happening right now in May 2026.
             Avoid topics already covered recently: [${pastTopics}].
-            Select ONE highly compelling trend that can be linked to a useful tool, global calculation, or financial/informational interest.
+            Select ONE highly compelling trend that can be linked to financial interest, global calculators, or statistical metrics.
             Return ONLY the name of the chosen topic/trend. Do not write anything else.`;
 
-            let chosenTrend = "Global Finance Trends";
+            let chosenTrend = "Global Economic Shifts";
             try {
               const trendResponse = await ai.models.generateContent({
                 model: 'gemini-2.5-flash',
                 contents: trendPrompt,
               });
               chosenTrend = trendResponse.text.trim();
-              console.log(`Chosen Viral Trend for today: "${chosenTrend}"`);
+              console.log(`Chosen Trend: "${chosenTrend}"`);
             } catch (err) {
-              console.error("Failed to fetch live trends, using fallback topic.", err);
+              console.error("Failed to fetch trends, using fallback.", err);
             }
 
-            console.log("Step 2: Generating SEO-Optimized Jekyll Post...");
+            console.log("Step 2: Generating Trend Article using custom site structure...");
+            
+            const todayDate = new Date().toISOString().split('T')[0];
             
             const articlePrompt = `You are the Content Creator component of the OpenClaw Agent.
-            Write a comprehensive, engaging, and highly interesting article about the viral trend: "${chosenTrend}".
-            The article must include detailed information, explanations, and be structured for maximum Google SEO and retention.
+            Write a comprehensive, engaging article about the viral trend: "${chosenTrend}".
             
-            CRITICAL: The article must be in valid Jekyll Markdown format with Front Matter.
-            Example Front Matter:
+            You MUST follow this exact structural pattern, wrapping content in HTML elements matching the site's theme.
+            
+            STRICT FORMAT REQUIREMENT:
             ---
             layout: post
-            title: "Viral Title About ${chosenTrend}"
-            date: ${new Date().toISOString().split('T')[0]}
-            tags: [trend, calculator, ${chosenTrend.toLowerCase().replace(/[^a-z0-9]/g, '')}]
-            description: "An SEO description that makes people click from Google search results."
+            title: "[Generate a catchy title related to ${chosenTrend}]"
+            description: "[Generate an SEO meta description]"
+            tag: "[Choose one: Finance / Tech / Global / Health / Analytics]"
+            icon: "[Material symbols icon name, e.g., public, payments, trending_up]"
+            image: "[Generate a highly relevant high-quality Unsplash image URL with parameters like ?w=1000&q=80]"
             ---
-            
-            Inside the article, mention or embed an idea for an interactive tool (like a special percentage calculator or converter) related to this topic.
-            Return ONLY the raw markdown content. Do not wrap it in triple backticks (\`\`\`).`;
+
+            <p class="lead text-xl text-slate-600">
+                [A compelling 2-3 sentence introductory paragraph connecting the trend directly to the reader's daily life or budget.]
+            </p>
+
+            <h2>[First Major Heading]</h2>
+            <p>[Detailed context paragraph with some <strong>strong bold text elements</strong>.]</p>
+
+            <h2>[Second Major Heading explaining global impact]</h2>
+            <p>[Analysis paragraph.]</p>
+            <ol>
+                <li><strong>[Impact 1]:</strong> [Details]</li>
+                <li><strong>[Impact 2]:</strong> [Details]</li>
+                <li><strong>[Impact 3]:</strong> [Details]</li>
+            </ol>
+
+            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 my-8 not-prose">
+                <h3 class="mt-0 text-primary font-bold text-xl mb-2">[Catchy Alert Box Title]</h3>
+                <p class="text-slate-700 mb-0">[How this trend impacts the reader's personal wallet, time, or asset valuation today.]</p>
+            </div>
+
+            <h2>[Third Heading - Actionable Conclusion]</h2>
+            <p>[Closing thoughts.]</p>
+
+            <div class="mt-10 text-center not-prose">
+                <a href="{{ '/percentage.html' | relative_url }}" class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-bold no-underline hover:bg-blue-700 hover:shadow-lg hover:-translate-y-1 transition-all">
+                    <span class="material-symbols-outlined">calculate</span>
+                    [Generate a call to action related to calculating their statistics or personal numbers]
+                </a>
+            </div>
+
+            CRITICAL: Return ONLY the raw markdown/html output. Do not wrap the response in markdown code blocks (\`\`\`).`;
 
             let articleContent = "";
             try {
@@ -107,29 +137,28 @@ jobs:
               });
               articleContent = articleResponse.text.trim();
             } catch (err) {
-              console.error("Failed to generate article:", err);
+              console.error("Failed to generate article content:", err);
             }
 
-            // שמירת המאמר בפורמט שם תקין של Jekyll: YYYY-MM-DD-title.md
-            if (articleContent.length > 100) {
-              const datePrefix = new Date().toISOString().split('T')[0];
-              const safeTitle = chosenTrend.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 30);
-              const postFileName = `${datePrefix}-${safeTitle}.md`;
+            // שמירת הקובץ בפורמט Jekyll תקין בתיקיית _posts
+            if (articleContent.length > 200) {
+              const safeTitle = chosenTrend.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 35);
+              const postFileName = `${todayDate}-${safeTitle}.md`;
               const postPath = path.join(process.cwd(), '_posts', postFileName);
               
               fs.writeFileSync(postPath, articleContent, 'utf8');
-              console.log(`Successfully published new trend article: ${postFileName}`);
+              console.log(`Successfully published new trend article based on templates: ${postFileName}`);
               
               // 3. עדכון הזיכרון
               memory.push({
                 run_timestamp: new Date().toISOString(),
-                status: "ARTICLE_PUBLISHED",
+                status: "ARTICLE_PUBLISHED_WITH_TEMPLATE",
                 published_topic: chosenTrend,
                 file_created: `_posts/${postFileName}`
               });
               fs.writeFileSync(memoryPath, JSON.stringify(memory, null, 2), 'utf8');
             } else {
-              console.log("Article content was too short or failed generation. Skipping file write.");
+              console.log("Article generation output was too small. Skipping file creation.");
             }
           }
 
@@ -146,8 +175,8 @@ jobs:
           git add .
           
           if git diff --staged --quiet; then
-            echo "No new articles or changes were generated by the agent."
+            echo "No new trends or modifications were generated during this run."
           else
-            git commit -m "auto(agent): research trends and publish new SEO article to _posts"
+            git commit -m "auto(agent): publish live trend article using custom post structure"
             git push origin ${{ github.ref_name }}
           fi
