@@ -24,5 +24,11 @@
     "status": "ARTICLE_PUBLISHED",
     "published_topic": "AI Job Vulnerability Calculator",
     "file_created": "_posts/2026-05-26-ai-job-vulnerability-calculato.md"
+  },
+  {
+    "run_timestamp": "2026-05-26T03:14:04.240Z",
+    "status": "ARTICLE_PUBLISHED_WITH_TEMPLATE",
+    "published_topic": "Global Sovereign Debt Crisis",
+    "file_created": "_posts/2026-05-26-global-sovereign-debt-crisis.md"
   }
 ]
