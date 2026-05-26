@@ -1,4 +1,4 @@
-name: OpenClaw Repository Optimizer Agent
+name: OpenClaw Repository Optimizer & Publisher Agent
 
 on:
   schedule:
@@ -6,12 +6,12 @@ on:
   workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
 
 permissions:
-  contents: write # Required to push optimized code and memory files back to the repo
+  contents: write # Required to push optimized code and articles back to the repo
 
 jobs:
-  optimize-repo:
+  optimize-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15 # Guardrail against infinite optimization loops
+    timeout-minutes: 15 # Guardrail against infinite loops
 
     steps:
       - name: Checkout Repository
@@ -25,7 +25,10 @@ jobs:
       - name: Install Google Gen AI SDK
         run: npm install @google/genai
 
-      - name: Run OpenClaw AI Agent
+      - name: Ensure Posts Directory Exists
+        run: mkdir -p _posts
+
+      - name: Run OpenClaw AI Publisher Agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -40,7 +43,7 @@ jobs:
               process.exit(1);
             }
 
-            // אתחול ה-SDK הרשמי של גוגל ג'ן איי-איי
+            // אתחול ה-SDK הרשמי
             const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
             
             // 1. ניהול הזיכרון של הסוכן
@@ -54,73 +57,79 @@ jobs:
               }
             }
 
-            console.log("Starting repository analysis for Almog787/Global-calculator-pro...");
+            console.log("Step 1: Researching Google Trends and Global News...");
             
-            // 2. סריקה חכמה של קבצי המחשבונים והגדרות האתר
-            const targets = ['index.html', '_config.yml'];
-            
-            // סריקה אוטומטית של קבצי קוד נוספים בשורש המאגר (CSS, JS, HTML)
-            fs.readdirSync(process.cwd()).forEach(file => {
-              if ((file.endsWith('.js') || file.endsWith('.html') || file.endsWith('.css')) && !targets.includes(file)) {
-                targets.push(file);
-              }
-            });
+            // הגדרת קונטקסט הזיכרון עבור ה-AI כדי שלא יחזור על אותם נושאים
+            const pastTopics = memory.map(run => run.published_topic || '').join(', ');
 
-            const optimizedFiles = [];
+            const trendPrompt = `You are the Google Trends Researcher component of the OpenClaw Agent. 
+            Identify the top trending global news, calculators, or viral interactive search queries right now in May 2026.
+            Avoid topics already covered recently: [${pastTopics}].
+            Select ONE highly compelling trend that can be linked to a useful tool, global calculation, or financial/informational interest.
+            Return ONLY the name of the chosen topic/trend. Do not write anything else.`;
 
-            // 3. לולאת הרצה על כל קובץ ושיפורו באמצעות ה-AI
-            for (const file of targets) {
-              const filePath = path.join(process.cwd(), file);
-              if (!fs.existsSync(filePath)) continue;
-
-              console.log(`Agent processing: ${file}`);
-              const currentContent = fs.readFileSync(filePath, 'utf8');
-
-              const prompt = `You are the 'OpenClaw' Autonomous AI Agent. Your objective is to optimize the following website file to maximize user retention, traffic, accessibility (Lighthouse standards), and Google SEO rankings.
-              
-              If it is an HTML or Jekyll file: Ensure proper meta tags, open-graph tags, descriptions, headers hierarchy, and Google-friendly structure exist.
-              If it is a JS/Calculator file: Optimize the code logic, make sure instructions are crystal clear for users, and fix any user experience flaws.
-              
-              CRITICAL: Return ONLY the raw, updated code/text content of the file. Do NOT wrap the response in markdown code blocks (like \`\`\`html). Do not explain your changes.
-              
-              File Name: ${file}
-              Current File Content:
-              ${currentContent}`;
-
-              try {
-                const response = await ai.models.generateContent({
-                  model: 'gemini-2.5-flash',
-                  contents: prompt,
-                });
-
-                let updatedCode = response.text.trim();
-                
-                // הגנה מפני מקרה שהמודל בכל זאת החזיר בלוק קוד של מרקדאון
-                if (updatedCode.startsWith('\`\`\`')) {
-                  updatedCode = updatedCode.replace(/^\`\`\`[a-zA-Z]*\n/, '').replace(/\n\`\`\`$/, '');
-                }
-
-                if (updatedCode && updatedCode.length > 10 && updatedCode !== currentContent) {
-                  fs.writeFileSync(filePath, updatedCode, 'utf8');
-                  optimizedFiles.push(file);
-                  console.log(`Successfully optimized and saved: ${file}`);
-                }
-              } catch (err) {
-                console.error(`Failed to process ${file}:`, err);
-              }
+            let chosenTrend = "Global Finance Trends";
+            try {
+              const trendResponse = await ai.models.generateContent({
+                model: 'gemini-2.5-flash',
+                contents: trendPrompt,
+              });
+              chosenTrend = trendResponse.text.trim();
+              console.log(`Chosen Viral Trend for today: "${chosenTrend}"`);
+            } catch (err) {
+              console.error("Failed to fetch live trends, using fallback topic.", err);
             }
 
-            // 4. עדכון קובץ הזיכרון לריצה הבאה
-            if (optimizedFiles.length > 0) {
+            console.log("Step 2: Generating SEO-Optimized Jekyll Post...");
+            
+            const articlePrompt = `You are the Content Creator component of the OpenClaw Agent.
+            Write a comprehensive, engaging, and highly interesting article about the viral trend: "${chosenTrend}".
+            The article must include detailed information, explanations, and be structured for maximum Google SEO and retention.
+            
+            CRITICAL: The article must be in valid Jekyll Markdown format with Front Matter.
+            Example Front Matter:
+            ---
+            layout: post
+            title: "Viral Title About ${chosenTrend}"
+            date: ${new Date().toISOString().split('T')[0]}
+            tags: [trend, calculator, ${chosenTrend.toLowerCase().replace(/[^a-z0-9]/g, '')}]
+            description: "An SEO description that makes people click from Google search results."
+            ---
+            
+            Inside the article, mention or embed an idea for an interactive tool (like a special percentage calculator or converter) related to this topic.
+            Return ONLY the raw markdown content. Do not wrap it in triple backticks (\`\`\`).`;
+
+            let articleContent = "";
+            try {
+              const articleResponse = await ai.models.generateContent({
+                model: 'gemini-2.5-flash',
+                contents: articlePrompt,
+              });
+              articleContent = articleResponse.text.trim();
+            } catch (err) {
+              console.error("Failed to generate article:", err);
+            }
+
+            // שמירת המאמר בפורמט שם תקין של Jekyll: YYYY-MM-DD-title.md
+            if (articleContent.length > 100) {
+              const datePrefix = new Date().toISOString().split('T')[0];
+              const safeTitle = chosenTrend.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 30);
+              const postFileName = `${datePrefix}-${safeTitle}.md`;
+              const postPath = path.join(process.cwd(), '_posts', postFileName);
+              
+              fs.writeFileSync(postPath, articleContent, 'utf8');
+              console.log(`Successfully published new trend article: ${postFileName}`);
+              
+              // 3. עדכון הזיכרון
               memory.push({
                 run_timestamp: new Date().toISOString(),
-                status: "OPTIMIZATION_COMPLETE",
-                files_improved: optimizedFiles
+                status: "ARTICLE_PUBLISHED",
+                published_topic: chosenTrend,
+                file_created: `_posts/${postFileName}`
               });
               fs.writeFileSync(memoryPath, JSON.stringify(memory, null, 2), 'utf8');
-              console.log("Agent memory updated successfully.");
             } else {
-              console.log("No structural changes were required during this run.");
+              console.log("Article content was too short or failed generation. Skipping file write.");
             }
           }
 
@@ -130,15 +139,15 @@ jobs:
           });
           EOF
 
-      - name: Commit and Push Optimized Code
+      - name: Commit and Push New Content
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           
           if git diff --staged --quiet; then
-            echo "No changes detected. Repository is already fully optimized."
+            echo "No new articles or changes were generated by the agent."
           else
-            git commit -m "auto(agent): optimize site structure, calculators UX, and SEO tags via Gemini"
+            git commit -m "auto(agent): research trends and publish new SEO article to _posts"
             git push origin ${{ github.ref_name }}
           fi
