@@ -8,7 +8,7 @@
     "index": "node google-indexer.js"
   },
   "dependencies": {
-    "@google/genai": "^2.6.0",
+    "@google/genai": "^2.7.0",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "googleapis": "^144.0.0",

@@ -30,5 +30,11 @@
     "status": "ARTICLE_PUBLISHED_WITH_TEMPLATE",
     "published_topic": "Global Sovereign Debt Crisis",
     "file_created": "_posts/2026-05-26-global-sovereign-debt-crisis.md"
+  },
+  {
+    "run_timestamp": "2026-05-31T02:14:03.838Z",
+    "status": "ARTICLE_PUBLISHED_WITH_TEMPLATE",
+    "published_topic": "Economic Impact of AI Regulation",
+    "file_created": "_posts/2026-05-31-economic-impact-of-ai-regulation.md"
   }
 ]
